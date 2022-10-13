@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/10/13 18:01:41 by aball            ###   ########.fr       */
+/*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
+/*   Updated: 2022/10/13 13:28:23 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handler(int signo, siginfo_t *info, void *context)
+int	my_echo(char *echo, int flag)
 {
-	(void)info;
-	(void)context;
-	(void)signo;
+	int	i;
 
-	if (signo == SIGINT)
-	{
+	i = flag;
+	while (echo[i] == 'n')
+		i++;
+	while (echo[i] == ' ')
+		i++;
+	printf("%s", echo + i);
+	if (flag == 4)
 		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-
-	}
-}
-
-int	main(void)
-{
-	int	ret;
-	struct sigaction sa;
-
-	sa.sa_sigaction = &handler;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
-	{
-		ret = parsing();
-		if (ret == 0)
-			exit (0);
-	}
 	return (0);
 }

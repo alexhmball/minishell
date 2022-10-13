@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 03:30:19 by aball             #+#    #+#             */
-/*   Updated: 2022/03/02 17:42:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/10/10 20:33:05 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	print_putchar(char c)
 {
-	write(1, &c, 1);
-	return (1);
+	int	ret;
+
+	ret = write(1, &c, 1);
+	return (ret);
 }
