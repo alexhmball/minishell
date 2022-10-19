@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/10/13 13:25:02 by aball            ###   ########.fr       */
+/*   Updated: 2022/10/13 21:32:37 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@
 # include <readline/history.h>
 
 int		parsing(void);
-int		my_echo(char *echo, int flag);
+int		my_echo(char **echo, int flag);
 
 #endif
