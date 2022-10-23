@@ -1,40 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   freedom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/10/23 20:09:53 by aball            ###   ########.fr       */
+/*   Created: 2022/10/23 20:10:42 by aball             #+#    #+#             */
+/*   Updated: 2022/10/23 20:12:08 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_newline(char **echo)
+void	freedom(char **free_me)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (echo[i])
-	{
-
-	}
-}
-
-int	my_echo(char **echo)
-{
-	int	i;
-	int	new_line;
-
-	i = 0;
-	new_line = check_newline(echo);
-	while (echo[i])
-		printf("%s", echo[i++]);
-	if (new_line)
-		printf("\n");
-	return (0);
+	while (free_me[i])
+		free(free_me[i++]);
 }

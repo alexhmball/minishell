@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/10/23 18:38:07 by aball            ###   ########.fr       */
+/*   Updated: 2022/10/23 20:12:16 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@
 # include <readline/history.h>
 
 int		parsing(void);
-// int		my_echo(char **echo);
-char	*quote_validator(char *line);
+int		my_echo(char **echo);
+char	*quote_validator(char *line, int single_q, int double_q);
+int		check_quotes(char c, int *single_q, int *double_q);
+char	*remove_quotes(char *line, int remove, int single_q, int double_q);
+void	freedom(char **free_me);
 
 #endif
