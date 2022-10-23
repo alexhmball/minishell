@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/10/23 20:29:01 by aball            ###   ########.fr       */
+/*   Created: 2022/10/23 21:35:15 by aball             #+#    #+#             */
+/*   Updated: 2022/10/23 22:34:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// int	check_newline(char **echo)
-// {
-// 	int	i;
-// 	int	j;
+int	is_spc_tb(char c)
+{
+	if ((c >= 9 && c <= 13) || c == ' ')
+		return (1);
+	return (0);
+}
 
-// 	i = 0;
-// 	j = 0;
-// 	while (echo[i])
-// 	{
-
-// 	}
-// }
-
-int	my_echo(char **echo)
+int	is_dollar(char *str)
 {
 	int	i;
-	// int	new_line;
 
-	i = 1;
-	// new_line = check_newline(echo);
-	while (echo[i])
-		printf("%s", echo[i++]);
-	// if (new_line)
-		printf("\n");
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
 	return (0);
 }
