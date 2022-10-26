@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 20:19:34 by aball             #+#    #+#             */
-/*   Updated: 2022/08/28 23:17:26 by aball            ###   ########.fr       */
+/*   Updated: 2022/10/25 18:29:11 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~MY FUNCTIONS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 char	*str_sep(int size, char **strs, char *sep);
+void	ft_swap(void *a, void *b);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~DOUBLY LINKED LISTS~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
