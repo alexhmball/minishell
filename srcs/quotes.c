@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/10/25 21:07:04 by aball            ###   ########.fr       */
+/*   Updated: 2022/10/26 10:23:55 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,7 @@ char	**remove_quotes(char *line, int single_q, int double_q)
 		while (line[end - 1] == '"' || line[end - 1] == 39)
 			end--;
 		if (check_line(line, start, end))
-		{
 			new_line[x] = ft_substr(line, start, end - start);
-			printf("|%s|\n", new_line[x++]);
-		}
 		if (!line[i])
 			break;
 		start = end;
@@ -159,10 +156,7 @@ void	insert_expand(char *new_line, char *line, char *exp, int len, char *temp)
 	save = i;
 	x = 0;
 	while (exp[x])
-	{
-	printf("%s\n", new_line);
 		new_line[i++] = exp[x++];
-	}
 	save += ft_strlen(temp) + 1;
 	while (i < len && line[save])
 	{
@@ -178,22 +172,21 @@ void	expand(char *line, int *i)
 	char	*new_line;
 	int		len;
 
-	*i += 1;
-	len = *i;
+	// *i += 1;
+	len = *i + 1;
 	while (ft_isalnum(line[len]) && !is_spc_tb(line[len]))
 		len++;
 	temp = (char *)malloc(sizeof(char) * (len - *i));
 	ft_strlcpy(temp, line + *i, len - *i + 1);
 	exp = getenv(temp);
-	printf("%s \n", temp);
+	printf("|%s| \n", temp);
 	len = ft_strlen(line) - ft_strlen(temp);
 	len += ft_strlen(exp) - 1;
 	new_line = (char *)malloc(sizeof(char) * len);
 	insert_expand(new_line, line, exp, len, temp);
-	printf("|%s|\n", new_line);
-	printf("|%s|\n", line);
-	ft_swap((void *)new_line, (void *)line);
-	*i += ft_strlen(exp);
+	free (line);
+	line = ft_strdup(new_line);
+	// *i += ft_strlen(exp);
 }
 
 char	**quote_validator(char *line, int single_q, int double_q)
