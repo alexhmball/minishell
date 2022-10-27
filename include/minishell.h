@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/10/25 20:05:22 by aball            ###   ########.fr       */
+/*   Updated: 2022/10/26 21:57:16 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int		check_quotes(char c, int *single_q, int *double_q);
 char	**remove_quotes(char *line, int single_q, int double_q);
 void	freedom(char **free_me);
 void	expand(char *line, int *i);
-void	insert_expand(char *new_line, char *line, char *exp, int len, char *temp);
+void	insert_expand(char *new_line, char *line, char *exp, char *temp);
 
 #endif
