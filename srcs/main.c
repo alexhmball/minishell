@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/10/13 18:01:41 by aball            ###   ########.fr       */
+/*   Updated: 2022/10/27 16:22:54 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	handler(int signo, siginfo_t *info, void *context)
 int	main(void)
 {
 	int	ret;
-	struct sigaction sa;
+	// struct sigaction sa;
 
-	sa.sa_sigaction = &handler;
-	sigaction(SIGINT, &sa, NULL);
+	// sa.sa_sigaction = &handler;
+	// sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{

@@ -6,13 +6,13 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/10/24 12:50:17 by aball            ###   ########.fr        #
+#    Updated: 2022/11/01 19:58:35 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-FILES = main.c parsing.c echo.c quotes.c freedom.c utils.c
+FILES = main.c parsing.c echo.c quotes.c freedom.c utils.c pwd.c
 
 SRCS = $(addprefix srcs/, ${FILES})
 

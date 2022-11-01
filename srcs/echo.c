@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/10/26 21:53:18 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/10/27 16:14:04 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ int	my_echo(char **echo)
 	i = 1;
 	// new_line = check_newline(echo);
 	while (echo[i])
+	{
 		printf("%s ", echo[i++]);
 	// if (new_line)
 		printf("\n");
+	}
 	return (0);
 }

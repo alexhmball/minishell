@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/10/26 21:57:16 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/01 19:58:51 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@
 int		parsing(void);
 // char	**special_split(char *cmd);
 int		is_spc_tb(char c);
+int		is_q(char c);
 int		my_echo(char **echo);
 char	**quote_validator(char *line, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
 char	**remove_quotes(char *line, int single_q, int double_q);
 void	freedom(char **free_me);
-void	expand(char *line, int *i);
+char	*expand(char *line, int *i);
 void	insert_expand(char *new_line, char *line, char *exp, char *temp);
+void	print_working_dir(void);
 
 #endif
