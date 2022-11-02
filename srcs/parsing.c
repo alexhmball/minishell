@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/01 19:59:14 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/02 10:34:54 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ int	parsing(void)
 
 	line = readline("\x1b[30m\x1b[46mminishell$\x1b[m ");
 	if (!line)
+	{
+		free(line);
 		exit (1);
+	}
 	if (line && *line)
 		add_history(line);
 	cmd = quote_validator(line, 0, 0);
 	if (!cmd)
 	{
 		printf("Error: invalid quotes\n");
+		freedom(cmd);
 		return (1);
 	}
 	if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "exit", 4))
