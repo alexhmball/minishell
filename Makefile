@@ -6,17 +6,17 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/01 19:58:35 by aball            ###   ########.fr        #
+#    Updated: 2022/11/03 17:58:28 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-FILES = main.c parsing.c echo.c quotes.c freedom.c utils.c pwd.c
+FILES = main parsing echo quotes freedom utils pwd cd
 
-SRCS = $(addprefix srcs/, ${FILES})
+OBJDIR = objects
 
-OBJS = ${SRCS:c=o}
+OBJS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(FILES)))
 
 RM = rm -fr
 
@@ -26,19 +26,23 @@ CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1/include
 
 INCLUDE = include/minishell.h
 
+$(OBJDIR)/%.o : srcs/%.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 all: libft $(NAME)
+	@tput setaf 2
+	@printf 'Executable Compiled\n'
+	@tput setaf 7
 
 $(NAME): ${OBJS}
 	${CC} ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline
-
-.o: .c
-	${CC} ${CFLAGS} -c $< -o ${<:c=o}
 
 libft:
 	make -C libft
 
 clean:
-	${RM} ${OBJS}
+	${RM} ${OBJDIR}
 	make clean -C libft
 
 fclean: clean

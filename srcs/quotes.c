@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/01 19:58:47 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/03 22:29:44 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	skip_q(char c, int *single_q, int *double_q)
 	else if (c == '"' && !*single_q && *double_q)
 	{
 		*double_q = 0;
-		return (1);
+		return (0);
 	}
 	else if (c == 39 && *single_q && !*double_q)
 	{
 		*single_q = 0;
-		return (1);
+		return (0);
 	}
 	else if (*single_q || *double_q)
 		return (1);
@@ -104,6 +104,7 @@ char	**remove_quotes(char *line, int single_q, int double_q)
 	int		start;
 	int		end;
 	char	**new_line;
+	int		flag;
 
 	i = word_count(line, single_q, double_q);
 	new_line = (char **)malloc(sizeof(char *) * (i + 1));
@@ -113,6 +114,7 @@ char	**remove_quotes(char *line, int single_q, int double_q)
 	start = 0;
 	end = 0;
 	x = 0;
+	flag = 0;
 	while (line[i])
 	{
 		while (is_spc_tb(line[i]) && line[i])
@@ -123,24 +125,38 @@ char	**remove_quotes(char *line, int single_q, int double_q)
 		}
 		if (is_q(line[i]))
 		{
-			while (check_quotes(line[i], &single_q, &double_q) && line[i])
+			while (skip_q(line[i], &single_q, &double_q) && line[i])
 				i++;
-			end = i;
+			if (is_q(line[i]))
+				i++;
+			if (!is_spc_tb(line[i]))
+			{
+				end = i - 1;
+				start++;
+				new_line[x] = ft_substr(line, start, end - start);
+				start = i;
+				while (!is_spc_tb(line[i]) && !is_q(line[i]) && line[i])
+					i++;
+				new_line[x] = join_str(new_line[x], line, i - start - 1, start);
+				flag = 1;
+				x++;
+			}
+			end = i - 1;
+			start++;
 		}
 		else
 		{
 			while (!is_spc_tb(line[i]) && !is_q(line[i]) && line[i])
-			{
 				i++;
-				end++;
-			}
+			end = i;
 		}
-		if (check_line(line, start, end))
+		if (check_line(line, start, end) && !new_line[x] && !flag)
 			new_line[x++] = ft_substr(line, start, end - start);
 		if (!line[i])
 			break;
-		start = end;
-		i = end;
+		start = i;
+		end = i;
+		flag = 0;
 	}
 	new_line[x] = 0;
 	return (new_line);

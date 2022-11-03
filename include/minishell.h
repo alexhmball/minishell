@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/01 19:58:51 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/03 22:19:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include <limits.h>
+# include <errno.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -42,5 +43,8 @@ void	freedom(char **free_me);
 char	*expand(char *line, int *i);
 void	insert_expand(char *new_line, char *line, char *exp, char *temp);
 void	print_working_dir(void);
+void	change_dir(char **cmd);
+int		check_newline(char **echo, int	*i);
+char	*join_str(char *s1, char *s2, int size, int start);
 
 #endif
