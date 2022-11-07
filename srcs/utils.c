@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:35:15 by aball             #+#    #+#             */
-/*   Updated: 2022/11/03 22:21:16 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/07 10:11:50 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,9 @@ char	*join_str(char *s1, char *s2, int size, int start)
 {
 	int		len;
 	int		i;
-	int		j;
 	char	*ret;
 
 	i = 0;
-	j = start;
 	len = ft_strlen(s1) + size + 1;
 	ret = (char *)malloc(sizeof(char) * len);
 	printf("%d\n", len);
@@ -57,11 +55,11 @@ char	*join_str(char *s1, char *s2, int size, int start)
 		ret[i] = s1[i];
 		i++;
 	}
-	while (i < len)
+	while (i < len && s2[start])
 	{
-		ret[i] = s2[j];
+		ret[i] = s2[start];
 		i++;
-		j++;
+		start++;
 	}
 	ret[i] = 0;
 	return (ret);
