@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/03 22:29:44 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/07 14:33:56 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char	**remove_quotes(char *line, int single_q, int double_q)
 				i++;
 			if (is_q(line[i]))
 				i++;
-			if (!is_spc_tb(line[i]))
+			if (!is_spc_tb(line[i]) && line[i])
 			{
 				end = i - 1;
 				start++;
@@ -157,8 +157,10 @@ char	**remove_quotes(char *line, int single_q, int double_q)
 		start = i;
 		end = i;
 		flag = 0;
+		printf("%s %d\n", new_line[x], x);
 	}
 	new_line[x] = 0;
+	printf("%s\n", new_line[0]);
 	return (new_line);
 }
 
