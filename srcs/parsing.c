@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/07 14:18:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/09 19:05:54 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ int	parsing(void)
 	if (line && *line)
 		add_history(line);
 	cmd = quote_validator(line, 0, 0);
-	printf("|%s|\n", cmd[0]);
 	if (!cmd)
 	{
 		printf("Error: invalid quotes\n");
-		freedom(cmd);
 		return (1);
 	}
 	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "exit", 4))
@@ -46,9 +44,10 @@ int	parsing(void)
 	else if (ft_strlen(cmd[0]) == 2 && !ft_strncmp(cmd[0], "cd", 2))
 		change_dir(cmd);
 	else
-		{
-			execve("bin/ls", cmd, NULL);
-		}
-	freedom(cmd);
+	{
+		cmd[0] = "bin/ls";
+		execve(cmd[0], cmd, NULL);
+	}
+	// freedom(cmd);
 	return (1);
 }

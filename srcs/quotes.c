@@ -6,60 +6,11 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/07 14:33:56 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/09 19:15:26 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-static int	skip_q(char c, int *single_q, int *double_q)
-{
-	if (c == '"' && !*single_q && !*double_q)
-	{
-		*double_q = 1;
-		return (1);
-	}
-	else if (c == 39 && !*single_q && !*double_q)
-	{
-		*single_q = 1;
-		return (1);
-	}
-	else if (c == '"' && !*single_q && *double_q)
-	{
-		*double_q = 0;
-		return (0);
-	}
-	else if (c == 39 && *single_q && !*double_q)
-	{
-		*single_q = 0;
-		return (0);
-	}
-	else if (*single_q || *double_q)
-		return (1);
-	return (0);
-}
-
-static int		word_count(char *line, int single_q, int double_q)
-{
-	int		i;
-	int		counter;
-
-	i = 0;
-	counter = 0;
-	while (line[i])
-	{
-		while (skip_q(line[i], &single_q, &double_q))
-			i++;
-		if (is_spc_tb(line[i]))
-			i++;
-		else
-		{
-			counter++;
-			i++;
-		}
-	}
-	return (counter);
-}
 
 int	check_quotes(char c, int *single_q, int *double_q)
 {
@@ -86,81 +37,32 @@ int	check_quotes(char c, int *single_q, int *double_q)
 	return (0);
 }
 
-int	check_line(char *line, int start, int end)
-{
-	while (start < end && line[start])
-	{
-		if (!is_spc_tb(line[start]))
-			return (1);
-		start++;
-	}
-	return (0);
-}
-
 char	**remove_quotes(char *line, int single_q, int double_q)
 {
 	int		i;
 	int		x;
-	int		start;
-	int		end;
 	char	**new_line;
-	int		flag;
 
-	i = word_count(line, single_q, double_q);
+	i = string_count(line);
 	new_line = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!new_line)
 		return (NULL);
 	i = 0;
-	start = 0;
-	end = 0;
 	x = 0;
-	flag = 0;
 	while (line[i])
 	{
+		new_line[x] = NULL;
 		while (is_spc_tb(line[i]) && line[i])
-		{
 			i++;
-			start++;
-			end++;
-		}
-		if (is_q(line[i]))
+		while (line[i] && (single_q || double_q || !is_spc_tb(line[i])))
 		{
-			while (skip_q(line[i], &single_q, &double_q) && line[i])
-				i++;
-			if (is_q(line[i]))
-				i++;
-			if (!is_spc_tb(line[i]) && line[i])
-			{
-				end = i - 1;
-				start++;
-				new_line[x] = ft_substr(line, start, end - start);
-				start = i;
-				while (!is_spc_tb(line[i]) && !is_q(line[i]) && line[i])
-					i++;
-				new_line[x] = join_str(new_line[x], line, i - start - 1, start);
-				flag = 1;
-				x++;
-			}
-			end = i - 1;
-			start++;
+			if (!check_quotes(line[i], &single_q, &double_q) && line[i])
+				new_line[x] = add_char(new_line[x], line[i]);
+			i++;
 		}
-		else
-		{
-			while (!is_spc_tb(line[i]) && !is_q(line[i]) && line[i])
-				i++;
-			end = i;
-		}
-		if (check_line(line, start, end) && !new_line[x] && !flag)
-			new_line[x++] = ft_substr(line, start, end - start);
-		if (!line[i])
-			break;
-		start = i;
-		end = i;
-		flag = 0;
-		printf("%s %d\n", new_line[x], x);
+		x++;
 	}
-	new_line[x] = 0;
-	printf("%s\n", new_line[0]);
+	new_line[x] = NULL;
 	return (new_line);
 }
 
@@ -179,18 +81,14 @@ void	insert_expand(char *new_line, char *line, char *exp, char *temp)
 	save = i;
 	x = 0;
 	while (exp[x])
-	{
 		new_line[i++] = exp[x++];
-	}
 	save += ft_strlen(temp) + 1;
 	while (line[save])
-	{
 		new_line[i++] = line[save++];
-	}
 	new_line[i] = 0;
 }
 
-char	*expand(char *line, int *i)
+char	*expand(char *line, int *i, int *single_q, int *double_q)
 {
 	char	*exp;
 	char	*temp;
@@ -199,24 +97,24 @@ char	*expand(char *line, int *i)
 
 	*i += 1;
 	len = *i;
-	while (ft_isalnum(line[len]) && !is_spc_tb(line[len]))
+	while (ft_isalnum(line[len]) && !is_spc_tb(line[len]) && !is_q(line[len]))
 		len++;
 	temp = (char *)malloc(sizeof(char) * (len - *i));
 	ft_strlcpy(temp, line + *i, len - *i + 1);
 	exp = getenv(temp);
 	if (!exp)
-	{
-		exp = (char *)malloc(sizeof(char) * 1);
-		exp[0] = 0;
-	}
+		exp = (char *)ft_calloc(1, sizeof(char));
 	len = ft_strlen(line) - ft_strlen(temp);
 	len += ft_strlen(exp) - 1;
 	new_line = (char *)malloc(sizeof(char) * len);
 	insert_expand(new_line, line, exp, temp);
 	free (line);
 	free (temp);
+	*i = 0;
+	*single_q = 0;
+	*double_q = 0;
 	return (new_line);
-	}
+}
 
 char	**quote_validator(char *line, int single_q, int double_q)
 {
@@ -225,8 +123,9 @@ char	**quote_validator(char *line, int single_q, int double_q)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && !single_q)
-			line = expand(line, &i);
+		if (line[i] == '$' && !single_q && !is_spc_tb(line[i + 1])
+			&& line[i + 1] && !is_q(line[i + 1]))
+			line = expand(line, &i, &single_q, &double_q);
 		if (!line)
 			return (NULL);
 		if (line[i] == '"' && !single_q && !double_q)

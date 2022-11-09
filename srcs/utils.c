@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:35:15 by aball             #+#    #+#             */
-/*   Updated: 2022/11/07 10:11:50 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/09 18:47:12 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,48 @@ int	is_q(char c)
 	return (0);
 }
 
-char	*join_str(char *s1, char *s2, int size, int start)
+char	*add_char(char *s1, char c)
 {
-	int		len;
-	int		i;
 	char	*ret;
+	int		i;
+	int		len;
 
+	if (!s1)
+		len = 0;
+	else
+		len = ft_strlen(s1);
+	ret = (char *)malloc(sizeof(char) * (len + 2));
+	if (!ret)
+		return (NULL);
 	i = 0;
-	len = ft_strlen(s1) + size + 1;
-	ret = (char *)malloc(sizeof(char) * len);
-	printf("%d\n", len);
-	while (s1[i])
+	while (len > 0 && s1[i])
 	{
 		ret[i] = s1[i];
 		i++;
 	}
-	while (i < len && s2[start])
-	{
-		ret[i] = s2[start];
-		i++;
-		start++;
-	}
+	ret[i++] = c;
 	ret[i] = 0;
+	free (s1);
 	return (ret);
+}
+
+int	string_count(char *line)
+{
+	int		i;
+	int		counter;
+
+	i = 0;
+	counter = 1;
+	while (line[i])
+	{
+		while (is_spc_tb(line[i]) && line[i])
+			i++;
+		while (!is_spc_tb(line[i]) && line[i])
+			i++;
+		counter++;
+		if (!line[i])
+			break ;
+		i++;
+	}
+	return (counter);
 }

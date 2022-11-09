@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/03 22:19:36 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/09 18:47:25 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,18 @@ int		parsing(void);
 // char	**special_split(char *cmd);
 int		is_spc_tb(char c);
 int		is_q(char c);
-int		my_echo(char **echo);
 char	**quote_validator(char *line, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
 char	**remove_quotes(char *line, int single_q, int double_q);
 void	freedom(char **free_me);
-char	*expand(char *line, int *i);
+char	*expand(char *line, int *i, int *single_q, int *double_q);
 void	insert_expand(char *new_line, char *line, char *exp, char *temp);
+int		check_newline(char **echo, int	*i);
+char	*add_char(char *s1, char c);
+int		string_count(char *line);
+
+int		my_echo(char **echo);
 void	print_working_dir(void);
 void	change_dir(char **cmd);
-int		check_newline(char **echo, int	*i);
-char	*join_str(char *s1, char *s2, int size, int start);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/07 10:22:00 by aball            ###   ########.fr        #
+#    Updated: 2022/11/09 16:42:55 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM = rm -fr
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1/include
+CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1/include 
 
 INCLUDE = include/minishell.h
 
