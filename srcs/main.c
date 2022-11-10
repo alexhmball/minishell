@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/10 22:10:11 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/11 03:03:16 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	handler(int signo, siginfo_t *info, void *context)
 	(void)context;
 	if (signo == SIGINT)
 	{
-		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		printf("\n");
 		rl_redisplay();
 	}
 }
@@ -33,8 +33,6 @@ int	main(void)
 	sa.sa_sigaction = &handler;
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
-	printf("%d\n", ttyslot());
-	ioctl(1, 100, "ls");
 	while (1)
 	{
 		ret = parsing();
