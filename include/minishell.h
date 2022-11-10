@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/09 18:47:25 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/10 23:08:57 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct	s_cmd
+{
+	char	**cmd;
+	char	*path;
+	int		err;
+}			t_cmd;
+
 int		parsing(void);
 // char	**special_split(char *cmd);
 int		is_spc_tb(char c);
@@ -41,7 +48,7 @@ char	**remove_quotes(char *line, int single_q, int double_q);
 void	freedom(char **free_me);
 char	*expand(char *line, int *i, int *single_q, int *double_q);
 void	insert_expand(char *new_line, char *line, char *exp, char *temp);
-int		check_newline(char **echo, int	*i);
+int		check_newline(char **echo, int *i, int len);
 char	*add_char(char *s1, char c);
 int		string_count(char *line);
 

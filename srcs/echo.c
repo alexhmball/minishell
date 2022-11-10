@@ -6,13 +6,23 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/11/09 18:38:55 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/10 22:18:29 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_newline(char **echo, int *start)
+int	two_d_strlen(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	check_newline(char **echo, int *start, int len)
 {
 	int	i;
 	int	j;
@@ -32,6 +42,8 @@ int	check_newline(char **echo, int *start)
 			new_line = 0;
 			i++;
 			j = 1;
+			if (i >= len)
+				break ;
 		}
 		if (echo[i][j] != 'n')
 			break ;
@@ -46,8 +58,11 @@ int	my_echo(char **echo)
 	int	new_line;
 
 	i = 1;
+	counter = two_d_strlen(echo);
+	new_line = check_newline(echo, &i, counter);
+	if (i >= counter)
+		return (0);
 	counter = 0;
-	new_line = check_newline(echo, &i);
 	while (echo[i])
 	{
 		if (counter > 0)

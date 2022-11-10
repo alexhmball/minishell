@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/09 19:20:45 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/10 22:10:11 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	main(void)
 	sa.sa_sigaction = &handler;
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
+	printf("%d\n", ttyslot());
+	ioctl(1, 100, "ls");
 	while (1)
 	{
 		ret = parsing();
