@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:10:42 by aball             #+#    #+#             */
-/*   Updated: 2022/10/23 20:57:06 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/12 01:56:36 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	freedom(char **free_me)
 	i = 0;
 	while (free_me[i])
 		free(free_me[i++]);
+	free(free_me);
 }

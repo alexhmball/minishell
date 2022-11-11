@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:35:15 by aball             #+#    #+#             */
-/*   Updated: 2022/11/11 20:54:24 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/12 00:48:07 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	string_count(char *line)
 	int		counter;
 
 	i = 0;
-	counter = 1;
+	counter = 0;
 	while (line[i])
 	{
 		while (is_spc_tb(line[i]) && line[i])

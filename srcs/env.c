@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:37:28 by aball             #+#    #+#             */
-/*   Updated: 2022/11/11 22:47:43 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/12 00:34:35 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	my_export(t_cmd *args)
 		temp = *args->env;
 		while (temp)
 		{
-			printf("declare -x %s\n", temp->content);
+			printf("declare -x %s\n", (char *)temp->content);
 			temp = temp->next;
 		}
 	}
@@ -89,7 +89,7 @@ void	my_env(t_cmd *args)
 	temp = *args->env;
 	while (temp)
 	{
-		printf("%s\n", temp->content);
+		printf("%s\n", (char *)temp->content);
 		temp = temp->next;
 	}
 }
@@ -125,6 +125,7 @@ void	my_unset(t_cmd *args)
 				temp->next = current->next;
 				current->next = NULL;
 				ft_lstdelone(current, free);
+				current = temp;
 			}
 			temp = current;
 			current = current->next;
