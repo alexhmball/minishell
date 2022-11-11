@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/12 14:07:38 by aball             #+#    #+#              #
-#    Updated: 2022/10/25 18:28:48 by aball            ###   ########.fr        #
+#    Updated: 2022/11/11 22:39:45 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS += printf/ft_putchar.c printf/ft_putstr.c printf/ft_putnbr.c printf/ft_prin
 		printf/ft_putnbr_uns.c printf/ft_hex.c printf/ft_strlen.c printf/ft_hex_up.c \
 		printf/ft_putaddress.c str_sep.c
 
-BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
+SRCS += ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
 	ft_lstdelone.c ft_lstiter.c ft_lstclear.c ft_lstmap.c
 
 # BONUS += ft_lstadd_back_db.c ft_lstlast_db.c ft_lstadd_front_db.c ft_lstnew_db.c \

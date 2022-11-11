@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/11/10 22:18:29 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/11 21:27:53 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	my_echo(char **echo)
 	{
 		if (counter > 0)
 			printf(" ");
-		printf("%s", echo[i++]);
+		printf("%s", echo[i]);
+		i++;
 		counter++;
 	}
 	if (new_line)

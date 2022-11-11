@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:35:15 by aball             #+#    #+#             */
-/*   Updated: 2022/11/09 18:47:12 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/11 20:54:24 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ int	is_spc_tb(char c)
 	return (0);
 }
 
-int	is_dollar(char *str)
+int	count_dollar(char *str)
 {
 	int	i;
+	int	counter;
 
 	i = 0;
+	counter = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			return (1);
+			counter++;
 		i++;
 	}
-	return (0);
+	return (counter);
 }
 
 int	is_q(char c)
