@@ -6,13 +6,13 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/11 22:39:56 by aball            ###   ########.fr        #
+#    Updated: 2022/11/12 20:49:46 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-FILES = main parsing echo quotes freedom utils pwd cd env expand
+FILES = main parsing echo quotes freedom utils pwd cd env expand unset check export
 
 OBJDIR = objects
 
@@ -36,7 +36,7 @@ all: libft $(NAME)
 	@tput setaf 7
 
 $(NAME): ${OBJS}
-	${CC} ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline
+	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline
 
 libft:
 	make -C libft

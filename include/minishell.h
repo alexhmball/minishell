@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/11 22:48:07 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/12 22:52:00 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ typedef struct	s_cmd
 {
 	char			**cmd;
 	char			*path;
-	char			*line;
+	char			*s;
 	int				err;
 	int				*expand;
 	int				need_exp;
+	int				pid;
+	int				fd;
 	DIR				*folder;
 	t_list			**env;
 	struct dirent	*dir;
@@ -52,8 +54,9 @@ char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
 char	**remove_quotes(t_cmd *args, int single_q, int double_q);
 void	freedom(char **free_me);
+void	total_freedom(t_cmd *args);
 char	*expand(char *line, int i, t_cmd *args, int x);
-void	insert_expand(char *new_line, char *line, char *exp, char *temp);
+char	*insert_expand(char *line, char *exp, char *temp);
 int		check_newline(char **echo, int *i, int len);
 char	*add_char(char *s1, char c);
 int		string_count(char *line);
@@ -62,10 +65,12 @@ t_list	**create_env(char **exp);
 char	*find_env(char *temp, t_cmd *args);
 void	check_expand(t_cmd *args);
 int		find_equal(char *str);
+int		check_dir(t_cmd *args);
+char	*my_getenv(char *str_env, t_cmd *args);
 
 int		my_echo(char **echo);
 void	print_working_dir(void);
-void	change_dir(char **cmd);
+void	change_dir(char **cmd, t_cmd *args);
 void	my_export(t_cmd *args);
 void	my_env(t_cmd *args);
 void	my_unset(t_cmd *args);

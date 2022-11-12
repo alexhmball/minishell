@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/12 02:09:25 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/12 20:27:08 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ int	main(int ac, char **av, char **env)
 		if (ret == 0)
 			exit (0);
 	}
-	ft_lstclear(args->env, free);
-	free(args->env);
-	free(args->line);
-	freedom(args->cmd);
-	free(args->expand);
-	rl_clear_history();
+	total_freedom(args);
 	return (0);
 }
