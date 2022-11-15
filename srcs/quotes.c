@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 17:51:28 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 20:59:20 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**remove_quotes(t_cmd *args, int single_q, int double_q)
 void	flag_expansion(t_cmd *args, int single_q, int i, int *x)
 {
 	if (args->s[i] == '$' && !is_spc_tb(args->s[i + 1])
-		&& args->s[i + 1] && !is_q(args->s[i + 1]))
+		&& args->s[i + 1])
 	{
 		if (!single_q)
 			args->expand[*x] = 1;

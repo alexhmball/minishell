@@ -6,14 +6,14 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/15 17:09:40 by aball            ###   ########.fr        #
+#    Updated: 2022/11/15 21:10:47 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 FILES = main parsing echo quotes freedom utils pwd cd env expand unset check export \
-		str_utils linked_list
+		str_utils linked_list path
 
 OBJDIR = objects
 

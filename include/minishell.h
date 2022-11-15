@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 17:50:07 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 22:41:49 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 
 typedef struct s_pipe
 {
+	int				is_pipe;
 	char			*path;
 	char			**cmd;
 	struct s_pipe	*next;
@@ -85,6 +86,8 @@ char	*get_working_dir(void);
 int		validate_dir(t_cmd *args, char *search, char *cmd);
 int		validate_path(char	*cmd, t_cmd *args);
 char	**append_str(char **str, char *append);
+int		check_path(t_cmd *args);
+char	*check_single_path(char *cmd, t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~LINKED_LIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -93,6 +96,7 @@ void	lstadd_back_pipe(t_pipe **lst, t_pipe *new);
 t_pipe	*lstlast_pipe(t_pipe *lst);
 void	lstclear_pipe(t_pipe **lst, void (*del)(void *));
 void	lstdelone_pipe(t_pipe *lst, void (*del)(void *));
+void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int count);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

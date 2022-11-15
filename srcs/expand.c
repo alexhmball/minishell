@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/12 23:33:45 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 22:09:13 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ char	*expand(char *line, int i, t_cmd *args, int x)
 
 	i++;
 	len = i;
-	while (ft_isalnum(line[len]) && !is_spc_tb(line[len])
-		&& !is_q(line[len]) && line[len])
+	while (!is_spc_tb(line[len]) && !is_q(line[len]) && line[len])
 		len++;
 	temp = (char *)malloc(sizeof(char) * (len - i));
 	ft_strlcpy(temp, line + i, len - i + 1);
