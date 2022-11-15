@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/15 16:06:41 by aball            ###   ########.fr        #
+#    Updated: 2022/11/15 17:09:40 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ RM = rm -fr
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1/include
+CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1.1/include
 
 INCLUDE = include/minishell.h
 
@@ -37,7 +37,7 @@ all: libft $(NAME)
 	@tput setaf 7
 
 $(NAME): ${OBJS}
-	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline
+	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1.1/lib -lreadline
 
 libft:
 	make -C libft

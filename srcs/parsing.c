@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 16:44:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:11:11 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	create_pipe_list(t_cmd *args)
 		}
 		else if (args->cmd[i][0] == '>' || args->cmd[i][0] == '<')
 		{
-
+			validate_path(args->cmd, args->path, args);
+			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
+			temp = temp->next;
 		}
 		else
 			temp->cmd = append_str(temp->cmd, args->cmd[i]);
