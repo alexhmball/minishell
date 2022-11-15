@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/14 13:10:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:51:28 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	flag_expansion(t_cmd *args, int single_q, int i, int *x)
 	}
 	if (args->s[i] == '|')
 		args->pipe_n++;
+	if (args->s[i] == '>' || args->s[i] == '<')
+		args->redirect++;
 }
 
 char	**quote_validator(t_cmd *args, int single_q, int double_q)
@@ -91,6 +93,7 @@ char	**quote_validator(t_cmd *args, int single_q, int double_q)
 	x = 0;
 	args->need_exp = 0;
 	args->pipe_n = 0;
+	args->redirect = 0;
 	while (args->s[i])
 	{
 		flag_expansion(args, single_q, i, &x);

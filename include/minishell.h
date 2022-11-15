@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 17:43:35 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:50:07 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_cmd
 	int				pid;
 	int				fd;
 	int				pipe_n;
+	int				redirect;
 	DIR				*folder;
 	t_list			**env;
 	t_pipe			**pipe;
