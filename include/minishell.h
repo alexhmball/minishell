@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 16:02:37 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:36:19 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int		check_dir(t_cmd *args);
 char	*my_getenv(char *str_env, t_cmd *args);
 int		check_exec(t_cmd *args);
 char	*get_working_dir(void);
-int		validate_dir(t_cmd *args, char **search, int i, char *path, char **cmd);
-void	validate_path(char	**cmd, char *path, t_cmd *args);
+int		validate_dir(t_cmd *args, char *search, char *cmd);
+int		validate_path(char	*cmd, t_cmd *args);
 char	**append_str(char **str, char *append);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~LINKED_LIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

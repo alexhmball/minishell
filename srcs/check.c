@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 16:12:47 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:38:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ int	check_dir(t_cmd *args)
 	return (0);
 }
 
-int	validate_dir(t_cmd *args, char **search, int i, char *path, char **cmd)
+int	validate_dir(t_cmd *args, char *search, char *cmd)
 {
-	if (ft_strlen(args->dir->d_name) == ft_strlen(cmd[0])
-		&& !ft_strncmp(args->dir->d_name, cmd[0],
+	if (ft_strlen(args->dir->d_name) == ft_strlen(cmd)
+		&& !ft_strncmp(args->dir->d_name, cmd,
 			ft_strlen(args->dir->d_name)))
 	{
-		path = ft_strjoin(search[i], "/");
-		path = ft_strjoin(path, args->cmd[0]);
+		args->path = ft_strjoin(search, "/");
+		args->path = ft_strjoin(args->path, cmd);
 		closedir(args->folder);
 		return (1);
 	}
@@ -114,7 +114,7 @@ int	validate_dir(t_cmd *args, char **search, int i, char *path, char **cmd)
 	return (0);
 }
 
-void	validate_path(char	**cmd, char *path, t_cmd *args)
+int	validate_path(char *cmd, t_cmd *args)
 {
 	char	**search;
 	char	*current;
@@ -127,13 +127,13 @@ void	validate_path(char	**cmd, char *path, t_cmd *args)
 	{
 		args->dir = readdir(args->folder);
 		while (args->dir)
-			if (validate_dir(args, &current, i, path, cmd))
-				return ;
+			if (validate_dir(args, current, cmd))
+				return (1);
 		closedir(args->folder);
 	}
 	search = find_path(args);
 	if (!search)
-		return ;
+		return (0);
 	while (search[i])
 	{
 		args->folder = opendir(search[i]);
@@ -141,13 +141,13 @@ void	validate_path(char	**cmd, char *path, t_cmd *args)
 		{
 			args->dir = readdir(args->folder);
 			while (args->dir)
-				if (validate_dir(args, search, i, path, cmd))
-					return ;
+				if (validate_dir(args, search[i], cmd))
+					return (1);
 			closedir(args->folder);
 		}
 		i++;
 	}
-	path = "";
-	printf("%s: command not found\n", args->cmd[0]);
-	return ;
+	args->path = ft_strdup("");
+	// printf("%s: command not found validate\n", args->cmd[0]);
+	return (0);
 }

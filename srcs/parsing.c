@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 17:11:11 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:37:45 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_pipe_list(t_cmd *args)
 
 	i = 0;
 	args->pipe = (t_pipe **)malloc(sizeof(t_pipe *));
-	validate_path(args->cmd, args->path, args);
+	validate_path(args->cmd[i], args);
 	temp = lstnew_pipe(args->cmd[i], args->path);
 	*args->pipe = temp;
 	i++;
@@ -27,20 +27,20 @@ void	create_pipe_list(t_cmd *args)
 	{
 		if (args->cmd[i][0] == '|')
 		{
-			validate_path(args->cmd, args->path, args);
+			validate_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 			temp = temp->next;
 			i++;
 			if (args->cmd[i])
 			{
-				validate_path(args->cmd, args->path, args);
+				validate_path(args->cmd[i], args);
 				lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 			}
 			temp = temp->next;
 		}
 		else if (args->cmd[i][0] == '>' || args->cmd[i][0] == '<')
 		{
-			validate_path(args->cmd, args->path, args);
+			validate_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 			temp = temp->next;
 		}
@@ -64,8 +64,8 @@ void	print_pipe_list(t_cmd *args)
 		{
 			printf("cmd: %s\n", temp->cmd[i++]);
 		}
-			printf(".....\n");
-		// printf("path: %s\n", temp->path);
+		printf("path: %s\n", temp->path);
+		printf(".....\n");
 		temp = temp->next;
 	}
 }
@@ -95,7 +95,7 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		print_pipe_list(args);
 	}
-	if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
+	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
 	{
 		ft_printf("%s\n", args->cmd[0]);
 		return (0);
