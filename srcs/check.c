@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 17:38:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:46:28 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ char	**find_path(t_cmd *args)
 	return (ret);
 }
 
-int	search_dir(t_cmd *args, char **search, int i, char *path)
+int	search_dir(t_cmd *args, char *search)
 {
 	if (ft_strlen(args->dir->d_name) == ft_strlen(args->cmd[0])
 		&& !ft_strncmp(args->dir->d_name, args->cmd[0],
 			ft_strlen(args->dir->d_name)))
 	{
-		path = ft_strjoin(search[i], "/");
-		path = ft_strjoin(path, args->cmd[0]);
+		args->path = ft_strjoin(search, "/");
+		args->path = ft_strjoin(args->path, args->cmd[0]);
 		closedir(args->folder);
 		return (1);
 	}
@@ -75,7 +75,7 @@ int	check_dir(t_cmd *args)
 	{
 		args->dir = readdir(args->folder);
 		while (args->dir)
-			if (search_dir(args, &current, i, args->path))
+			if (search_dir(args, current))
 				return (1);
 		closedir(args->folder);
 	}
@@ -89,7 +89,7 @@ int	check_dir(t_cmd *args)
 		{
 			args->dir = readdir(args->folder);
 			while (args->dir)
-				if (search_dir(args, search, i, args->path))
+				if (search_dir(args, search[i]))
 					return (1);
 			closedir(args->folder);
 		}
