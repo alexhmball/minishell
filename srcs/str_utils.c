@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 19:37:06 by aball             #+#    #+#             */
-/*   Updated: 2022/11/14 12:15:01 by aball            ###   ########.fr       */
+/*   Created: 2022/11/14 13:56:04 by aball             #+#    #+#             */
+/*   Updated: 2022/11/14 14:23:06 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*get_working_dir(void)
+char	**append_str(char **str, char *append)
 {
-	char	*buf;
+	int		i;
+	int		size;
+	char	**new;
 
-	buf = (char *)malloc(sizeof(char) * PATH_MAX);
-	getcwd(buf, PATH_MAX);
-	return (buf);
-}
-
-void	print_working_dir(void)
-{
-	char	*buf;
-
-	buf = (char *)malloc(sizeof(char) * PATH_MAX);
-	getcwd(buf, PATH_MAX);
-	printf("%s\n", buf);
-	free(buf);
+	size = two_d_strlen(str) + 2;
+	new = (char **)malloc(sizeof(char *) * size);
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		new[i] = ft_strdup(str[i]);
+		i++;
+	}
+	new[i++] = ft_strdup(append);
+	new[i] = NULL;
+	freedom(str);
+	return (new);
 }
