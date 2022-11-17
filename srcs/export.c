@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 21:04:50 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/17 17:52:14 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	compare_env(t_cmd *args)
 {
 	t_list	*current;
-	t_list	*temp;
 	int		len;
 	int		len_env;
 
@@ -33,8 +32,7 @@ int	compare_env(t_cmd *args)
 					current->content = ft_strdup(args->cmd[1]);
 					return (1);
 				}
-				temp = current;
-				current = current->next;
+			current = current->next;
 		}
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 23:25:58 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/17 18:18:46 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,16 @@ char	**find_path(t_cmd *args)
 
 int	search_dir(t_cmd *args, char *search)
 {
+	char	*temp;
+	
 	if (ft_strlen(args->dir->d_name) == ft_strlen(args->cmd[0])
 		&& !ft_strncmp(args->dir->d_name, args->cmd[0],
 			ft_strlen(args->dir->d_name)))
 	{
-		args->path = ft_strjoin(search, "/");
-		args->path = ft_strjoin(args->path, args->cmd[0]);
+		temp = ft_strjoin(search, "/");
+		args->path = ft_strjoin(temp, args->cmd[0]);
 		closedir(args->folder);
+		free (temp);
 		return (1);
 	}
 	args->dir = readdir(args->folder);
@@ -85,7 +88,10 @@ int	check_dir(t_cmd *args)
 			args->dir = readdir(args->folder);
 			while (args->dir)
 				if (search_dir(args, search[i]))
+				{
+					freedom(search);
 					return (1);
+				}
 			closedir(args->folder);
 		}
 		i++;
@@ -97,22 +103,32 @@ int	check_dir(t_cmd *args)
 		args->dir = readdir(args->folder);
 		while (args->dir)
 			if (search_dir(args, current))
+			{
+				free(current);
+				freedom(search);
 				return (1);
+			}
 		closedir(args->folder);
 	}
 	if (*args->cmd)
 		printf("minishell: %s: command not found\n", args->cmd[0]);
+	freedom(search);
+	free(current);
+	args->path = NULL;
 	return (0);
 }
 
 int	validate_dir(t_cmd *args, char *search, char *cmd)
 {
+	char	*temp;
+	
 	if (ft_strlen(args->dir->d_name) == ft_strlen(cmd)
 		&& !ft_strncmp(args->dir->d_name, cmd,
 			ft_strlen(args->dir->d_name)))
 	{
-		args->path = ft_strjoin(search, "/");
-		args->path = ft_strjoin(args->path, cmd);
+		temp = ft_strjoin(search, "/");
+		args->path = ft_strjoin(temp, cmd);
+		free (temp);
 		closedir(args->folder);
 		return (1);
 	}
@@ -138,7 +154,10 @@ int	validate_path(char *cmd, t_cmd *args)
 			args->dir = readdir(args->folder);
 			while (args->dir)
 				if (validate_dir(args, search[i], cmd))
+				{
+					freedom(search);
 					return (1);
+				}
 			closedir(args->folder);
 		}
 		i++;
@@ -150,10 +169,15 @@ int	validate_path(char *cmd, t_cmd *args)
 		args->dir = readdir(args->folder);
 		while (args->dir)
 			if (validate_dir(args, current, cmd))
+			{
+				free(current);
+				freedom(search);
 				return (1);
+			}
 		closedir(args->folder);
 	}
+	free(current);
+	freedom(search);
 	args->path = NULL;
-	printf("%s: command not found validate\n", args->cmd[0]);
 	return (0);
 }
