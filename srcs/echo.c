@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/11/11 21:27:53 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 22:34:35 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_newline(char **echo, int *start, int len)
 	return (new_line);
 }
 
-int	my_echo(char **echo)
+int	my_echo(char **echo, t_cmd *args)
 {
 	int	i;
 	int	counter;
@@ -73,5 +73,6 @@ int	my_echo(char **echo)
 	}
 	if (new_line)
 		printf("\n");
+	args->err = 0;
 	return (0);
 }

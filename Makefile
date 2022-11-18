@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/15 21:10:47 by aball            ###   ########.fr        #
+#    Updated: 2022/11/18 21:33:07 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ all: libft $(NAME)
 	@tput setaf 7
 
 $(NAME): ${OBJS}
-	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1.1/lib -lreadline
+	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1.1/lib -lreadline -ltermcap
 
 libft:
 	make -C libft

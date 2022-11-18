@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 23:01:09 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 22:30:14 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,8 @@ void	change_dir(char **cmd, t_cmd *args)
 		path = my_getenv("HOME", args);
 	if (chdir(path) != 0)
 	{
-		if (errno == ENOTDIR)
-			printf("minishell: cd: %s: Not a directory\n", cmd[1]);
-		if (errno == ENOENT)
-			printf("minishell: cd: %s: No such file or directory\n", cmd[1]);
-		if (errno == EACCES)
-			printf("minishell: cd: %s: Permission denied\n", cmd[1]);
+		printf("minishell: cd: %s: %s\n", cmd[1], strerror(errno));
+		args->err = 1;
 		return ;
 	}
 	change_pwd_env(args);

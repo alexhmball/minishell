@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 22:28:02 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 22:44:23 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	handler(int signo, siginfo_t *info, void *context)
 
 int	main(int ac, char **av, char **env)
 {
-	int					ret;
 	struct sigaction	sa;
+	struct termios		term;
 	t_cmd				*args;
 
 	(void)ac;
@@ -39,15 +39,18 @@ int	main(int ac, char **av, char **env)
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
+	tcgetattr(STDIN_FILENO, &term);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	tputs(tgoto(ttyname(0), 0, 0), 1, putchar);
+	args->err = 0;
 	if (!*env)
 		printf("nope\n");
 	args->env = create_env(env);
 	while (1)
 	{
-		ret = parsing(args);
-		if (ret == 0)
-			exit (0);
+		if (!parsing(args))
+			break	;
 	}
 	total_freedom(args);
-	return (0);
+	return (args->err);
 }

@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 22:41:49 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 22:35:11 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int		validate_path(char	*cmd, t_cmd *args);
 char	**append_str(char **str, char *append);
 int		check_path(t_cmd *args);
 char	*check_single_path(char *cmd, t_cmd *args);
+int		locate_dollar(char *str);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~LINKED_LIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -100,7 +101,7 @@ void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int count);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-int		my_echo(char **echo);
+int		my_echo(char **echo, t_cmd *args);
 void	print_working_dir(void);
 void	change_dir(char **cmd, t_cmd *args);
 void	my_export(t_cmd *args);

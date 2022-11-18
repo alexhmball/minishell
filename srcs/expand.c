@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 22:09:13 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 22:33:33 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,36 @@ char	*insert_expand(char *line, char *exp, char *temp)
 	return (new_line);
 }
 
+char	*insert_error(char *line, t_cmd *args)
+{
+	char	*err_num;
+	char	*new_line;
+	int		len;
+	int		i;
+	int		j;
+
+	err_num = ft_itoa(args->err);
+	len = ft_strlen(line) - 1;
+	len += ft_strlen(err_num);
+	new_line = (char *)malloc(sizeof(char) * (len + 1));
+	i = 0;
+	j = 0;
+	while (line[i] && line[i] != '$')
+	{
+		new_line[i] = line[i];
+		i++;
+	}
+	len = i + 2;
+	while (err_num[j])
+		new_line[i++] = err_num[j++];
+	while (line[len])
+		new_line[i++] = line[len++];
+	free(line);
+	free(err_num);
+	new_line[i] = 0;
+	return (new_line);
+}
+
 char	*expand(char *line, int i, t_cmd *args, int x)
 {
 	char	*exp;
@@ -49,6 +79,11 @@ char	*expand(char *line, int i, t_cmd *args, int x)
 
 	i++;
 	len = i;
+	if (line[locate_dollar(line) + 1] == '?')
+	{
+		new_line = insert_error(line, args);
+		return (new_line);
+	}
 	while (!is_spc_tb(line[len]) && !is_q(line[len]) && line[len])
 		len++;
 	temp = (char *)malloc(sizeof(char) * (len - i));
