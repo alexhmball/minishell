@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:30:22 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 20:48:30 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/17 18:07:43 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_pipe	*lstnew_pipe(char *content, char *path)
 	new = (t_pipe *)malloc(sizeof(t_pipe));
 	if (!new)
 		return (0);
-	new->cmd = (char **)malloc(sizeof(char) * 2);
+	new->cmd = (char **)malloc(sizeof(char *) * 2);
 	new->cmd[0] = ft_strdup(content);
 	new->cmd[1] = NULL;
 	new->is_pipe = 0;

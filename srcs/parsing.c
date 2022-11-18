@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:38:00 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 22:48:26 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	parsing(t_cmd *args)
 {
 	int		pid;
 
+	init_struct(args);
 	args->s = readline("\x1b[30m\x1b[46mminishell$\x1b[m ");
 	if (!args->s)
 		return (0);
@@ -153,7 +154,7 @@ int	parsing(t_cmd *args)
 			}
 			else
 			{
-				free(args->path);
+				// free(args->path);
 				wait(&pid);
 				kill(pid, SIGQUIT);
 			}
@@ -162,5 +163,7 @@ int	parsing(t_cmd *args)
 	freedom(args->cmd);
 	free(args->s);
 	free(args->expand);
+	free(args->path);
+	args->expand = NULL;
 	return (1);
 }
