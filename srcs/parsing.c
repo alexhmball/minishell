@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:48:26 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/19 02:21:21 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,27 +137,30 @@ int	parsing(t_cmd *args)
 		my_env(args);
 	else if (ft_strlen(args->cmd[0]) == 5 && !ft_strncmp(args->cmd[0], "unset", 5))
 		my_unset(args);
-	else if (check_path(args) || check_dir(args))
+	else if (check_dir(args) || check_path(args))
 	{
 		if (!args->path)
-			printf("minishell: %s: no such file or directory\n", args->cmd[0]);
+		{
+			args->err = 127;
+			printf("minishell: %s: command not found\n", args->cmd[0]);
+		}
 		else if (access(args->path, X_OK) != 0)
-			printf("minishell: %s: Permission denied\n", args->path);
+		{
+			set_error(args, errno);
+			printf("minishell: %s: %s\n", args->path, strerror(errno));
+		}
 		else
 		{
 			pid = fork();
 			if (pid == 0)
 			{
 				execve(args->path, args->cmd, NULL);
-				printf("minishell: %s: no such file or directory\n", args->path);
-				exit (1);
+				printf("minishell: %s: no such file or directory here\n", args->path);
+				exit (127);
 			}
-			else
-			{
-				// free(args->path);
-				wait(&pid);
-				kill(pid, SIGQUIT);
-			}
+			wait(&pid);
+			// if (kill(pid, SIGQUIT) < 0)
+			// 	kill(pid, SIGTERM);
 		}
 	}
 	freedom(args->cmd);

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/18 22:44:23 by aball            ###   ########.fr       */
-=======
-/*   Updated: 2022/11/17 18:25:59 by ballzball        ###   ########.fr       */
->>>>>>> 48699525fd396a424e881b4705b0985299c5894f
+/*   Updated: 2022/11/19 02:22:02 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +23,12 @@ void	handler(int signo, siginfo_t *info, void *context)
 		printf("\n");
 		rl_redisplay();
 	}
+	// if (signo == SIGCHLD)
+	// {
+	// 	kill(info->si_pid, SIGQUIT);
+	// }
+	// printf("%d\n", info->si_uid);
+	// printf("%d\n", info->si_pid);
 }
 
 int	main(int ac, char **av, char **env)
@@ -42,6 +44,7 @@ int	main(int ac, char **av, char **env)
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
+	// sigaction(SIGCHLD, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	tcgetattr(STDIN_FILENO, &term);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);

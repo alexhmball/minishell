@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:49:11 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 23:53:55 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ int	check_dir(t_cmd *args)
 			}
 		closedir(args->folder);
 	}
-	if (*args->cmd)
-		printf("minishell: %s: command not found\n", args->cmd[0]);
+	// if (*args->cmd)
+	// 	printf("minishell: %s: command not found\n", args->cmd[0]);
 	args->err = 127;
 	freedom(search);
 	free(current);

@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:47:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/18 23:50:57 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int		check_path(t_cmd *args);
 char	*check_single_path(char *cmd, t_cmd *args);
 int		locate_dollar(char *str);
 void	init_struct(t_cmd *args);
+void	set_error(t_cmd *args, int code);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~LINKED_LIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
