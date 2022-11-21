@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:30:22 by aball             #+#    #+#             */
-/*   Updated: 2022/11/17 18:07:43 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/21 10:50:53 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_pipe	*lstnew_pipe(char *content, char *path)
 	new->cmd[0] = ft_strdup(content);
 	new->cmd[1] = NULL;
 	new->is_pipe = 0;
-	new->path = path;
+	new->path = ft_strdup(path);
 	new->next = NULL;
 	return (new);
 }

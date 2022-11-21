@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/19 02:22:02 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/21 10:45:04 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	main(int ac, char **av, char **env)
 {
 	struct sigaction	sa;
 	struct termios		term;
-	t_cmd				*args;
+	t_cmd				args;
 
 	(void)ac;
 	(void)av;
-	args = (t_cmd *)malloc(sizeof(t_cmd));
+	// args = (t_cmd *)malloc(sizeof(t_cmd));
 	sa.sa_sigaction = &handler;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
@@ -49,15 +49,15 @@ int	main(int ac, char **av, char **env)
 	tcgetattr(STDIN_FILENO, &term);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	tputs(tgoto(ttyname(0), 0, 0), 1, putchar);
-	args->err = 0;
+	args.err = 0;
 	if (!*env)
 		printf("nope\n");
-	args->env = create_env(env);
+	args.env = create_env(env);
 	while (1)
 	{
-		if (!parsing(args))
+		if (!parsing(&args))
 			break	;
 	}
-	total_freedom(args);
-	return (args->err);
+	total_freedom(&args);
+	return (args.err);
 }

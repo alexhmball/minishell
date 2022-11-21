@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 23:53:55 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/21 10:59:03 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int	validate_dir(t_cmd *args, char *search, char *cmd)
 		&& !ft_strncmp(args->dir->d_name, cmd,
 			ft_strlen(args->dir->d_name)))
 	{
+		my_free(args->path);
 		temp = ft_strjoin(search, "/");
 		args->path = ft_strjoin(temp, cmd);
 		free (temp);

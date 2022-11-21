@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 21:10:04 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 23:53:18 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/21 10:55:12 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,15 @@ int	check_path(t_cmd *args)
 {
 	int	i;
 	int	j;
-	int	flag;
 
 	i = 0;
-	flag = 0;
 	while (args->cmd[i])
 	{
 		j = 0;
 		while (args->cmd[i][j])
 		{
 			if (args->cmd[i][j] == '/')
-			{
 				args->cmd[i] = parse_path(args, args->cmd[i]);
-				flag = 1;
-			}
 			j++;
 		}
 		i++;
