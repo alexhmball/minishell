@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 21:43:01 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:14:23 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,15 @@ void	create_pipe_list(t_cmd *args)
 	}
 }
 
-void	print_pipe_list(t_cmd *args)
+int	print_pipe_list(t_cmd *args)
 {
 	t_pipe	*temp;
 	int		i;
 
 	temp = *args->pipe;
 	i = 0;
-	flag_list(args);
+	if (!flag_list(args))
+		return (0);
 	temp = *args->pipe;
 	organize_cmds(args);
 	temp = *args->pipe;
@@ -93,6 +94,7 @@ void	print_pipe_list(t_cmd *args)
 		printf(".....\n");
 		temp = temp->next;
 	}
+	return (1);
 }
 
 int	parsing(t_cmd *args)
@@ -117,7 +119,8 @@ int	parsing(t_cmd *args)
 	if (args->pipe_n || args->redirect)
 	{
 		create_pipe_list(args);
-		print_pipe_list(args);
+		if (!print_pipe_list(args))
+			return (args->err);
 		// lstclear_pipe(args->pipe, my_free);
 	}
 	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))

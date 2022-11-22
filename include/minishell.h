@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 00:27:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:46:35 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_cmd
 	int				fd;
 	int				pipe_n;
 	int				redirect;
+	char			**env_for_excecute;
 	DIR				*folder;
 	t_list			**env;
 	t_pipe			**pipe;
@@ -117,7 +118,7 @@ void	lstclear_pipe(t_pipe **lst, void (*del)(void *));
 void	lstdelone_pipe(t_pipe *lst, void (*del)(void *));
 void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int count);
 void	organize_cmds(t_cmd *args);
-void	flag_list(t_cmd *args);
+int		flag_list(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

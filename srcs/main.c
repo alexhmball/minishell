@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/21 13:03:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:47:22 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ int	main(int ac, char **av, char **env)
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
-	tcgetattr(STDIN_FILENO, &term);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	tputs(tgoto(ttyname(0), 0, 0), 1, putchar);
 	args.err = 0;
 	if (!*env)
 		printf("nope\n");
 	args.env = create_env(env);
+	args.env_for_excecute = env;
 	while (1)
 	{
 		if (!parsing(&args))

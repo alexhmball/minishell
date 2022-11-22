@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 23:24:36 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:15:21 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c)
 	return (*head);
 }
 
-void	flag_list(t_cmd *args)
+int	flag_list(t_cmd *args)
 {
 	t_pipe	*temp;
 	t_pipe	*prev;
@@ -75,6 +75,11 @@ void	flag_list(t_cmd *args)
 
 	temp = *args->pipe;
 	c = 0;
+	if (temp->cmd[0][0] == '|')
+	{
+		args->err = 258;
+		return (0);
+	}
 	while (temp)
 	{
 		if (temp->cmd[0][0] == '<')
@@ -93,4 +98,5 @@ void	flag_list(t_cmd *args)
 		temp = temp->next;
 		c++;
 	}
+	return (1);
 }
