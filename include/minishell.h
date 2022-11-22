@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 01:46:35 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:49:01 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int		is_us(t_cmd *args);
 int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args);
 void	execute_them(t_cmd *args);
+void	pipex(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

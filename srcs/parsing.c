@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 01:14:23 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:48:27 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!print_pipe_list(args))
 			return (args->err);
+		pipex(args);
 		// lstclear_pipe(args->pipe, my_free);
 	}
 	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
