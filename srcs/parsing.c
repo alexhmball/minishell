@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 20:55:58 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 21:34:33 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,9 @@ void	print_pipe_list(t_cmd *args)
 {
 	t_pipe	*temp;
 	int		i;
-	int		c;
 
 	temp = *args->pipe;
 	i = 0;
-	c = 0;
 	organize_cmds(args);
 	temp = *args->pipe;
 	while (temp)
@@ -142,6 +140,6 @@ int	parsing(t_cmd *args)
 	freedom(args->cmd);
 	my_free(args->s);
 	my_free(args->expand);
-	my_free(args->path);
+	// my_free(args->path);
 	return (1);
 }
