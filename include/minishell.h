@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 00:27:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:23:23 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		is_us(t_cmd *args);
 int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args);
 void	execute_them(t_cmd *args);
+void	pipex(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
