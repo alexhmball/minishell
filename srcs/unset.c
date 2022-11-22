@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:03 by aball             #+#    #+#             */
-/*   Updated: 2022/11/12 23:48:42 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 18:43:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	my_unset(t_cmd *args)
 				&& !ft_strncmp(current->content, args->cmd[1], len))
 			{
 				temp->next = current->next;
-				ft_lstdelone(current, free);
+				ft_lstdelone(current, my_free);
 				current = temp;
 				if (i == 0)
 					args->env = &temp->next;

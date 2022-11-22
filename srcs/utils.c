@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:35:15 by aball             #+#    #+#             */
-/*   Updated: 2022/11/12 00:48:07 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/22 18:43:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*add_char(char *s1, char c)
 	}
 	ret[i++] = c;
 	ret[i] = 0;
-	free (s1);
+	my_free (s1);
 	return (ret);
 }
 

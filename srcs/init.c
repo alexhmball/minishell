@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:50:17 by ballzball         #+#    #+#             */
-/*   Updated: 2022/11/17 18:51:41 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/22 18:56:09 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,15 @@ void	init_struct(t_cmd *args)
 	args->cmd = NULL;
 	args->s = NULL;
 	args->expand = NULL;
+}
+
+void	init_all(t_cmd *args)
+{
+	args->err = 0;
+	args->env = NULL;
+	args->path = NULL;
+	args->cmd = NULL;
+	args->s = NULL;
+	args->expand = NULL;
+	args->fd = 0;
 }

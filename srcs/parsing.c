@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/21 11:00:11 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/22 18:58:19 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	create_pipe_list(t_cmd *args)
 
 	i = 0;
 	args->pipe = (t_pipe **)malloc(sizeof(t_pipe *));
+	args->path = NULL;
 	validate_path(args->cmd[i], args);
 	args->cmd[i] = check_single_path(args->cmd[i], args);
 	temp = lstnew_pipe(args->cmd[i], args->path);
@@ -96,8 +97,8 @@ void	print_pipe_list(t_cmd *args)
 		printf(".....\n");
 		temp = temp->next;
 	}
-	lstclear_pipe(args->pipe, free);
-	free(args->pipe);
+	// lstclear_pipe(args->pipe, my_free);
+	// my_free(args->pipe);
 }
 
 int	parsing(t_cmd *args)
@@ -125,25 +126,15 @@ int	parsing(t_cmd *args)
 	{
 		create_pipe_list(args);
 		print_pipe_list(args);
-		// lstclear_pipe(args->pipe, free);
+		// lstclear_pipe(args->pipe, my_free);
 	}
 	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
 	{
 		ft_printf("%s\n", args->cmd[0]);
 		return (0);
 	}
-	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "echo", 4))
-		my_echo(args->cmd, args);
-	else if (ft_strlen(args->cmd[0]) == 3 && !ft_strncmp(args->cmd[0], "pwd", 3))
-		print_working_dir();
-	else if (ft_strlen(args->cmd[0]) == 2 && !ft_strncmp(args->cmd[0], "cd", 2))
-		change_dir(args->cmd, args);
-	else if (ft_strlen(args->cmd[0]) == 6 && !ft_strncmp(args->cmd[0], "export", 6))
-		my_export(args);
-	else if (ft_strlen(args->cmd[0]) == 3 && !ft_strncmp(args->cmd[0], "env", 3))
-		my_env(args);
-	else if (ft_strlen(args->cmd[0]) == 5 && !ft_strncmp(args->cmd[0], "unset", 5))
-		my_unset(args);
+	else if (is_us(args))
+		excecute_us(args);
 	else if (check_dir(args) || check_path(args))
 	{
 		if (!args->path)
@@ -171,9 +162,9 @@ int	parsing(t_cmd *args)
 		}
 	}
 	freedom(args->cmd);
-	free(args->s);
-	free(args->expand);
-	free(args->path);
+	my_free(args->s);
+	my_free(args->expand);
+	my_free(args->path);
 	args->expand = NULL;
 	return (1);
 }

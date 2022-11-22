@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:30:22 by aball             #+#    #+#             */
-/*   Updated: 2022/11/21 10:50:53 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/22 18:50:02 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ void	lstdelone_pipe(t_pipe *lst, void (*del)(void *))
 {
 	if (lst)
 	{
-		freedom(lst->cmd);
-		del(lst->path);
-		del(lst);
+		if (lst->path)
+			del(lst->path);
+		if (lst->cmd)
+			freedom(lst->cmd);
+		if (lst)
+			del(lst);
 	}
 }
 

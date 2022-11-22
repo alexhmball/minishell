@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/17 17:52:14 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/22 18:43:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	compare_env(t_cmd *args)
 			if (len_env == len)
 				if (!ft_strncmp(current->content, args->cmd[1], len))
 				{
-					free(current->content);
+					my_free(current->content);
 					current->content = ft_strdup(args->cmd[1]);
 					return (1);
 				}

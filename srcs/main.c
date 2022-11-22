@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/21 10:45:04 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/21 13:03:27 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ void	handler(int signo, siginfo_t *info, void *context)
 		printf("\n");
 		rl_redisplay();
 	}
-	// if (signo == SIGCHLD)
-	// {
-	// 	kill(info->si_pid, SIGQUIT);
-	// }
-	// printf("%d\n", info->si_uid);
-	// printf("%d\n", info->si_pid);
 }
 
 int	main(int ac, char **av, char **env)
@@ -39,12 +33,10 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	// args = (t_cmd *)malloc(sizeof(t_cmd));
 	sa.sa_sigaction = &handler;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
-	// sigaction(SIGCHLD, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	tcgetattr(STDIN_FILENO, &term);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
@@ -56,7 +48,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		if (!parsing(&args))
-			break	;
+			break ;
 	}
 	total_freedom(&args);
 	return (args.err);

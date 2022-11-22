@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:33:33 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 18:43:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 char	*insert_expand(char *line, char *exp, char *temp)
 {
-	int	i;
-	int	x;
-	int	save;
-	int	len;
-	char *new_line;
+	int		i;
+	int		x;
+	int		save;
+	int		len;
+	char	*new_line;
 
 	i = 0;
 	len = ft_strlen(line) - ft_strlen(temp);
@@ -64,8 +64,8 @@ char	*insert_error(char *line, t_cmd *args)
 		new_line[i++] = err_num[j++];
 	while (line[len])
 		new_line[i++] = line[len++];
-	free(line);
-	free(err_num);
+	my_free(line);
+	my_free(err_num);
 	new_line[i] = 0;
 	return (new_line);
 }
@@ -95,9 +95,9 @@ char	*expand(char *line, int i, t_cmd *args, int x)
 	if (!exp)
 		exp = (char *)ft_calloc(1, sizeof(char));
 	new_line = insert_expand(line, exp, temp);
-	free (line);
-	free (temp);
-	free (exp);
+	my_free (line);
+	my_free (temp);
+	my_free (exp);
 	return (new_line);
 }
 

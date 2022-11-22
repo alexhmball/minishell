@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:49:32 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 18:43:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	insert_env(char *env, char *path, t_cmd *args)
 		len_find = find_equal(temp->content);
 		if (len_find == len_env && !ft_strncmp(env, temp->content, len_env))
 		{
-			free (temp->content);
+			my_free (temp->content);
 			temp->content = ft_strjoin(env, path);
 		}
 		temp = temp->next;
@@ -39,10 +39,10 @@ void	change_pwd_env(t_cmd *args)
 
 	old_pwd = my_getenv("PWD", args);
 	new_pwd = get_working_dir();
-	insert_env("OLDPWD=",old_pwd, args);
-	insert_env("PWD=",new_pwd, args);
-	free(new_pwd);
-	free(old_pwd);
+	insert_env("OLDPWD=", old_pwd, args);
+	insert_env("PWD=", new_pwd, args);
+	my_free(new_pwd);
+	my_free(old_pwd);
 }
 
 void	change_dir(char **cmd, t_cmd *args)

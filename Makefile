@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+         #
+#    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/20 23:35:29 by ballzball        ###   ########.fr        #
+#    Updated: 2022/11/21 12:10:27 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 FILES = main parsing echo quotes freedom utils pwd cd env expand unset check export \
-		str_utils linked_list path init error
+		str_utils linked_list path init error excecute
 
 OBJDIR = objects
 
@@ -23,7 +23,7 @@ RM = rm -fr
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1.1/include
+CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1/include
 
 INCLUDE = include/minishell.h
 
@@ -37,7 +37,7 @@ all: libft $(NAME)
 	@tput setaf 7
 
 $(NAME): ${OBJS}
-	${CC} ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1.1/lib -lreadline -ltermcap
+	${CC} ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline -ltermcap
 
 libft:
 	make -C libft
