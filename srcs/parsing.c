@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 19:00:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 19:15:24 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_pipe_list(t_cmd *args)
 
 	i = 0;
 	args->pipe = (t_pipe **)malloc(sizeof(t_pipe *));
-	args->path = NULL;
+	my_free(args->path);
 	validate_path(args->cmd[i], args);
 	args->cmd[i] = check_single_path(args->cmd[i], args);
 	temp = lstnew_pipe(args->cmd[i], args->path);
@@ -31,35 +31,35 @@ void	create_pipe_list(t_cmd *args)
 	{
 		if (validate_path(args->cmd[i], args) && args->cmd[i - 1][0] != '>' && args->cmd[i - 1][0] != '<')
 		{
+			my_free(args->path);
 			args->cmd[i] = check_single_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			my_free(args->path);
 			temp = temp->next;
 		}
 		else if (args->cmd[i][0] == '|')
 		{
+			my_free(args->path);
 			validate_path(args->cmd[i], args);
 			args->cmd[i] = check_single_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			my_free(args->path);
 			temp = temp->next;
 			temp->is_pipe = 1;
 			i++;
 			if (args->cmd[i])
 			{
+				my_free(args->path);
 				validate_path(args->cmd[i], args);
 				args->cmd[i] = check_single_path(args->cmd[i], args);
 				lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-				my_free(args->path);
 				temp = temp->next;
 			}
 		}
 		else if (args->cmd[i][0] == '>' || args->cmd[i][0] == '<')
 		{
+			my_free(args->path);
 			validate_path(args->cmd[i], args);
 			args->cmd[i] = check_single_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			my_free(args->path);
 			temp = temp->next;
 		}
 		else
@@ -97,8 +97,8 @@ void	print_pipe_list(t_cmd *args)
 		printf(".....\n");
 		temp = temp->next;
 	}
-	// lstclear_pipe(args->pipe, my_free);
-	// my_free(args->pipe);
+	lstclear_pipe(args->pipe, my_free);
+	my_free(args->pipe);
 }
 
 int	parsing(t_cmd *args)
