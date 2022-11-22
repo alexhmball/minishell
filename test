@@ -1,9 +1,0 @@
-Makefile
-a.out
-allowed_func.txt
-include
-libft
-minishell
-objects
-srcs
-test
