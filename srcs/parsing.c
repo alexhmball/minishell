@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 19:15:24 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/22 20:55:58 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,18 @@ void	create_pipe_list(t_cmd *args)
 	my_free(args->path);
 	*args->pipe = temp;
 	temp->next = NULL;
+	if (args->cmd[i][0] == '<')
+		temp->in = 1;
+	else if (args->cmd[i][0] == '>')
+		temp->out = 1;
 	i++;
 	while (args->cmd[i])
 	{
 		if (validate_path(args->cmd[i], args) && args->cmd[i - 1][0] != '>' && args->cmd[i - 1][0] != '<')
 		{
-			my_free(args->path);
 			args->cmd[i] = check_single_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
+			my_free(args->path);
 			temp = temp->next;
 		}
 		else if (args->cmd[i][0] == '|')
@@ -61,6 +65,10 @@ void	create_pipe_list(t_cmd *args)
 			args->cmd[i] = check_single_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 			temp = temp->next;
+			if (args->cmd[i][0] == '<')
+				temp->in = 1;
+			else
+				temp->out = 1;
 		}
 		else
 			temp->cmd = append_str(temp->cmd, args->cmd[i]);
@@ -77,13 +85,7 @@ void	print_pipe_list(t_cmd *args)
 	temp = *args->pipe;
 	i = 0;
 	c = 0;
-	while (temp)
-	{
-		if (temp->next && !temp->path && !temp->next->is_pipe && !temp->is_pipe)
-			swap_node(temp, temp->next, args->pipe, c);
-		c++;
-		temp = temp->next;
-	}
+	organize_cmds(args);
 	temp = *args->pipe;
 	while (temp)
 	{
@@ -94,17 +96,15 @@ void	print_pipe_list(t_cmd *args)
 		}
 		printf("path: %s\n", temp->path);
 		printf("pipe? %d\n", temp->is_pipe);
+		printf("in? %d\n", temp->in);
+		printf("out? %d\n", temp->out);
 		printf(".....\n");
 		temp = temp->next;
 	}
-	lstclear_pipe(args->pipe, my_free);
-	my_free(args->pipe);
 }
 
 int	parsing(t_cmd *args)
 {
-	int		pid;
-
 	init_struct(args);
 	args->s = readline("\x1b[30m\x1b[46mminishell$\x1b[m ");
 	if (!args->s)
@@ -137,34 +137,11 @@ int	parsing(t_cmd *args)
 		excecute_us(args);
 	else if (check_dir(args) || check_path(args))
 	{
-		if (!args->path)
-		{
-			args->err = 127;
-			printf("minishell: %s: command not found\n", args->cmd[0]);
-		}
-		else if (access(args->path, X_OK) != 0)
-		{
-			set_error(args, errno);
-			printf("minishell: %s: %s\n", args->path, strerror(errno));
-		}
-		else
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				execve(args->path, args->cmd, NULL);
-				printf("minishell: %s: no such file or directory here\n", args->path);
-				exit (127);
-			}
-			wait(&pid);
-			// if (kill(pid, SIGQUIT) < 0)
-			// 	kill(pid, SIGTERM);
-		}
+		execute_them(args);
 	}
 	freedom(args->cmd);
 	my_free(args->s);
 	my_free(args->expand);
 	my_free(args->path);
-	args->expand = NULL;
 	return (1);
 }

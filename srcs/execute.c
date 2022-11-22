@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   excecute.c                                         :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/11/21 12:17:24 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 19:30:19 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,32 @@ void	excecute_us(t_cmd *args)
 	else if (ft_strlen(args->cmd[0]) == 5
 		&& !ft_strncmp(args->cmd[0], "unset", 5))
 		my_unset(args);
+}
+
+void	execute_them(t_cmd *args)
+{
+	int	pid;
+
+	if (!args->path)
+	{
+		args->err = 127;
+		printf("minishell: %s: command not found\n", args->cmd[0]);
+	}
+	else if (access(args->path, X_OK) != 0)
+	{
+		set_error(args, errno);
+		printf("minishell: %s: %s\n", args->path, strerror(errno));
+	}
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			execve(args->path, args->cmd, NULL);
+			printf("minishell: %s: no such file or directory\n", args->path);
+			exit (127);
+		}
+		wait(&pid);
+		kill(pid, SIGQUIT);
+	}
 }
