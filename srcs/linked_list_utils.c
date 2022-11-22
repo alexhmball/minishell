@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 23:10:25 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 23:24:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ void	organize_cmds(t_cmd *args)
 	}
 }
 
-t_pipe	*remove_node(t_pipe **head, t_pipe *node, int count)
+t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c)
 {
 
-	if (count == 0)
-		*head = node->next;
+	if (c == 0)
+		return (*head);
 	else
-		pre_pipe(head, count)->next = node->next;
+		prev_node->next = node->next;
+	node->next = NULL;
 	lstdelone_pipe(node, my_free);
 	return (*head);
 }
@@ -69,6 +70,7 @@ t_pipe	*remove_node(t_pipe **head, t_pipe *node, int count)
 void	flag_list(t_cmd *args)
 {
 	t_pipe	*temp;
+	t_pipe	*prev;
 	int		c;
 
 	temp = *args->pipe;
@@ -85,8 +87,9 @@ void	flag_list(t_cmd *args)
 			temp->out = 1;
 			temp->cmd = remove_str(temp->cmd, 0);
 		}
-		if (temp->next && temp->is_pipe)
-			temp = remove_node(args->pipe, temp, c);
+		else if (temp->next && temp->is_pipe)
+			temp = remove_node(args->pipe, temp, prev, c);
+		prev = temp;
 		temp = temp->next;
 		c++;
 	}
