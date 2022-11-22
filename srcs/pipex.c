@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/23 01:45:16 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/23 01:49:53 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	pipex(t_cmd *args)
 			}
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
-			execve(temp->path, temp->cmd, NULL);
+			execve(temp->path, temp->cmd, args->env_for_excecute);
 			// perror("exec: ");
 			// exit(EXIT_FAILURE);
 		}
@@ -66,7 +66,7 @@ void	pipex(t_cmd *args)
 			dup2(prev_pipe, STDIN_FILENO);
 			close(prev_pipe);
 		}
-		execve(temp->path, temp->cmd, NULL);
+		execve(temp->path, temp->cmd, args->env_for_excecute);
 	}
 	close(fd[0]);
 	close(fd[1]);

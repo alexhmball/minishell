@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 01:47:22 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 01:50:17 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	handler(int signo, siginfo_t *info, void *context)
 int	main(int ac, char **av, char **env)
 {
 	struct sigaction	sa;
-	struct termios		term;
 	t_cmd				args;
 
 	(void)ac;
