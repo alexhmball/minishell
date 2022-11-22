@@ -6,29 +6,11 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 18:46:20 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 00:40:30 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	*my_getenv(char *str_env, t_cmd *args)
-{
-	t_list	*current;
-	size_t	len;
-	size_t	len2;
-
-	current = *args->env;
-	len = ft_strlen(str_env);
-	while (current)
-	{
-		len2 = find_equal(current->content);
-		if (len2 == len && !ft_strncmp(current->content, str_env, len))
-			return (ft_strdup(current->content + len + 1));
-		current = current->next;
-	}
-	return (NULL);
-}
 
 char	**find_path(t_cmd *args)
 {

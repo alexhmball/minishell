@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 21:46:22 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 00:27:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ int		is_q(char c);
 char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
 char	**remove_quotes(t_cmd *args, int single_q, int double_q);
-int		freedom(char **free_me);
-void	total_freedom(t_cmd *args);
 char	*expand(char *line, int i, t_cmd *args, int x);
 char	*insert_expand(char *line, char *exp, char *temp);
 int		check_newline(char **echo, int *i, int len);
@@ -84,7 +82,6 @@ void	check_expand(t_cmd *args);
 int		find_equal(char *str);
 int		check_dir(t_cmd *args);
 char	*my_getenv(char *str_env, t_cmd *args);
-int		check_exec(t_cmd *args);
 char	*get_working_dir(void);
 int		validate_dir(t_cmd *args, char *search, char *cmd);
 int		validate_path(char	*cmd, t_cmd *args);
@@ -94,13 +91,22 @@ char	*check_single_path(char *cmd, t_cmd *args);
 int		locate_dollar(char *str);
 void	init_struct(t_cmd *args);
 void	set_error(t_cmd *args, int code);
-void	my_free(void *content);
-int		is_us(t_cmd *args);
-void	excecute_us(t_cmd *args);
 int		search_all_paths(t_cmd *args, char **search);
 int		search_current_dir(t_cmd *args, char *current);
-void	execute_them(t_cmd *args);
 char	**remove_str(char **str, int index);
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+int		is_us(t_cmd *args);
+int		check_exec(t_cmd *args);
+void	excecute_us(t_cmd *args);
+void	execute_them(t_cmd *args);
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+void	my_free(void *content);
+int		freedom(char **free_me);
+void	total_freedom(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~LINKED_LIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
