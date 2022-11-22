@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 20:37:38 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 21:46:22 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	excecute_us(t_cmd *args);
 int		search_all_paths(t_cmd *args, char **search);
 int		search_current_dir(t_cmd *args, char *current);
 void	execute_them(t_cmd *args);
+char	**remove_str(char **str, int index);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~LINKED_LIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -110,6 +111,7 @@ void	lstclear_pipe(t_pipe **lst, void (*del)(void *));
 void	lstdelone_pipe(t_pipe *lst, void (*del)(void *));
 void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int count);
 void	organize_cmds(t_cmd *args);
+void	flag_list(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 21:29:16 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 22:58:40 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,43 @@ void	organize_cmds(t_cmd *args)
 	{
 		if (temp->next && temp->next->in && temp->path)
 			swap_node(temp, temp->next, args->pipe, c);
-		else if (temp->next && temp->out && temp->next->path)
+		if (temp->next && temp->out && temp->next->path)
 			swap_node(temp, temp->next, args->pipe, c);
 		c++;
+		temp = temp->next;
+	}
+}
+
+t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node)
+{
+
+	if (node == *head)
+		*head = node->next;
+	else
+		prev_node->next = node->next;
+	lstdelone_pipe(node, my_free);
+	return (*head);
+}
+
+void	flag_list(t_cmd *args)
+{
+	t_pipe	*temp;
+
+	temp = *args->pipe;
+	while (temp)
+	{
+		if (temp->cmd[0][0] == '<')
+		{
+			temp->in = 1;
+			temp->cmd = remove_str(temp->cmd, 0);
+		}
+		else if (temp->cmd[0][0] == '>')
+		{
+			temp->out = 1;
+			temp->cmd = remove_str(temp->cmd, 0);
+		}
+		if (temp->next && temp->next->is_pipe)
+			temp = remove_node(args->pipe, temp->next, temp);
 		temp = temp->next;
 	}
 }

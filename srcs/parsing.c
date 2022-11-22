@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 21:33:56 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 21:43:01 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ void	create_pipe_list(t_cmd *args)
 	my_free(args->path);
 	*args->pipe = temp;
 	temp->next = NULL;
-	if (args->cmd[i][0] == '<')
-		temp->in = 1;
-	else if (args->cmd[i][0] == '>')
-		temp->out = 1;
 	i++;
 	while (args->cmd[i])
 	{
@@ -65,10 +61,6 @@ void	create_pipe_list(t_cmd *args)
 			args->cmd[i] = check_single_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 			temp = temp->next;
-			if (args->cmd[i][0] == '<')
-				temp->in = 1;
-			else
-				temp->out = 1;
 		}
 		else
 			temp->cmd = append_str(temp->cmd, args->cmd[i]);
@@ -80,11 +72,11 @@ void	print_pipe_list(t_cmd *args)
 {
 	t_pipe	*temp;
 	int		i;
-	int		c;
 
 	temp = *args->pipe;
 	i = 0;
-	c = 0;
+	flag_list(args);
+	temp = *args->pipe;
 	organize_cmds(args);
 	temp = *args->pipe;
 	while (temp)
@@ -140,8 +132,8 @@ int	parsing(t_cmd *args)
 		execute_them(args);
 	}
 	freedom(args->cmd);
-	// my_free(args->s);
+	my_free(args->s);
 	my_free(args->expand);
-	my_free(args->path);
+	// my_free(args->path);
 	return (1);
 }
