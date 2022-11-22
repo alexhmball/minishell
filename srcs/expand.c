@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:33:33 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/22 01:18:26 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*insert_expand(char *line, char *exp, char *temp)
 	i = 0;
 	len = ft_strlen(line) - ft_strlen(temp);
 	len += ft_strlen(exp) - 1;
-	new_line = (char *)malloc(sizeof(char) * len);
+	new_line = (char *)malloc(sizeof(char) * len + 1);
 	while (line[i] != '$' && line[i])
 	{
 		new_line[i] = line[i];
@@ -86,8 +86,9 @@ char	*expand(char *line, int i, t_cmd *args, int x)
 	}
 	while (!is_spc_tb(line[len]) && !is_q(line[len]) && line[len])
 		len++;
-	temp = (char *)malloc(sizeof(char) * (len - i));
+	temp = (char *)malloc(sizeof(char) * (len - i) + 1);
 	ft_strlcpy(temp, line + i, len - i + 1);
+	temp[len - i] = 0;
 	if (args->expand[x])
 		exp = my_getenv(temp, args);
 	else
@@ -130,7 +131,7 @@ void	check_expand(t_cmd *args)
 		if (pos != -1)
 		{
 			temp = expand(args->cmd[i], pos, args, x);
-			args->cmd[i] = ft_strdup(temp);
+			args->cmd[i] = temp;
 			x++;
 		}
 		i++;
