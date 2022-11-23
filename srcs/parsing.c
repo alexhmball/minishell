@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 22:46:27 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/23 22:57:23 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,27 @@ int	parsing(t_cmd *args)
 	}
 	if (args->need_exp)
 		check_expand(args);
-	if (args->pipe_n || args->redirect)
+	// if (args->pipe_n || args->redirect)
+	// {
+		// create_pipe_list(args);
+		// if (!print_pipe_list(args))
+		// 	return (args->err);
+		// args->pid = fork();
+		// if (args->pid == 0)
+		// 	pipex(args);
+		// wait(&args->pid);
+		// lstclear_pipe(args->pipe, my_free);
+	// }
+	if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
 	{
+		ft_printf("%s\n", args->cmd[0]);
+		return (0);
+	}
+	else if (is_us(args))
+		excecute_us(args);
+	else /*if (check_dir(args) || check_path(args))*/
+	{
+		// execute_them(args);
 		create_pipe_list(args);
 		if (!print_pipe_list(args))
 			return (args->err);
@@ -69,18 +88,6 @@ int	parsing(t_cmd *args)
 		if (args->pid == 0)
 			pipex(args);
 		wait(&args->pid);
-		// lstclear_pipe(args->pipe, my_free);
-	}
-	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
-	{
-		ft_printf("%s\n", args->cmd[0]);
-		return (0);
-	}
-	else if (is_us(args))
-		excecute_us(args);
-	else if (check_dir(args) || check_path(args))
-	{
-		execute_them(args);
 	}
 	// freedom(args->cmd);
 	// my_free(args->s);
