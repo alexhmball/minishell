@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/23 22:45:40 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/23 23:34:35 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	pipex(t_cmd *args)
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
-	// int		my_stdin;
 
 	temp = *args->pipe;
 	prev_pipe = STDIN_FILENO;
