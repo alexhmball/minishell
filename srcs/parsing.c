@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 23:08:32 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/23 23:12:57 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 int	print_pipe_list(t_cmd *args)
 {
-	// t_pipe	*temp;
-	// int		i;
+	t_pipe	*temp;
+	int		i;
 
-	// temp = *args->pipe;
-	// i = 0;
+	temp = *args->pipe;
+	i = 0;
 	if (!flag_list(args))
 		return (0);
 	// temp = *args->pipe;
 	organize_cmds(args);
-	// temp = *args->pipe;
-	// while (temp)
-	// {
-	// 	i = 0;
-	// 	while (temp->cmd[i])
-	// 	{
-	// 		printf("cmd: %s\n", temp->cmd[i++]);
-	// 	}
-	// 	printf("path: %s\n", temp->path);
-	// 	printf("pipe? %d\n", temp->is_pipe);
-	// 	printf("in? %d\n", temp->in);
-	// 	printf("out? %d\n", temp->out);
-	// 	printf(".....\n");
-	// 	temp = temp->next;
-	// }
+	temp = *args->pipe;
+	while (temp)
+	{
+		i = 0;
+		while (temp->cmd[i])
+		{
+			printf("cmd: %s\n", temp->cmd[i++]);
+		}
+		printf("path: %s\n", temp->path);
+		printf("pipe? %d\n", temp->is_pipe);
+		printf("in? %d\n", temp->in);
+		printf("out? %d\n", temp->out);
+		printf(".....\n");
+		temp = temp->next;
+	}
 	return (1);
 }
 
@@ -76,8 +76,8 @@ int	parsing(t_cmd *args)
 		ft_printf("%s\n", args->cmd[0]);
 		return (0);
 	}
-	else if (is_us(args))
-		excecute_us(args);
+	// else if (is_us(args))
+	// 	excecute_us(args);
 	else /*if (check_dir(args) || check_path(args))*/
 	{
 		// execute_them(args);
