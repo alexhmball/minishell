@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 04:36:42 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 22:29:56 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	print_pipe_list(t_cmd *args)
 {
-	t_pipe	*temp;
-	int		i;
+	// t_pipe	*temp;
+	// int		i;
 
-	temp = *args->pipe;
-	i = 0;
+	// temp = *args->pipe;
+	// i = 0;
 	if (!flag_list(args))
 		return (0);
-	temp = *args->pipe;
+	// temp = *args->pipe;
 	organize_cmds(args);
-	temp = *args->pipe;
+	// temp = *args->pipe;
 	// while (temp)
 	// {
 	// 	i = 0;
