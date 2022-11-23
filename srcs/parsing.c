@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 04:16:14 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 04:36:42 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ int	print_pipe_list(t_cmd *args)
 	temp = *args->pipe;
 	organize_cmds(args);
 	temp = *args->pipe;
-	while (temp)
-	{
-		i = 0;
-		while (temp->cmd[i])
-		{
-			printf("cmd: %s\n", temp->cmd[i++]);
-		}
-		printf("path: %s\n", temp->path);
-		printf("pipe? %d\n", temp->is_pipe);
-		printf("in? %d\n", temp->in);
-		printf("out? %d\n", temp->out);
-		printf(".....\n");
-		temp = temp->next;
-	}
+	// while (temp)
+	// {
+	// 	i = 0;
+	// 	while (temp->cmd[i])
+	// 	{
+	// 		printf("cmd: %s\n", temp->cmd[i++]);
+	// 	}
+	// 	printf("path: %s\n", temp->path);
+	// 	printf("pipe? %d\n", temp->is_pipe);
+	// 	printf("in? %d\n", temp->in);
+	// 	printf("out? %d\n", temp->out);
+	// 	printf(".....\n");
+	// 	temp = temp->next;
+	// }
 	return (1);
 }
 
@@ -65,7 +65,10 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!print_pipe_list(args))
 			return (args->err);
-		// pipex(args);
+		args->pid = fork();
+		if (args->pid == 0)
+			pipex(args);
+		wait(&args->pid);
 		// lstclear_pipe(args->pipe, my_free);
 	}
 	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
