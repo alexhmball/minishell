@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 01:15:21 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 03:11:44 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ int	flag_list(t_cmd *args)
 
 	temp = *args->pipe;
 	c = 0;
-	if (temp->cmd[0][0] == '|')
+	if (temp->cmd[0][0] == '|' || lstlast_pipe(*args->pipe)->is_pipe)
 	{
 		args->err = 258;
+		printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
 	while (temp)

@@ -6,67 +6,11 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 01:48:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/23 04:16:14 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	create_pipe_list(t_cmd *args)
-{
-	t_pipe	*temp;
-	int		i;
-
-	i = 0;
-	args->pipe = (t_pipe **)malloc(sizeof(t_pipe *));
-	my_free(args->path);
-	validate_path(args->cmd[i], args);
-	args->cmd[i] = check_single_path(args->cmd[i], args);
-	temp = lstnew_pipe(args->cmd[i], args->path);
-	my_free(args->path);
-	*args->pipe = temp;
-	temp->next = NULL;
-	i++;
-	while (args->cmd[i])
-	{
-		if (validate_path(args->cmd[i], args) && args->cmd[i - 1][0] != '>' && args->cmd[i - 1][0] != '<')
-		{
-			args->cmd[i] = check_single_path(args->cmd[i], args);
-			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			my_free(args->path);
-			temp = temp->next;
-		}
-		else if (args->cmd[i][0] == '|')
-		{
-			my_free(args->path);
-			validate_path(args->cmd[i], args);
-			args->cmd[i] = check_single_path(args->cmd[i], args);
-			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			temp = temp->next;
-			temp->is_pipe = 1;
-			i++;
-			if (args->cmd[i])
-			{
-				my_free(args->path);
-				validate_path(args->cmd[i], args);
-				args->cmd[i] = check_single_path(args->cmd[i], args);
-				lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-				temp = temp->next;
-			}
-		}
-		else if (args->cmd[i][0] == '>' || args->cmd[i][0] == '<')
-		{
-			my_free(args->path);
-			validate_path(args->cmd[i], args);
-			args->cmd[i] = check_single_path(args->cmd[i], args);
-			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			temp = temp->next;
-		}
-		else
-			temp->cmd = append_str(temp->cmd, args->cmd[i]);
-		i++;
-	}
-}
 
 int	print_pipe_list(t_cmd *args)
 {
@@ -121,7 +65,7 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!print_pipe_list(args))
 			return (args->err);
-		pipex(args);
+		// pipex(args);
 		// lstclear_pipe(args->pipe, my_free);
 	}
 	else if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))

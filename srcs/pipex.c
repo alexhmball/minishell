@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/23 02:50:48 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/23 03:05:06 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,46 +28,48 @@ void	pipex(t_cmd *args)
 	while (temp->next)
 	{
 		pipe(fd);
-		// if (pipe(fd) == -1)
-		// {
-		// 	perror("pipe: ");
-		// 	exit(EXIT_FAILURE);
-		// }
+		if (pipe(fd) == -1)
+		{
+			perror("pipe: ");
+			exit(EXIT_FAILURE);
+		}
 		child = fork();
-		// if (child == -1)
-		// {
-		// 	perror("fork: ");
-		// 	exit(EXIT_FAILURE);
-		// }
+		if (child == -1)
+		{
+			perror("fork: ");
+			exit(EXIT_FAILURE);
+		}
 		if (!child)
 		{
 			if (prev_pipe != my_stdin)
 			{
 				dup2(prev_pipe, my_stdin);
-				close(prev_pipe);
+				// close(prev_pipe);
 			}
 			dup2(fd[1], my_stdout);
-			close(fd[1]);
-			close(my_stdin);
-			close(STDIN_FILENO);
+			// close(fd[1]);
+			// close(my_stdin);
+			// close(STDIN_FILENO);
 			close(STDOUT_FILENO);
 			execve(temp->path, temp->cmd, args->env_for_excecute);
-			// perror("exec: ");
-			// exit(EXIT_FAILURE);
+			perror("exec: ");
+			exit(EXIT_FAILURE);
 		}
-		wait(&child);
 		close(prev_pipe);
 		close(fd[1]);
+		wait(&child);
 		// close(my_stdin);
-		prev_pipe = fd[0];
+		// dup2(prev_pipe, fd[0]);
+		prev_pipe = dup(fd[0]);
+		// prev_pipe = fd[0];
 		temp = temp->next;
 	}
 	child = fork();
-	// if (child == -1)
-	// {
-	// 	perror("fork: ");
-	// 	exit(EXIT_FAILURE);
-	// }
+	if (child == -1)
+	{
+		perror("fork: ");
+		exit(EXIT_FAILURE);
+	}
 	if (!child)
 	{
 		if (prev_pipe != my_stdin)
@@ -77,14 +79,14 @@ void	pipex(t_cmd *args)
 			close(STDOUT_FILENO);
 			close(prev_pipe);
 		}
-		close(my_stdout);
+		// close(my_stdout);
 		execve(temp->path, temp->cmd, args->env_for_excecute);
 	}
-	wait(&child);
 	close(fd[0]);
 	close(fd[1]);
 	close(prev_pipe);
 	close(my_stdout);
 	close(my_stdin);
+	wait(&child);
 	return ;
 }
