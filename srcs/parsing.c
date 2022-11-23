@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 22:29:56 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/11/23 22:46:27 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	parsing(t_cmd *args)
 	{
 		execute_them(args);
 	}
-	freedom(args->cmd);
-	my_free(args->s);
-	my_free(args->expand);
+	// freedom(args->cmd);
+	// my_free(args->s);
+	// my_free(args->expand);
 	// my_free(args->path);
 	return (1);
 }
