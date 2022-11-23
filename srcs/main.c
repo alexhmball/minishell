@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 04:34:31 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/23 22:34:11 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	sa.sa_sigaction = &handler;
-	sa.sa_flags = SA_SIGINFO;
+	sa.sa_flags = SA_NOCLDSTOP;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
