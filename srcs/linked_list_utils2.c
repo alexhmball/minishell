@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 04:14:45 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:17:13 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	parse_args_back(t_cmd *args, int i)
 	validate_path(args->cmd[i], args);
 	args->cmd[i] = check_single_path(args->cmd[i], args);
 	lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-	// temp = temp->next;
 }
 
 void	setup_lst_front(t_cmd *args, int i)
@@ -50,6 +49,12 @@ void	create_pipe_list(t_cmd *args)
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 			my_free(args->path);
 			temp = temp->next;
+			i++;
+			while (args->cmd[i] && args->cmd[i][0] != '>' && args->cmd[i][0] != '<' && args->cmd[i][0] != '|')
+			{
+				temp->cmd = append_str(temp->cmd, args->cmd[i]);
+				i++;
+			}
 		}
 		else if (args->cmd[i][0] == '|')
 		{
@@ -64,6 +69,7 @@ void	create_pipe_list(t_cmd *args)
 		}
 		else
 			temp->cmd = append_str(temp->cmd, args->cmd[i]);
-		i++;
+		if (args->cmd[i])
+			i++;
 	}
 }

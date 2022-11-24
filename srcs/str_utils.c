@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:56:04 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 21:44:40 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:06:02 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ char	**append_str(char **str, char *append)
 	int		size;
 	char	**new;
 
-	size = two_d_strlen(str) + 2;
+	if (*str)
+		size = two_d_strlen(str) + 2;
+	else
+		size = 2;
 	new = (char **)malloc(sizeof(char *) * size);
 	if (!new)
 		return (NULL);
@@ -57,4 +60,29 @@ char	**remove_str(char **str, int index)
 	new[j] = NULL;
 	freedom(str);
 	return (new);
+}
+
+char	*add_char(char *s1, char c)
+{
+	char	*ret;
+	int		i;
+	int		len;
+
+	if (!s1)
+		len = 0;
+	else
+		len = ft_strlen(s1);
+	ret = (char *)malloc(sizeof(char) * (len + 2));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (len > 0 && s1[i])
+	{
+		ret[i] = s1[i];
+		i++;
+	}
+	ret[i++] = c;
+	ret[i] = 0;
+	my_free (s1);
+	return (ret);
 }

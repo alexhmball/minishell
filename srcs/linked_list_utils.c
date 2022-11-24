@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 03:11:44 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:14:03 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,15 @@ int	flag_list(t_cmd *args)
 		{
 			temp->in = 1;
 			temp->cmd = remove_str(temp->cmd, 0);
+			validate_path(temp->cmd[0], args);
+			temp->path = args->path;
 		}
 		else if (temp->cmd[0][0] == '>')
 		{
 			temp->out = 1;
 			temp->cmd = remove_str(temp->cmd, 0);
+			validate_path(temp->cmd[0], args);
+			temp->path = args->path;
 		}
 		else if (temp->next && temp->is_pipe)
 			temp = remove_node(args->pipe, temp, prev, c);
