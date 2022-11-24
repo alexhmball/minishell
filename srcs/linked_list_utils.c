@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/24 16:14:03 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 18:12:47 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int	flag_list(t_cmd *args)
 		if (temp->cmd[0][0] == '<')
 		{
 			temp->in = 1;
-			temp->cmd = remove_str(temp->cmd, 0);
+			if (two_d_strlen(temp->cmd) == 1)
+				temp->cmd[0] = ft_strdup(temp->cmd[0] + 1);
+			else
+				temp->cmd = remove_str(temp->cmd, 0);
 			validate_path(temp->cmd[0], args);
 			temp->path = args->path;
 		}
