@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:10:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 18:54:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:06:41 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ void	my_free(void *content)
 		free(content);
 		content = NULL;
 	}
+	content = NULL;
 }

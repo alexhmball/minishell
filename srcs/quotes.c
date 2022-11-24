@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/15 20:59:20 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:16:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,29 @@ char	**remove_quotes(t_cmd *args, int single_q, int double_q)
 	int		i;
 	int		x;
 	char	**new_line;
+	char	*tmp;
 
-	i = string_count(args->s);
-	new_line = (char **)malloc(sizeof(char *) * (i + 1));
+	new_line = (char **)malloc(sizeof(char *) * 1);
 	if (!new_line)
 		return (NULL);
 	i = 0;
 	x = 0;
+	new_line[0] = NULL;
 	while (args->s[i])
 	{
-		new_line[x] = NULL;
+		tmp = NULL;
 		while (is_spc_tb(args->s[i]) && args->s[i])
 			i++;
 		while (args->s[i] && (single_q || double_q || !is_spc_tb(args->s[i])))
 		{
 			if (!check_quotes(args->s[i], &single_q, &double_q) && args->s[i])
-				new_line[x] = add_char(new_line[x], args->s[i]);
+				tmp = add_char(tmp, args->s[i]);
 			i++;
 		}
+		new_line = append_str(new_line, tmp);
+		my_free(tmp);
 		x++;
 	}
-	new_line[x] = NULL;
 	return (new_line);
 }
 
