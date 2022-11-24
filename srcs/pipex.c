@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/24 17:23:58 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/24 18:11:55 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	pipex(t_cmd *args)
 			if (prev_pipe == STDIN_FILENO && temp->in)
 			{
 				dup2(infile, STDIN_FILENO);
-				close(infile);
+				prev_pipe = infile;
+				// close(infile);
 			}
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
@@ -77,7 +78,7 @@ void	pipex(t_cmd *args)
 			dup2(prev_pipe, STDIN_FILENO);
 			close(prev_pipe);
 		}
-		else
+		else if (prev_pipe == STDIN_FILENO && infile)
 		{
 			dup2(infile, STDIN_FILENO);
 			close(infile);

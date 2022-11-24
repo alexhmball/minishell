@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/24 17:36:23 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 17:42:16 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	create_pipe_list(t_cmd *args)
 	int		i;
 
 	i = 0;
-	for (int i = 0; args->cmd[i]; i++)
-		printf("cmd[%d] = %s\n", i, args->cmd[i]);
+	// for (int i = 0; args->cmd[i]; i++)
+	// 	printf("cmd[%d] = %s\n", i, args->cmd[i]);
 	setup_lst_front(args, i);
 	temp = lstnew_pipe(args->cmd[i], args->path);
 	my_free(args->path);
@@ -54,7 +54,7 @@ void	create_pipe_list(t_cmd *args)
 			i++;
 			while (args->cmd[i] && args->cmd[i][0] != '>' && args->cmd[i][0] != '<' && args->cmd[i][0] != '|')
 			{
-				printf("cmd[%d] app = %s\n", i, args->cmd[i]);
+				// printf("cmd[%d] app = %s\n", i, args->cmd[i]);
 				temp->cmd = append_str(temp->cmd, args->cmd[i]);
 				i++;
 			}
