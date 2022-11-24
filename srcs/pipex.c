@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/24 18:11:55 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/24 18:23:21 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	pipex(t_cmd *args)
 	}
 	while (temp->next && args->pipe_n)
 	{
+		printf("n: %d\n", args->pipe_n);
 		if (pipe(fd) == -1)
 		{
 			perror("pipe: ");
@@ -51,8 +52,8 @@ void	pipex(t_cmd *args)
 			if (prev_pipe == STDIN_FILENO && temp->in)
 			{
 				dup2(infile, STDIN_FILENO);
-				prev_pipe = infile;
-				// close(infile);
+				// prev_pipe = infile;
+				close(infile);
 			}
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
