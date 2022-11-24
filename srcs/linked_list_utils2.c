@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/24 16:17:13 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/24 17:07:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	create_pipe_list(t_cmd *args)
 	i++;
 	while (args->cmd[i])
 	{
-		if (validate_path(args->cmd[i], args) && args->cmd[i - 1][0] != '>' && args->cmd[i - 1][0] != '<')
+		if (validate_path(args->cmd[i], args) && args->cmd[i - 1][0] != '>' && args->cmd[i - 1][0] != '<' && !temp->path)
 		{
 			args->cmd[i] = check_single_path(args->cmd[i], args);
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
