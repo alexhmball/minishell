@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/24 17:52:37 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/24 18:25:29 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 int	print_pipe_list(t_cmd *args)
 {
-	// t_pipe	*temp;
-	// int		i;
+	t_pipe	*temp;
+	int		i;
 
-	// i = 0;
+	i = 0;
 	if (!flag_list(args))
 		return (0);
 	organize_cmds(args);
-	// temp = *args->pipe;
-	// while (temp)
-	// {
-	// 	i = 0;
-	// 	while (temp->cmd[i])
-	// 	{
-	// 		printf("cmd: %s\n", temp->cmd[i++]);
-	// 	}
-	// 	printf("path: %s\n", temp->path);
-	// 	printf("pipe? %d\n", temp->is_pipe);
-	// 	printf("in? %d\n", temp->in);
-	// 	printf("out? %d\n", temp->out);
-	// 	printf(".....\n");
-	// 	temp = temp->next;
-	// }
+	temp = *args->pipe;
+	while (temp)
+	{
+		i = 0;
+		while (temp->cmd[i])
+		{
+			printf("cmd: %s\n", temp->cmd[i++]);
+		}
+		printf("path: %s\n", temp->path);
+		printf("pipe? %d\n", temp->is_pipe);
+		printf("in? %d\n", temp->in);
+		printf("out? %d\n", temp->out);
+		printf(".....\n");
+		temp = temp->next;
+	}
 	return (1);
 }
 
