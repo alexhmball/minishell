@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/25 19:49:21 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/25 20:00:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int count)
 		pre_pipe(head, count)->next = node2;
 	node1->next = node2->next;
 	node2->next = node1;
-	printf("swapping %s\n", pre_pipe(head, count)->cmd[0]);
 }
 
 void	organize_cmds(t_cmd *args)
@@ -48,15 +47,12 @@ void	organize_cmds(t_cmd *args)
 	temp = *args->pipe;
 	prev = NULL;
 	c = 0;
-	printf("%zu\n", my_lst_size(temp));
-	temp = *args->pipe;
 	while (temp)
 	{
 		if (temp->next && temp->next->in && temp->path)
 			swap_node(temp, temp->next, args->pipe, c);
 		else if (prev && prev->out && !temp->out && !temp->in)
 		{
-			printf("swap: %s %d %s\n", temp->cmd[0], c, prev->cmd[0]);
 			swap_node(prev, temp, args->pipe, c);
 			temp = *args->pipe;
 			prev = NULL;
