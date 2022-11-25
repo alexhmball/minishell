@@ -6,21 +6,60 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/24 18:43:11 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/25 18:08:17 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+t_pipe	*my_lst_last(t_pipe *temp)
+{
+	while(temp)
+		temp = temp->next;
+	return (temp);
+}
+
+size_t	my_lst_size(t_pipe *temp)
+{
+	size_t	i;
+
+	i = 0;
+	while (temp)
+	{
+		temp = temp->next;
+		i++;
+	}
+	return (i);
+}
+
 void	pipex(t_cmd *args)
 {
 	t_pipe	*temp;
+	t_pipe	*last;
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
 	int		infile;
+	size_t	lst_size;
+	int		i;
 
 	temp = *args->pipe;
+	lst_size = my_lst_size(temp);
+	last = my_lst_last(temp);
+	while (temp)
+	{
+		i = 0;
+		while (temp->cmd[i])
+		{
+			printf("cmd in pipe: %s\n", temp->cmd[i++]);
+		}
+		printf("path in pipe: %s\n", temp->path);
+		printf("pipe? in pipe %d\n", temp->is_pipe);
+		printf("in? in pipe %d\n", temp->in);
+		printf("out? in pipe %d\n", temp->out);
+		printf(".....\n");
+		temp = temp->next;
+	}
 	prev_pipe = STDIN_FILENO;
 	if (temp->in)
 	{
