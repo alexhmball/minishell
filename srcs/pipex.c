@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/25 20:41:38 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/25 20:45:30 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	pipex(t_cmd *args)
 		if (!temp->path)
 		{
 			args->err = 127;
-			printf("minishell: %s: command not found\n", args->cmd[0]);
+			printf("minishell: %s: command not found\n", temp->cmd[0]);
 		}
 		execve(temp->path, temp->cmd, args->env_for_excecute);
 		// perror(ft_strjoin("minishell: ", temp->cmd[0]));
