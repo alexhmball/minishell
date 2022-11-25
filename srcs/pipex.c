@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/25 18:08:17 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:37:38 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,25 @@ void	pipex(t_cmd *args)
 	int		fd[2];
 	int		infile;
 	size_t	lst_size;
-	int		i;
+	// int		i;
 
 	temp = *args->pipe;
 	lst_size = my_lst_size(temp);
 	last = my_lst_last(temp);
-	while (temp)
-	{
-		i = 0;
-		while (temp->cmd[i])
-		{
-			printf("cmd in pipe: %s\n", temp->cmd[i++]);
-		}
-		printf("path in pipe: %s\n", temp->path);
-		printf("pipe? in pipe %d\n", temp->is_pipe);
-		printf("in? in pipe %d\n", temp->in);
-		printf("out? in pipe %d\n", temp->out);
-		printf(".....\n");
-		temp = temp->next;
-	}
+	// while (temp)
+	// {
+	// 	i = 0;
+	// 	while (temp->cmd[i])
+	// 	{
+	// 		printf("cmd in pipe: %s\n", temp->cmd[i++]);
+	// 	}
+	// 	printf("path in pipe: %s\n", temp->path);
+	// 	printf("pipe? in pipe %d\n", temp->is_pipe);
+	// 	printf("in? in pipe %d\n", temp->in);
+	// 	printf("out? in pipe %d\n", temp->out);
+	// 	printf(".....\n");
+	// 	temp = temp->next;
+	// }
 	prev_pipe = STDIN_FILENO;
 	if (temp->in)
 	{

@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/24 18:30:18 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/25 19:49:21 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_pipe	*pre_pipe(t_pipe **head, int count)
 
 	temp = *head;
 	i = 0;
-	while(temp->next && i < count)
+	count -= 2;
+	while(i < count)
 	{
 		temp = temp->next;
 		i++;
@@ -35,23 +36,36 @@ void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int count)
 		pre_pipe(head, count)->next = node2;
 	node1->next = node2->next;
 	node2->next = node1;
+	printf("swapping %s\n", pre_pipe(head, count)->cmd[0]);
 }
 
 void	organize_cmds(t_cmd *args)
 {
 	t_pipe	*temp;
+	t_pipe	*prev;
 	int		c;
 
 	temp = *args->pipe;
+	prev = NULL;
 	c = 0;
+	printf("%zu\n", my_lst_size(temp));
+	temp = *args->pipe;
 	while (temp)
 	{
 		if (temp->next && temp->next->in && temp->path)
 			swap_node(temp, temp->next, args->pipe, c);
-		if (temp->next && temp->out && temp->next->path)
-			swap_node(temp, temp->next, args->pipe, c);
-		c++;
+		else if (prev && prev->out && !temp->out && !temp->in)
+		{
+			printf("swap: %s %d %s\n", temp->cmd[0], c, prev->cmd[0]);
+			swap_node(prev, temp, args->pipe, c);
+			temp = *args->pipe;
+			prev = NULL;
+			c = 0;
+		}
+		if (c)
+			prev = temp;
 		temp = temp->next;
+		c++;
 	}
 }
 

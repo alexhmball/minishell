@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 04:13:42 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/25 18:11:05 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	organize_cmds(t_cmd *args);
 int		flag_list(t_cmd *args);
 void	parse_args_back(t_cmd *args, int i);
 void	create_pipe_list(t_cmd *args);
+t_pipe	*my_lst_last(t_pipe *temp);
+size_t	my_lst_size(t_pipe *temp);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
