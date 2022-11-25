@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/25 20:12:07 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/25 20:33:50 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	pipex(t_cmd *args)
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
 			execve(temp->path, temp->cmd, args->env_for_excecute);
-			perror("exec: ");
+			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
 		}
 		close(prev_pipe);
@@ -113,9 +113,9 @@ void	pipex(t_cmd *args)
 			outfile = open(last->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
 			dup2(outfile, STDOUT_FILENO);
 			close(outfile);
-			printf("ads");
 		}
 		execve(temp->path, temp->cmd, args->env_for_excecute);
+		perror(ft_strjoin("minishell: ", temp->cmd[0]));
 	}
 	wait(&child);
 	if (args->pipe_n)
