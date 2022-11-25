@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/25 20:33:50 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/25 20:41:38 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,13 @@ void	pipex(t_cmd *args)
 			dup2(outfile, STDOUT_FILENO);
 			close(outfile);
 		}
+		if (!temp->path)
+		{
+			args->err = 127;
+			printf("minishell: %s: command not found\n", args->cmd[0]);
+		}
 		execve(temp->path, temp->cmd, args->env_for_excecute);
-		perror(ft_strjoin("minishell: ", temp->cmd[0]));
+		// perror(ft_strjoin("minishell: ", temp->cmd[0]));
 	}
 	wait(&child);
 	if (args->pipe_n)
