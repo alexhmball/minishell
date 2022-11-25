@@ -6,18 +6,11 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/25 19:37:38 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/25 19:55:59 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_pipe	*my_lst_last(t_pipe *temp)
-{
-	while(temp)
-		temp = temp->next;
-	return (temp);
-}
 
 size_t	my_lst_size(t_pipe *temp)
 {
@@ -40,34 +33,25 @@ void	pipex(t_cmd *args)
 	int		child;
 	int		fd[2];
 	int		infile;
+	int		outfile;
 	size_t	lst_size;
-	// int		i;
+	size_t	i;
 
 	temp = *args->pipe;
 	lst_size = my_lst_size(temp);
-	last = my_lst_last(temp);
-	// while (temp)
-	// {
-	// 	i = 0;
-	// 	while (temp->cmd[i])
-	// 	{
-	// 		printf("cmd in pipe: %s\n", temp->cmd[i++]);
-	// 	}
-	// 	printf("path in pipe: %s\n", temp->path);
-	// 	printf("pipe? in pipe %d\n", temp->is_pipe);
-	// 	printf("in? in pipe %d\n", temp->in);
-	// 	printf("out? in pipe %d\n", temp->out);
-	// 	printf(".....\n");
-	// 	temp = temp->next;
-	// }
+	last = lstlast_pipe(temp);
+	i = 0;
+	if (last->out)
+		lst_size--;
 	prev_pipe = STDIN_FILENO;
 	if (temp->in)
 	{
+		lst_size--;
 		infile = open(temp->path, O_RDONLY);
 		temp->next->in = 1;
 		temp = temp->next;
 	}
-	while (temp->next && args->pipe_n)
+	while (i <= lst_size - 2 && args->pipe_n)
 	{
 		printf("n: %d\n", args->pipe_n);
 		if (pipe(fd) == -1)
@@ -104,6 +88,7 @@ void	pipex(t_cmd *args)
 		close(fd[1]);
 		prev_pipe = fd[0];
 		temp = temp->next;
+		i++;
 	}
 	child = fork();
 	if (child == -1)
@@ -122,6 +107,13 @@ void	pipex(t_cmd *args)
 		{
 			dup2(infile, STDIN_FILENO);
 			close(infile);
+		}
+		if (last->out)
+		{
+			outfile = open(last->cmd[0], O_RDWR | O_CREAT, 0777);
+			dup2(outfile, STDOUT_FILENO);
+			close(outfile);
+			printf("ads");
 		}
 		execve(temp->path, temp->cmd, args->env_for_excecute);
 	}
