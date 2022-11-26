@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 20:17:30 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 20:21:20 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	parse_pipe(t_cmd *args)
 	temp = *args->pipe;
 	while (temp)
 	{
-		// if (temp->next && temp->is_pipe)
-		// 	temp = remove_node(args->pipe, temp, prev, i);
+		if (temp->next && temp->is_pipe)
+			temp = remove_node(args->pipe, temp, prev, i);
 		prev = temp;
 		temp = temp->next;
 		i++;
