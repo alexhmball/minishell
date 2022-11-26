@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/26 23:53:17 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/27 01:46:22 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,21 @@ void	pipex(t_cmd *args)
 			if (temp->out)
 				temp = temp->next;
 			cmd = temp;
-			if (prev_pipe != STDIN_FILENO)
+			if (prev_pipe != STDIN_FILENO && !temp->in)
 			{
 				dup2(prev_pipe, STDIN_FILENO);
 				close(prev_pipe);
+			}
+			while (prev_pipe != STDIN_FILENO && temp->in)
+			{
+				infile = open(temp->path, O_RDONLY);
+				if (infile < 0)
+				{
+					perror(ft_strjoin("minishell: ", temp->cmd[0]));
+					exit(EXIT_FAILURE);
+				}
+				close(infile);
+				temp = temp->next;
 			}
 			if (prev_pipe == STDIN_FILENO && prev_node)
 			{

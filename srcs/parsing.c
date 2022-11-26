@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 00:11:44 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/27 01:46:15 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_pipe(t_cmd *args)
 	// 	temp = temp->next;
 	// }
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	organize_cmds(args);
+	// organize_cmds(args);
 	temp = *args->pipe;
 	while (temp)
 	{
