@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 22:04:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 03:26:07 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,40 +123,12 @@ void	create_pipe_list(t_cmd *args)
 			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 			// my_free(args->path);
 			temp = temp->next;
-			while (args->cmd[i + 1] && args->cmd[i + 1][0] != '>' && args->cmd[i + 1][0] != '<' && args->cmd[i + 1][0] != '|')
-			{
-				// printf("~~%s~~\n", args->cmd[i]);
-				temp->cmd = append_str(temp->cmd, args->cmd[i]);
-				i++;
-			}
 		}
-		// else if (validate_path(args->cmd[i], args) && (args->cmd[i - 1][0] == '>' || args->cmd[i - 1][0] == '<') && ft_strlen(args->cmd[i - 1]) > 1)
-		// {
-		// 	args->cmd[i] = check_single_path(args->cmd[i], args);
-		// 	lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-		// 	// my_free(args->path);
-		// 	temp = temp->next;
-		// 	i++;
-		// 	while (args->cmd[i] && args->cmd[i][0] != '>' && args->cmd[i][0] != '<' && args->cmd[i][0] != '|')
-		// 	{
-		// 		temp->cmd = append_str(temp->cmd, args->cmd[i]);
-		// 		i++;
-		// 	}
-		// }
 		else if (args->cmd[i] && args->cmd[i][0] == '|')
 		{
 			parse_args_back(args, i);
 			temp = temp->next;
 			temp->is_pipe = 1;
-			i++;
-			if (args->cmd[i])
-			{
-				validate_path(args->cmd[i], args);
-				args->cmd[i] = check_single_path(args->cmd[i], args);
-				lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-				// my_free(args->path);
-				temp = temp->next;
-			}
 		}
 		else if (args->cmd[i] && (args->cmd[i][0] == '>' || args->cmd[i][0] == '<'))
 		{
@@ -167,10 +139,7 @@ void	create_pipe_list(t_cmd *args)
 				temp->cmd = append_str(temp->cmd, args->cmd[i]);
 		}
 		else if (args->cmd[i] && temp->cmd[0][0] != '>' && temp->cmd[0][0] != '<')
-		{
-			// printf("~~%s~~\n", args->cmd[i]);
 			temp->cmd = append_str(temp->cmd, args->cmd[i]);
-		}
 		else
 		{
 			validate_path(args->cmd[i], args);
@@ -179,7 +148,6 @@ void	create_pipe_list(t_cmd *args)
 			// my_free(args->path);
 			temp = temp->next;
 		}
-		if (args->cmd[i])
-			i++;
+		i++;
 	}
 }
