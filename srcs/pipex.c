@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/25 20:45:30 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 19:01:28 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,28 @@ void	pipex(t_cmd *args)
 	int		fd[2];
 	int		infile;
 	int		outfile;
-	size_t	lst_size;
-	size_t	i;
+	// size_t	lst_size;
+	// size_t	i;
 
 	temp = *args->pipe;
-	lst_size = my_lst_size(temp);
+	// lst_size = my_lst_size(temp);
+	// printf("size: %zu\n", lst_size);
 	last = lstlast_pipe(temp);
-	i = 0;
-	if (last->out)
-		lst_size--;
+	// i = 0;
+	// if (last->out)
+	// 	lst_size--;
 	prev_pipe = STDIN_FILENO;
 	if (temp->in)
 	{
-		lst_size--;
+		// lst_size--;
 		infile = open(temp->path, O_RDONLY);
 		temp->next->in = 1;
 		temp = temp->next;
 	}
-	while (i <= lst_size - 2 && args->pipe_n)
+	while (temp)
 	{
 		printf("n: %d\n", args->pipe_n);
-		if (pipe(fd) == -1)
+		if (pipe(fd) == -1 && args->pipe_n)
 		{
 			perror("pipe: ");
 			exit(EXIT_FAILURE);
@@ -67,6 +68,8 @@ void	pipex(t_cmd *args)
 		}
 		if (!child)
 		{
+			if (temp->out)
+				temp = temp->next;
 			if (prev_pipe != STDIN_FILENO)
 			{
 				dup2(prev_pipe, STDIN_FILENO);
@@ -78,8 +81,17 @@ void	pipex(t_cmd *args)
 				prev_pipe = infile;
 				close(infile);
 			}
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[1]);
+			if (temp->next && temp->next->out)
+			{
+				outfile = open(temp->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
+				dup2(outfile, STDOUT_FILENO);
+				close(outfile);
+			}
+			else if (temp->next && args->pipe_n)
+			{
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[1]);
+			}
 			execve(temp->path, temp->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
@@ -88,40 +100,40 @@ void	pipex(t_cmd *args)
 		close(fd[1]);
 		prev_pipe = fd[0];
 		temp = temp->next;
-		i++;
+		// i++;
 	}
-	child = fork();
-	if (child == -1)
-	{
-		perror("fork: ");
-		exit(EXIT_FAILURE);
-	}
-	if (!child)
-	{
-		if (prev_pipe != STDIN_FILENO && args->pipe_n)
-		{
-			dup2(prev_pipe, STDIN_FILENO);
-			close(prev_pipe);
-		}
-		else if (prev_pipe == STDIN_FILENO && infile && !args->pipe_n)
-		{
-			dup2(infile, STDIN_FILENO);
-			close(infile);
-		}
-		if (last->out)
-		{
-			outfile = open(last->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
-			dup2(outfile, STDOUT_FILENO);
-			close(outfile);
-		}
-		if (!temp->path)
-		{
-			args->err = 127;
-			printf("minishell: %s: command not found\n", temp->cmd[0]);
-		}
-		execve(temp->path, temp->cmd, args->env_for_excecute);
-		// perror(ft_strjoin("minishell: ", temp->cmd[0]));
-	}
+	// child = fork();
+	// if (child == -1)
+	// {
+	// 	perror("fork: ");
+	// 	exit(EXIT_FAILURE);
+	// }
+	// if (!child)
+	// {
+	// 	if (prev_pipe != STDIN_FILENO && args->pipe_n)
+	// 	{
+	// 		dup2(prev_pipe, STDIN_FILENO);
+	// 		close(prev_pipe);
+	// 	}
+	// 	else if (prev_pipe == STDIN_FILENO && infile && !args->pipe_n)
+	// 	{
+	// 		dup2(infile, STDIN_FILENO);
+	// 		close(infile);
+	// 	}
+	// 	if (last->out)
+	// 	{
+	// 		outfile = open(last->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
+	// 		dup2(outfile, STDOUT_FILENO);
+	// 		close(outfile);
+	// 	}
+	// 	if (!temp->path)
+	// 	{
+	// 		args->err = 127;
+	// 		printf("minishell: %s: command not found\n", temp->cmd[0]);
+	// 	}
+	// 	execve(temp->path, temp->cmd, args->env_for_excecute);
+	// 	// perror(ft_strjoin("minishell: ", temp->cmd[0]));
+	// }
 	wait(&child);
 	if (args->pipe_n)
 	{
