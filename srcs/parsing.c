@@ -6,21 +6,32 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 18:52:14 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/26 19:09:25 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	print_pipe_list(t_cmd *args)
+int	parse_pipe(t_cmd *args)
 {
 	t_pipe	*temp;
+	t_pipe	*prev;
 	int		i;
 
 	i = 0;
 	if (!flag_list(args))
 		return (0);
+	find_cmd_args(args);
 	organize_cmds(args);
+	temp = *args->pipe;
+	while (temp)
+	{
+		if (temp->next && temp->is_pipe)
+			temp = remove_node(args->pipe, temp, prev, i);
+		prev = temp;
+		temp = temp->next;
+		i++;
+	}
 	temp = *args->pipe;
 	while (temp)
 	{
@@ -80,7 +91,7 @@ int	parsing(t_cmd *args)
 	{
 		// execute_them(args);
 		create_pipe_list(args);
-		if (!print_pipe_list(args))
+		if (!parse_pipe(args))
 			return (args->err);
 		args->pid = fork();
 		if (args->pid == 0)

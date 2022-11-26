@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/25 18:11:05 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 18:55:27 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,11 @@ void	parse_args_back(t_cmd *args, int i);
 void	create_pipe_list(t_cmd *args);
 t_pipe	*my_lst_last(t_pipe *temp);
 size_t	my_lst_size(t_pipe *temp);
+void	find_cmd_args(t_cmd *args);
+t_pipe	*ret_pipe_location(t_pipe **head, int node);
+t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c);
+t_pipe	*pre_pipe(t_pipe **head, int count);
+void	group_args(t_cmd *args, int arg, int cmd);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
