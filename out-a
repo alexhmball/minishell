@@ -1,0 +1,15 @@
+Makefile
+allowed_func.txt
+include
+infile
+libft
+minimal.supp
+minishell
+minishell.log
+objects
+out
+out-a
+out2
+out3
+srcs
+suppress.sh

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 22:39:46 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/26 22:42:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	parse_pipe(t_cmd *args)
 int	parsing(t_cmd *args)
 {
 	init_struct(args);
+	rl_redisplay();
 	args->s = readline("\x1b[30m\x1b[46mminishell$\x1b[m ");
 	if (!args->s)
 		return (0);
