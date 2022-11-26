@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/26 22:37:40 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/26 23:18:35 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ void	pipex(t_cmd *args)
 	int		infile;
 	int		outfile;
 	int		prev_node;
+	int		prev_out;
 	// size_t	lst_size;
 	// size_t	i;
 
 	temp = *args->pipe;
 	prev_node = 0;
+	prev_out = 0;
 	// lst_size = my_lst_size(temp);
 	// printf("size: %zu\n", lst_size);
 	last = lstlast_pipe(temp);
@@ -104,8 +106,9 @@ void	pipex(t_cmd *args)
 				outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
 				dup2(outfile, STDOUT_FILENO);
 				close(outfile);
+				prev_out = 1;
 			}
-			if (temp->next && args->pipe_n)
+			if (temp->next && args->pipe_n && !prev_out)
 			{
 				dup2(fd[1], STDOUT_FILENO);
 				close(fd[1]);
