@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 01:32:03 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 01:43:32 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ int	parsing(t_cmd *args)
 			exit(args->err);
 		}
 		waitpid(-1, &args->pid, 0);
-		// wait(&args->pid);
-		// exit (0);
 	}
 	// freedom(args->cmd);
 	// my_free(args->s);
