@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 20:44:53 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 22:04:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	create_pipe_list(t_cmd *args)
 			temp = temp->next;
 			while (args->cmd[i + 1] && args->cmd[i + 1][0] != '>' && args->cmd[i + 1][0] != '<' && args->cmd[i + 1][0] != '|')
 			{
-				printf("~~%s~~\n", args->cmd[i]);
+				// printf("~~%s~~\n", args->cmd[i]);
 				temp->cmd = append_str(temp->cmd, args->cmd[i]);
 				i++;
 			}
@@ -168,7 +168,7 @@ void	create_pipe_list(t_cmd *args)
 		}
 		else if (args->cmd[i] && temp->cmd[0][0] != '>' && temp->cmd[0][0] != '<')
 		{
-			printf("~~%s~~\n", args->cmd[i]);
+			// printf("~~%s~~\n", args->cmd[i]);
 			temp->cmd = append_str(temp->cmd, args->cmd[i]);
 		}
 		else
