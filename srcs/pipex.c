@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/26 23:34:42 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/26 23:53:17 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	pipex(t_cmd *args)
 				close(outfile);
 				temp = temp->next;
 			}
-			if (!temp->next && temp->out)
+			if (temp->out)
 			{
 				outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0666);
 				dup2(outfile, STDOUT_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 23:21:01 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 00:11:44 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	parsing(t_cmd *args)
 		{
 			pipex(args);
 			waitpid(0, &args->pid, 0);
-			exit(EXIT_SUCCESS);
+			// exit(EXIT_SUCCESS);
 		}
 		waitpid(0, &args->pid, 0);
 		// wait(&args->pid);
