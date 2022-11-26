@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/26 20:26:38 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/26 21:21:25 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	pipex(t_cmd *args)
 {
 	t_pipe	*temp;
 	t_pipe	*last;
+	t_pipe	*cmd;
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
@@ -78,6 +79,7 @@ void	pipex(t_cmd *args)
 		{
 			if (temp->out)
 				temp = temp->next;
+			cmd = temp;
 			if (prev_pipe != STDIN_FILENO)
 			{
 				dup2(prev_pipe, STDIN_FILENO);
@@ -92,6 +94,14 @@ void	pipex(t_cmd *args)
 			while (temp->next && temp->next->out)
 			{
 				outfile = open(temp->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
+				// if (!temp->next)
+				// 	dup2(outfile, STDOUT_FILENO);
+				close(outfile);
+				temp = temp->next;
+			}
+			if (!temp->next && temp->out)
+			{
+				outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
 				dup2(outfile, STDOUT_FILENO);
 				close(outfile);
 			}
@@ -100,13 +110,15 @@ void	pipex(t_cmd *args)
 			// 	dup2(fd[1], STDOUT_FILENO);
 			// 	close(fd[1]);
 			// }
-			execve(temp->path, temp->cmd, args->env_for_excecute);
+			execve(cmd->path, cmd->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
 		}
 		close(prev_pipe);
 		close(fd[1]);
 		prev_pipe = fd[0];
+		while (temp->next && temp->next->out)
+			temp = temp->next;
 		temp = temp->next;
 		// i++;
 	}
