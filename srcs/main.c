@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 16:33:09 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 16:38:42 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,17 @@ void	handler(int signo, siginfo_t *info, void *context)
 
 int	main(int ac, char **av, char **env)
 {
-	// struct sigaction	sa;
+	struct sigaction	sa;
 	t_cmd				args;
 
 	(void)ac;
 	(void)av;
-	// sa.sa_sigaction = &handler;
-	// sa.sa_flags = SA_NOCLDSTOP;
-	// sigemptyset(&sa.sa_mask);
-	// sigaction(SIGINT, &sa, NULL);
-	// signal(SIGQUIT, SIG_IGN);
+	sa.sa_sigaction = &handler;
+	sa.sa_flags = SA_NOCLDSTOP;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 	args.err = 0;
-	if (!*env)
-		printf("nope\n");
 	args.env = create_env(env);
 	args.env_for_excecute = env;
 	while (1)
