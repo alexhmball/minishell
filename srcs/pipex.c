@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/26 21:21:25 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/26 22:37:40 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ void	pipex(t_cmd *args)
 				dup2(outfile, STDOUT_FILENO);
 				close(outfile);
 			}
-			// if (temp->next && args->pipe_n)
-			// {
-			// 	dup2(fd[1], STDOUT_FILENO);
-			// 	close(fd[1]);
-			// }
+			if (temp->next && args->pipe_n)
+			{
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[1]);
+			}
 			execve(cmd->path, cmd->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
@@ -160,5 +160,5 @@ void	pipex(t_cmd *args)
 		close(fd[0]);
 		close(fd[1]);
 	}
-	exit(EXIT_SUCCESS);
+	// exit(EXIT_SUCCESS);
 }
