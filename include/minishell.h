@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 18:55:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 23:21:06 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,21 @@ typedef struct s_pipe
 
 typedef struct	s_cmd
 {
-	char			**cmd;
-	char			*path;
-	char			*s;
-	int				err;
-	int				*expand;
-	int				need_exp;
-	int				pid;
-	int				fd;
-	int				pipe_n;
-	int				redirect;
-	char			**env_for_excecute;
-	DIR				*folder;
-	t_list			**env;
-	t_pipe			**pipe;
-	struct dirent	*dir;
+	char				**cmd;
+	char				*path;
+	char				*s;
+	int					err;
+	int					*expand;
+	int					need_exp;
+	int					pid;
+	int					fd;
+	int					pipe_n;
+	int					redirect;
+	char				**env_for_excecute;
+	DIR					*folder;
+	t_list				**env;
+	t_pipe				**pipe;
+	struct dirent		*dir;
 }			t_cmd;
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
