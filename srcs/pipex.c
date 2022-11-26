@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/26 23:23:25 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 01:26:30 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ void	pipex(t_cmd *args)
 			}
 			while (temp->next && temp->next->out)
 			{
-				outfile = open(temp->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
+				outfile = open(temp->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0666);
 				// if (!temp->next)
 				// 	dup2(outfile, STDOUT_FILENO);
 				close(outfile);
 				temp = temp->next;
 			}
-			if (!temp->next && temp->out)
+			if (temp->out)
 			{
-				outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
+				outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0666);
 				dup2(outfile, STDOUT_FILENO);
 				close(outfile);
 				prev_out = 1;
@@ -157,7 +157,8 @@ void	pipex(t_cmd *args)
 	// 	execve(temp->path, temp->cmd, args->env_for_excecute);
 	// 	// perror(ft_strjoin("minishell: ", temp->cmd[0]));
 	// }
-	wait(&child);
+	waitpid(-1, &child, 0);
+	// wait(&child);
 	if (args->pipe_n)
 	{
 		close(fd[0]);
