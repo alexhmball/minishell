@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 20:00:44 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 20:23:07 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	group_args(t_cmd *args, int arg, int cmd)
 
 	i = 0;
 	cmd_pipe = ret_pipe_location(args->pipe, cmd);
-	printf("cmd: %s\n", cmd_pipe->cmd[0]);
+	// printf("cmd: %s\n", cmd_pipe->cmd[0]);
 	arg_pipe = ret_pipe_location(args->pipe, arg);
-	printf("arg: %s\n", arg_pipe->cmd[0]);
-	printf("pre: %s\n", pre_pipe(args->pipe, arg)->next->cmd[0]);
+	// printf("arg: %s\n", arg_pipe->cmd[0]);
+	// printf("pre: %s\n", pre_pipe(args->pipe, arg)->next->cmd[0]);
 	while (arg_pipe->cmd[i])
 		cmd_pipe->cmd = append_str(cmd_pipe->cmd, arg_pipe->cmd[i++]);
 	remove_node(args->pipe, arg_pipe, pre_pipe(args->pipe, arg)->next, arg);
@@ -87,7 +87,7 @@ void	find_cmd_args(t_cmd *args)
 		}
 		if (cmd != -1 && arg != -1)
 		{
-			printf("cmd: %d arg: %d\n", cmd, arg);
+			// printf("cmd: %d arg: %d\n", cmd, arg);
 			group_args(args, arg, cmd);
 			counter = 0;
 			temp = *args->pipe;
