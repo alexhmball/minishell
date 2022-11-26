@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/26 19:01:28 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/26 20:26:38 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void	pipex(t_cmd *args)
 	int		fd[2];
 	int		infile;
 	int		outfile;
+	int		prev_node;
 	// size_t	lst_size;
 	// size_t	i;
 
 	temp = *args->pipe;
+	prev_node = 0;
 	// lst_size = my_lst_size(temp);
 	// printf("size: %zu\n", lst_size);
 	last = lstlast_pipe(temp);
@@ -45,11 +47,17 @@ void	pipex(t_cmd *args)
 	// if (last->out)
 	// 	lst_size--;
 	prev_pipe = STDIN_FILENO;
-	if (temp->in)
+	while (temp->in && temp->next)
 	{
 		// lst_size--;
 		infile = open(temp->path, O_RDONLY);
-		temp->next->in = 1;
+		if (infile < 0)
+		{
+			perror(ft_strjoin("minishell: ", temp->cmd[0]));
+			exit(EXIT_FAILURE);
+		}
+		// temp->next->in = 1;
+		prev_node = 1;
 		temp = temp->next;
 	}
 	while (temp)
@@ -75,23 +83,23 @@ void	pipex(t_cmd *args)
 				dup2(prev_pipe, STDIN_FILENO);
 				close(prev_pipe);
 			}
-			if (prev_pipe == STDIN_FILENO && temp->in)
+			if (prev_pipe == STDIN_FILENO && prev_node)
 			{
 				dup2(infile, STDIN_FILENO);
 				prev_pipe = infile;
 				close(infile);
 			}
-			if (temp->next && temp->next->out)
+			while (temp->next && temp->next->out)
 			{
 				outfile = open(temp->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0777);
 				dup2(outfile, STDOUT_FILENO);
 				close(outfile);
 			}
-			else if (temp->next && args->pipe_n)
-			{
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-			}
+			// if (temp->next && args->pipe_n)
+			// {
+			// 	dup2(fd[1], STDOUT_FILENO);
+			// 	close(fd[1]);
+			// }
 			execve(temp->path, temp->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
