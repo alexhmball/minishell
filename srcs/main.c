@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 16:38:42 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 01:40:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handler(int signo, siginfo_t *info, void *context)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		printf("\n");
+		printf("\n\a");
 		rl_redisplay();
 	}
 }
