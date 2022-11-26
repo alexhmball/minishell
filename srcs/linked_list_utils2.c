@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 18:56:42 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/26 19:25:34 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	setup_lst_front(t_cmd *args, int i)
 	args->pipe = (t_pipe **)malloc(sizeof(t_pipe *));
 	// my_free(args->path);
 	validate_path(args->cmd[i], args);
-	args->cmd[i] = check_single_path(args->cmd[i], args);
+	// args->cmd[i] = check_single_path(args->cmd[i], args);
 
 }
 
@@ -98,6 +98,11 @@ void	create_pipe_list(t_cmd *args)
 	i = 0;
 	setup_lst_front(args, i);
 	temp = lstnew_pipe(args->cmd[i], args->path);
+	if (args->cmd[i][0] == '>' || args->cmd[i][0] == '<')
+	{
+		i++;
+		temp->cmd = append_str(temp->cmd, args->cmd[i]);
+	}
 	my_free(args->path);
 	*args->pipe = temp;
 	temp->next = NULL;
@@ -117,19 +122,19 @@ void	create_pipe_list(t_cmd *args)
 				i++;
 			}
 		}
-		else if (validate_path(args->cmd[i], args) && (args->cmd[i - 1][0] == '>' || args->cmd[i - 1][0] == '<') && ft_strlen(args->cmd[i - 1]) > 1)
-		{
-			args->cmd[i] = check_single_path(args->cmd[i], args);
-			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			// my_free(args->path);
-			temp = temp->next;
-			i++;
-			while (args->cmd[i] && args->cmd[i][0] != '>' && args->cmd[i][0] != '<' && args->cmd[i][0] != '|')
-			{
-				temp->cmd = append_str(temp->cmd, args->cmd[i]);
-				i++;
-			}
-		}
+		// else if (validate_path(args->cmd[i], args) && (args->cmd[i - 1][0] == '>' || args->cmd[i - 1][0] == '<') && ft_strlen(args->cmd[i - 1]) > 1)
+		// {
+		// 	args->cmd[i] = check_single_path(args->cmd[i], args);
+		// 	lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
+		// 	// my_free(args->path);
+		// 	temp = temp->next;
+		// 	i++;
+		// 	while (args->cmd[i] && args->cmd[i][0] != '>' && args->cmd[i][0] != '<' && args->cmd[i][0] != '|')
+		// 	{
+		// 		temp->cmd = append_str(temp->cmd, args->cmd[i]);
+		// 		i++;
+		// 	}
+		// }
 		else if (args->cmd[i] && args->cmd[i][0] == '|')
 		{
 			parse_args_back(args, i);
