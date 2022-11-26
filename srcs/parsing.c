@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 01:46:15 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/27 01:49:34 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,11 @@ int	parsing(t_cmd *args)
 		if (args->pid == 0)
 		{
 			pipex(args);
-			waitpid(0, &args->pid, 0);
-			// exit(EXIT_SUCCESS);
+			while (waitpid(-1, &args->pid, 0) > 0)
+				;
+			exit(args->err);
 		}
-		waitpid(0, &args->pid, 0);
+		waitpid(-1, &args->pid, 0);
 		// wait(&args->pid);
 		// exit (0);
 	}
