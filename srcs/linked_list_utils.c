@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/26 20:19:41 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 04:02:16 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ t_pipe	*pre_pipe(t_pipe **head, int count)
 	return (temp);
 }
 
-void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int count)
+void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, t_pipe *prev)
 {
-	if (count == 0)
+	if (prev == *head)
 		*head = node2;
-	if (count > 0)
-		pre_pipe(head, count)->next = node2;
+	else
+		prev->next = node2;
 	node1->next = node2->next;
 	node2->next = node1;
 }
@@ -49,20 +49,19 @@ void	organize_cmds(t_cmd *args)
 	c = 0;
 	while (temp)
 	{
-		if (temp->next && temp->next->in && temp->path
-			&& !temp->in && !temp->is_pipe && !temp->next->is_pipe && !temp->out && !temp->next->out)
+		if (temp->next && temp->next->in && !temp->in && !temp->is_pipe && !temp->next->is_pipe && !temp->out && !temp->next->out)
 		{
-			swap_node(temp, temp->next, args->pipe, c);
+			swap_node(temp, temp->next, args->pipe, prev);
 			temp = *args->pipe;
 			c = 0;
 		}
-		// else if (prev && prev->out && !temp->out && !temp->in)
-		// {
-		// 	swap_node(prev, temp, args->pipe, c);
-		// 	temp = *args->pipe;
-		// 	prev = NULL;
-		// 	c = 0;
-		// }
+		else if (temp->next && temp->out && !temp->next->out && !temp->is_pipe && !temp->next->is_pipe)
+		{
+			swap_node(temp, temp->next, args->pipe, prev);
+			temp = *args->pipe;
+			prev = NULL;
+			c = 0;
+		}
 		if (c)
 			prev = temp;
 		temp = temp->next;
@@ -115,7 +114,6 @@ int	flag_list(t_cmd *args)
 			validate_path(temp->cmd[0], args);
 			temp->path = args->path;
 		}
-
 		prev = temp;
 		temp = temp->next;
 		c++;

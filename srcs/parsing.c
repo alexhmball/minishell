@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 03:15:53 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 03:29:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_pipe(t_cmd *args)
 		temp = temp->next;
 	}
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	// organize_cmds(args);
+	organize_cmds(args);
 	temp = *args->pipe;
 	while (temp)
 	{
