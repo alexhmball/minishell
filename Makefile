@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
+#    By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/23 04:11:19 by aball            ###   ########.fr        #
+#    Updated: 2022/11/27 04:58:55 by talsaiaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 FILES = main parsing echo quotes freedom utils pwd cd env expand unset check export \
 		str_utils linked_list path init error execute linked_list_utils pipex \
-		linked_list_utils2
+		linked_list_utils2 setting_up_fds
 
 OBJDIR = objects
 
