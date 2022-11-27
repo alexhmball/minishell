@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 03:26:07 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 07:28:08 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	parse_args_back(t_cmd *args, int i)
 {
-	// my_free(args->path);
 	validate_path(args->cmd[i], args);
 	args->cmd[i] = check_single_path(args->cmd[i], args);
 	lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
+	my_free(args->path);
 }
 
 void	setup_lst_front(t_cmd *args, int i)
@@ -50,10 +50,7 @@ void	group_args(t_cmd *args, int arg, int cmd)
 
 	i = 0;
 	cmd_pipe = ret_pipe_location(args->pipe, cmd);
-	// printf("cmd: %s\n", cmd_pipe->cmd[0]);
 	arg_pipe = ret_pipe_location(args->pipe, arg);
-	// printf("arg: %s\n", arg_pipe->cmd[0]);
-	// printf("pre: %s\n", pre_pipe(args->pipe, arg)->next->cmd[0]);
 	while (arg_pipe->cmd[i])
 		cmd_pipe->cmd = append_str(cmd_pipe->cmd, arg_pipe->cmd[i++]);
 	remove_node(args->pipe, arg_pipe, pre_pipe(args->pipe, arg)->next, arg);
@@ -87,7 +84,6 @@ void	find_cmd_args(t_cmd *args)
 		}
 		if (cmd != -1 && arg != -1)
 		{
-			// printf("cmd: %d arg: %d\n", cmd, arg);
 			group_args(args, arg, cmd);
 			counter = 0;
 			temp = *args->pipe;
@@ -101,53 +97,47 @@ void	find_cmd_args(t_cmd *args)
 void	create_pipe_list(t_cmd *args)
 {
 	t_pipe	*temp;
+	t_pipe	*prev;
 	int		i;
 
 	i = 0;
 	setup_lst_front(args, i);
 	temp = lstnew_pipe(args->cmd[i], args->path);
-	if (args->cmd[i][0] == '>' || args->cmd[i][0] == '<')
-	{
-		i++;
-		temp->cmd = append_str(temp->cmd, args->cmd[i]);
-	}
 	my_free(args->path);
 	*args->pipe = temp;
 	temp->next = NULL;
+	prev = NULL;
 	i++;
 	while (args->cmd[i])
 	{
-		if (validate_path(args->cmd[i], args) && args->cmd[i - 1][0] != '>' && args->cmd[i - 1][0] != '<' && !temp->path)
-		{
-			args->cmd[i] = check_single_path(args->cmd[i], args);
-			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			// my_free(args->path);
-			temp = temp->next;
-		}
-		else if (args->cmd[i] && args->cmd[i][0] == '|')
-		{
-			parse_args_back(args, i);
-			temp = temp->next;
+		parse_args_back(args, i);
+		i++;
+		temp = temp->next;
+	}
+	temp = *args->pipe;
+	i = 0;
+	while (temp)
+	{
+		if (temp->cmd[0][0] == '|')
 			temp->is_pipe = 1;
-		}
-		else if (args->cmd[i] && (args->cmd[i][0] == '>' || args->cmd[i][0] == '<'))
+		else if (temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) == 1)
 		{
-			parse_args_back(args, i);
-			temp = temp->next;
-			i++;
-			if (args->cmd[i])
-				temp->cmd = append_str(temp->cmd, args->cmd[i]);
+			temp->next->in = 1;
+			temp = remove_node(args->pipe, temp, prev, i);
+			i = 0;
 		}
-		else if (args->cmd[i] && temp->cmd[0][0] != '>' && temp->cmd[0][0] != '<')
-			temp->cmd = append_str(temp->cmd, args->cmd[i]);
-		else
+		else if (temp->cmd[0][0] == '>' && ft_strlen(temp->cmd[0]) == 1)
 		{
-			validate_path(args->cmd[i], args);
-			args->cmd[i] = check_single_path(args->cmd[i], args);
-			lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
-			// my_free(args->path);
-			temp = temp->next;
+			temp->next->out = 1;
+			temp = remove_node(args->pipe, temp, prev, i);
+			i = 0;
 		}
+		else if (temp->cmd[0][0] == '<')
+			temp->in = 1;
+		else if (temp->cmd[0][0] == '>')
+			temp->out = 1;
+		prev = temp;
+		temp = temp->next;
 		i++;
 	}
 }
