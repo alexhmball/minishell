@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 07:28:08 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 10:05:08 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	find_cmd_args(t_cmd *args)
 			counter++;
 			temp = temp->next;
 		}
+		printf("cmd: %d, arg: %d\n", cmd, arg);
 		if (cmd != -1 && arg != -1)
 		{
 			group_args(args, arg, cmd);

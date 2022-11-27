@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+         #
+#    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/27 04:58:55 by talsaiaa         ###   ########.fr        #
+#    Updated: 2022/11/27 09:10:33 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ $(OBJDIR)/%.o : srcs/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: libft $(NAME)
+	@cat talal.ansi.txt
 	@tput setaf 2
 	@printf 'Executable Compiled\n'
 	@tput setaf 7
