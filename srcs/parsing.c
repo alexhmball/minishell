@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 03:29:18 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 05:12:31 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,21 @@ int	parse_pipe(t_cmd *args)
 	if (!flag_list(args))
 		return (0);
 	find_cmd_args(args);
-		temp = *args->pipe;
-	while (temp)
-	{
-		i = 0;
-		while (temp->cmd[i])
-		{
-			printf("cmd: %s\n", temp->cmd[i++]);
-		}
-		printf("path: %s\n", temp->path);
-		printf("pipe? %d\n", temp->is_pipe);
-		printf("in? %d\n", temp->in);
-		printf("out? %d\n", temp->out);
-		printf(".....\n");
-		temp = temp->next;
-	}
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	// 	temp = *args->pipe;
+	// while (temp)
+	// {
+	// 	i = 0;
+	// 	while (temp->cmd[i])
+	// 	{
+	// 		printf("cmd: %s\n", temp->cmd[i++]);
+	// 	}
+	// 	printf("path: %s\n", temp->path);
+	// 	printf("pipe? %d\n", temp->is_pipe);
+	// 	printf("in? %d\n", temp->in);
+	// 	printf("out? %d\n", temp->out);
+	// 	printf(".....\n");
+	// 	temp = temp->next;
+	// }
 	organize_cmds(args);
 	temp = *args->pipe;
 	while (temp)
@@ -63,6 +62,7 @@ int	parse_pipe(t_cmd *args)
 		printf(".....\n");
 		temp = temp->next;
 	}
+	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	return (1);
 }
 

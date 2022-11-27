@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 04:02:16 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 05:11:44 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_pipe	*pre_pipe(t_pipe **head, int count)
 
 void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, t_pipe *prev)
 {
-	if (prev == *head)
+	if (!prev)
 		*head = node2;
 	else
 		prev->next = node2;
@@ -49,21 +49,30 @@ void	organize_cmds(t_cmd *args)
 	c = 0;
 	while (temp)
 	{
-		if (temp->next && temp->next->in && !temp->in && !temp->is_pipe && !temp->next->is_pipe && !temp->out && !temp->next->out)
-		{
-			swap_node(temp, temp->next, args->pipe, prev);
-			temp = *args->pipe;
-			c = 0;
-		}
-		else if (temp->next && temp->out && !temp->next->out && !temp->is_pipe && !temp->next->is_pipe)
+		if (temp->next && temp->next->in && !temp->in && !temp->is_pipe && !temp->next->is_pipe)
 		{
 			swap_node(temp, temp->next, args->pipe, prev);
 			temp = *args->pipe;
 			prev = NULL;
 			c = 0;
 		}
-		if (c)
-			prev = temp;
+		prev = temp;
+		temp = temp->next;
+		c++;
+	}
+	temp = *args->pipe;
+	prev = NULL;
+	c = 0;
+	while (temp)
+	{
+		if (temp->next && temp->out && !temp->next->out && !temp->is_pipe && !temp->next->is_pipe)
+		{
+			swap_node(temp, temp->next, args->pipe, prev);
+			temp = *args->pipe;
+			prev = NULL;
+			c = 0;
+		}
+		prev = temp;
 		temp = temp->next;
 		c++;
 	}
