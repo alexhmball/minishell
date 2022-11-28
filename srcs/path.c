@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 21:10:04 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 18:43:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 19:01:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,21 @@ int	search_current_dir(t_cmd *args, char *current)
 
 char	*check_single_path(char *cmd, t_cmd *args)
 {
-	int		i;
+	int	i;
+	int	flag;
 
 	i = 0;
+	flag = 0;
 	while (cmd[i])
 	{
 		if (cmd[i] == '/')
+		{
 			cmd = parse_path(args, cmd);
+			flag = 1;
+		}
 		i++;
 	}
+	if (!flag)
+		args->path = NULL;
 	return (cmd);
 }

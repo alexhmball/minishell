@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 10:05:08 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 18:58:26 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	parse_args_back(t_cmd *args, int i)
 {
 	validate_path(args->cmd[i], args);
-	args->cmd[i] = check_single_path(args->cmd[i], args);
+	// args->cmd[i] = check_single_path(args->cmd[i], args);
 	lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 	my_free(args->path);
 }
@@ -53,7 +53,7 @@ void	group_args(t_cmd *args, int arg, int cmd)
 	arg_pipe = ret_pipe_location(args->pipe, arg);
 	while (arg_pipe->cmd[i])
 		cmd_pipe->cmd = append_str(cmd_pipe->cmd, arg_pipe->cmd[i++]);
-	remove_node(args->pipe, arg_pipe, pre_pipe(args->pipe, arg)->next, arg);
+	remove_node(args->pipe, arg_pipe, ret_pipe_location(args->pipe, arg - 1), arg);
 }
 
 void	find_cmd_args(t_cmd *args)
@@ -73,16 +73,15 @@ void	find_cmd_args(t_cmd *args)
 	{
 		while (pipe && temp)
 		{
-			if (temp->path && !temp->in && !temp->out && arg == -1 && !temp->is_pipe)
+			if (temp->path && !temp->in && !temp->out && arg == -1 && !temp->is_pipe && cmd == -1)
 				cmd = counter;
-			else if (!temp->in && !temp->out && cmd != -1 && !temp->is_pipe)
+			else if (!temp->in && !temp->out && cmd != -1  && arg == -1 && !temp->is_pipe)
 				arg = counter;
 			else if (temp->is_pipe)
 				pipe = 0;
 			counter++;
 			temp = temp->next;
 		}
-		printf("cmd: %d, arg: %d\n", cmd, arg);
 		if (cmd != -1 && arg != -1)
 		{
 			group_args(args, arg, cmd);

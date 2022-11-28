@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 07:19:46 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/27 18:42:59 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ int	flag_list(t_cmd *args)
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
+	// while (temp)
+	// {
+	// 	temp->cmd[0] = check_single_path(temp->cmd[0], args);
+	// 	temp->path = args->path;
+	// 	temp = temp->next;
+	// }
 	// while (temp)
 	// {
 	// 	if (temp->cmd[0][0] == '<')

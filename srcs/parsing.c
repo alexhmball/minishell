@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 07:48:22 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/27 21:13:07 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	child_rangler(int signo, siginfo_t *info, void *context)
+{
+	(void)context;
+	(void)info;
+	if (signo == SIGINT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n\a");
+		rl_redisplay();
+		kill(info->si_pid, SIGQUIT);
+	}
+}
+
+void	confirm_path(t_cmd *args)
+{
+	t_pipe	*temp;
+
+	temp = *args->pipe;
+	while (temp)
+	{
+		temp->cmd[0] = check_single_path(temp->cmd[0], args);
+		if (args->path)
+			temp->path = ft_strdup(args->path);
+		temp = temp->next;
+	}
+}
 
 int	parse_pipe(t_cmd *args)
 {
@@ -36,8 +64,9 @@ int	parse_pipe(t_cmd *args)
 		printf(".....\n");
 		temp = temp->next;
 	}
-	organize_cmds(args);
+	confirm_path(args);
 	find_cmd_args(args);
+	organize_cmds(args);
 	temp = *args->pipe;
 	while (temp)
 	{
@@ -97,15 +126,20 @@ int	parsing(t_cmd *args)
 		// wait(&args->pid);
 		// lstclear_pipe(args->pipe, my_free);
 	// }
-	if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
-	{
-		ft_printf("%s\n", args->cmd[0]);
-		return (0);
-	}
+	// if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
+	// {
+	// 	ft_printf("%s\n", args->cmd[0]);
+	// 	return (0);
+	// }
 	// else if (is_us(args))
 	// 	excecute_us(args);
 	else /*if (check_dir(args) || check_path(args))*/
 	{
+		struct sigaction	sig;
+
+		sig.sa_sigaction = &child_rangler;
+		sig.sa_flags = SA_NOCLDSTOP;
+		sigemptyset(&sig.sa_mask);
 		// execute_them(args);
 		create_pipe_list(args);
 		if (!parse_pipe(args))
@@ -113,6 +147,7 @@ int	parsing(t_cmd *args)
 		args->pid = fork();
 		if (args->pid == 0)
 		{
+			sigaction(SIGINT, &sig, NULL);
 			pipex(args);
 			while (waitpid(-1, &args->pid, 0) > 0)
 				;
