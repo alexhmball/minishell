@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/30 01:57:39 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/30 02:14:35 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 			close(outfile);
 			temp = temp->next;
 		}
-		outfile = open(temp->cmd[0], O_RDWR| O_CREAT | O_TRUNC, 0666);
+		if (temp->append)
+			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0666);
+		else
+			outfile = open(temp->cmd[0], O_RDWR| O_CREAT | O_TRUNC, 0666);
 		if (outfile < 0)
 		{
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
