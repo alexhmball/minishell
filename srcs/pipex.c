@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/27 07:30:14 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:21:15 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	pipex(t_cmd *args)
 	// 	prev_node = 1;
 	// 	temp = temp->next;
 	// }
-	while (temp && !temp->out)
+	while (temp)
 	{
 		printf("n: %d\n", args->pipe_n);
 		if (pipe(fd) == -1 && args->pipe_n)
@@ -81,18 +81,15 @@ void	pipex(t_cmd *args)
 		{
 			// if (temp->out)
 			// 	temp = temp->next;
-			temp = setting_up_ins(temp, &prev_pipe);
 			cmd = temp;
 			printf("cmd: %s\n", temp->cmd[0]);
 			// printf("cmd next: %d\n", temp->next->out);
+			temp = setting_up_ins(temp, &prev_pipe);
 			// if (temp->next)
 			// 	temp = temp->next;
-			if (temp->next && temp->next->out)
-			{
-				printf("hello\n");
-				temp = temp->next;
-				temp = setting_up_outs(temp, args, fd, &prev_out);
-			}
+			printf("hello\n");
+			// temp = temp->next;
+			temp = setting_up_outs(temp, args, fd, &prev_out);
 			printf("temp after: %s\n", temp->cmd[0]);
 			// if (prev_pipe != STDIN_FILENO && !temp->in)
 			// {
