@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/27 07:35:21 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:03:14 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 		// temp = temp->next;
 		*prev_out = 1;
 	}
-	if (*prev_out && args->pipe_n && temp->next)
+	if (*prev_out == 0 && args->pipe_n && temp->next)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
