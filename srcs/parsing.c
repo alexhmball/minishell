@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 01:49:18 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 03:06:37 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,24 @@ int	parse_pipe(t_cmd *args)
 		temp = temp->next;
 		i++;
 	}
+	temp = *args->pipe;
+	i = 0;
+	while (temp)
+	{
+		if (temp->next && temp->next->here_doc && !temp->here_doc)
+		{
+			swap_node(temp, temp->next, args->pipe, i);
+			temp = *args->pipe;
+			prev = NULL;
+			i = -1;
+		}
+		if (i > -1)
+		{
+			prev = temp;
+			temp = temp->next;
+		}
+		i++;
+	}
 	print_pipe(args->pipe);
 	return (1);
 }
@@ -100,11 +118,11 @@ int	parsing(t_cmd *args)
 		// wait(&args->pid);
 		// lstclear_pipe(args->pipe, my_free);
 	// }
-	// if (ft_strlen(args->cmd[0]) == 4 && !ft_strncmp(args->cmd[0], "exit", 4))
-	// {
-	// 	ft_printf("%s\n", args->cmd[0]);
-	// 	return (0);
-	// }
+	if (!ft_strncmp(args->cmd[0], "exit", 4))
+	{
+		ft_printf("%s\n", args->cmd[0]);
+		return (0);
+	}
 	// else if (is_us(args))
 	// 	excecute_us(args);
 	else /*if (check_dir(args) || check_path(args))*/
