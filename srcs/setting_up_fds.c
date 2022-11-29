@@ -6,13 +6,13 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/30 01:12:37 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/30 02:14:35 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_pipe	*setting_up_ins(t_pipe *temp, int *prev_pipe, int *prev_out)
+t_pipe	*setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args)
 {
 	int	infile;
 
@@ -42,7 +42,7 @@ t_pipe	*setting_up_ins(t_pipe *temp, int *prev_pipe, int *prev_out)
 		if (temp->next && temp->next->out)
 			temp = temp->next;
 	}
-	else if (*prev_pipe != STDIN_FILENO && *prev_out == 0)
+	else if (*prev_pipe != STDIN_FILENO && args->pipe_n)
 	{
 		dup2(*prev_pipe, STDIN_FILENO);
 		close(*prev_pipe);
@@ -69,7 +69,10 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 			close(outfile);
 			temp = temp->next;
 		}
-		outfile = open(temp->cmd[0], O_RDWR| O_CREAT | O_TRUNC, 0666);
+		if (temp->append)
+			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0666);
+		else
+			outfile = open(temp->cmd[0], O_RDWR| O_CREAT | O_TRUNC, 0666);
 		if (outfile < 0)
 		{
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));

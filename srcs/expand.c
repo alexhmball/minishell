@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 19:00:47 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 01:40:05 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,24 +116,24 @@ int	locate_dollar(char *str)
 	return (-1);
 }
 
-void	check_expand(t_cmd *args)
+void	check_expand(t_pipe **head, t_cmd *args)
 {
-	int		i;
 	int		x;
 	int		pos;
-	char	*temp;
+	char	*ret;
+	t_pipe	*temp;
 
-	i = 0;
 	x = 0;
-	while (args->cmd[i])
+	temp = *head;
+	while (temp)
 	{
-		pos = locate_dollar(args->cmd[i]);
+		pos = locate_dollar(temp->cmd[0]);
 		if (pos != -1)
 		{
-			temp = expand(args->cmd[i], pos, args, x);
-			args->cmd[i] = temp;
+			ret = expand(temp->cmd[0], pos, args, x);
+			temp->cmd[0] = ret;
 			x++;
 		}
-		i++;
+		temp = temp->next;
 	}
 }

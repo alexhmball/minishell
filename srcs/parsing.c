@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 01:20:03 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 01:49:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	parse_pipe(t_cmd *args)
 	i = 0;
 	if (!flag_list(args))
 		return (0);
-	confirm_path(args);
+	// confirm_path(args);
 	find_cmd_args(args);
 	organize_cmds(args);
 	temp = *args->pipe;

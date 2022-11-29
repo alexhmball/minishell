@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/30 00:36:44 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/30 01:55:30 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	pipex(t_cmd *args)
 		if (!child)
 		{
 			cmd = temp;
-			temp = setting_up_ins(temp, &prev_pipe, &prev_out);
+			temp = setting_up_ins(temp, &prev_pipe, args);
 			temp = setting_up_outs(temp, args, fd, &prev_out);
 			execve(cmd->path, cmd->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));

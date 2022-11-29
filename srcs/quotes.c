@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 00:34:36 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 02:00:15 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	flag_quotes(t_pipe *node, int *single_q, int *double_q)
 		node->double_q = 1;
 }
 
-void	remove_quotes(t_pipe **head, int single_q, int double_q)
+void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args)
 {
 	int		i;
 	int		flag;
@@ -73,6 +73,9 @@ void	remove_quotes(t_pipe **head, int single_q, int double_q)
 		flag = 0;
 		current->cmd = remove_str(current->cmd, 0);
 		current->cmd = append_str(current->cmd, tmp);
+		validate_path(current->cmd[0], args);
+		if (args->path)
+			current->path = ft_strdup(args->path);
 		my_free(tmp);
 		current = current->next;
 	}

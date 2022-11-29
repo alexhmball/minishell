@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 01:58:23 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 02:28:26 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args);
 void	execute_them(t_cmd *args);
 void	pipex(t_cmd *args);
-t_pipe	*setting_up_ins(t_pipe *temp, int *prev_pipe, int *prev_out);
+t_pipe	*setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args);
 t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
