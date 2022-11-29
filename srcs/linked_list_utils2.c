@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/29 18:52:05 by codespace        ###   ########.fr       */
+/*   Updated: 2022/11/29 23:38:00 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,31 @@ void	find_cmd_args(t_cmd *args)
 	}
 }
 
+void	print_pipe(t_pipe **head)
+{
+	t_pipe	*temp;
+	int		i;
+
+	temp = *head;
+	while (temp)
+	{
+		i = 0;
+		while (temp->cmd[i])
+		{
+			printf("cmd: %s\n", temp->cmd[i++]);
+		}
+		printf("path: %s\n", temp->path);
+		printf("pipe? %d\n", temp->is_pipe);
+		printf("in? %d\n", temp->in);
+		printf("out? %d\n", temp->out);
+		printf("single? %d\n", temp->single_q);
+		printf("double? %d\n", temp->double_q);
+		printf(".....\n");
+		temp = temp->next;
+	}
+		printf("...~~~~~~~~~~~~~~..\n");
+}
+
 void	create_pipe_list(t_cmd *args)
 {
 	t_pipe	*temp;
@@ -114,7 +139,9 @@ void	create_pipe_list(t_cmd *args)
 		i++;
 		temp = temp->next;
 	}
+	print_pipe(args->pipe);
 	remove_quotes(args->pipe, 0, 0);
+	print_pipe(args->pipe);
 	temp = *args->pipe;
 	i = 0;
 	while (temp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/29 18:50:28 by codespace        ###   ########.fr       */
+/*   Updated: 2022/11/29 23:46:34 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	remove_quotes(t_pipe **head, int single_q, int double_q)
 	while (current)
 	{
 		tmp = NULL;
-		while (current->cmd && current->cmd[0][i] && (single_q || double_q || !is_spc_tb(current->cmd[0][i])))
+		while (current->cmd[0][i] && (single_q || double_q || !is_spc_tb(current->cmd[0][i])))
 		{
 			if (current->cmd[0][i] && !check_quotes(current->cmd[0][i], &single_q, &double_q))
 				tmp = add_char(tmp, current->cmd[0][i]);
@@ -69,11 +69,10 @@ void	remove_quotes(t_pipe **head, int single_q, int double_q)
 			}
 			i++;
 		}
+		i = 0;
 		flag = 0;
 		current->cmd = remove_str(current->cmd, 0);
 		current->cmd = append_str(current->cmd, tmp);
-		// my_free(current->cmd[0]);
-		// current->cmd[0] = ft_strdup(tmp);
 		my_free(tmp);
 		current = current->next;
 	}
