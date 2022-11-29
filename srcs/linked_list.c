@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:30:22 by aball             #+#    #+#             */
-/*   Updated: 2022/11/29 21:13:02 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 01:01:52 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_pipe	*lstnew_pipe(char *content, char *path)
 	new->is_pipe = 0;
 	new->double_q = 0;
 	new->single_q = 0;
+	new->here_doc = 0;
+	new->append = 0;
 	new->in = 0;
 	new->out = 0;
 	new->path = ft_strdup(path);

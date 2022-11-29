@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 00:04:16 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 01:11:52 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	print_pipe(t_pipe **head)
 		printf("out? %d\n", temp->out);
 		printf("single? %d\n", temp->single_q);
 		printf("double? %d\n", temp->double_q);
+		printf("append? %d\n", temp->append);
+		printf("heredoc? %d\n", temp->here_doc);
 		printf(".....\n");
 		temp = temp->next;
 	}
@@ -141,7 +143,7 @@ void	create_pipe_list(t_cmd *args)
 	}
 	// print_pipe(args->pipe);
 	remove_quotes(args->pipe, 0, 0);
-	// print_pipe(args->pipe);
+	print_pipe(args->pipe);
 	temp = *args->pipe;
 	i = 0;
 	while (temp)
@@ -161,9 +163,30 @@ void	create_pipe_list(t_cmd *args)
 			i = 0;
 		}
 		else if (temp->cmd[0][0] == '<' && temp->cmd[0][1] != '<' && !temp->double_q && !temp->single_q)
+		{
 			temp->in = 1;
-		else if (temp->cmd[0][0] == '>' && temp->cmd[0][1] != '<' && !temp->double_q && !temp->single_q)
+			temp->cmd[0] = ft_strdup(temp->cmd[0] + 1);
+		}
+		else if (temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) > 1 && temp->cmd[0][1] != '<' && !temp->double_q && !temp->single_q)
+			temp->here_doc = 1;
+		else if (temp->cmd[0][0] == '>' && temp->cmd[0][1] != '>' && !temp->double_q && !temp->single_q)
+		{
 			temp->out = 1;
+			temp->cmd[0] = ft_strdup(temp->cmd[0] + 1);
+		}
+		else if (temp->cmd[0][0] == '>' && temp->cmd[0][1] == '>' && !temp->double_q && !temp->single_q)
+		{
+			temp->append = 1;
+			temp->out = 1;
+			if (ft_strlen(temp->cmd[0]) > 2)
+				temp->cmd[0] = ft_strdup(temp->cmd[0] + 2);
+			else
+			{
+				temp->next->out = 1;
+				temp->next->append = 1;
+				temp = remove_node(args->pipe, temp, prev, i);
+			}
+		}
 		prev = temp;
 		temp = temp->next;
 		i++;

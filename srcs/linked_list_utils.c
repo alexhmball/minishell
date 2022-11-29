@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/11/29 18:41:38 by codespace        ###   ########.fr       */
+/*   Updated: 2022/11/30 00:28:51 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int c)
 void	organize_cmds(t_cmd *args)
 {
 	t_pipe	*temp;
+	t_pipe	*prev;
 	int		c;
 
 	temp = *args->pipe;
+	prev = NULL;
 	c = 0;
 	while (temp)
 	{
@@ -52,15 +54,18 @@ void	organize_cmds(t_cmd *args)
 		{
 			swap_node(temp, temp->next, args->pipe, c);
 			temp = *args->pipe;
+			prev = NULL;
 			c = -1;
 		}
 		if (c > -1)
 		{
+			prev = temp;
 			temp = temp->next;
 		}
 		c++;
 	}
 	temp = *args->pipe;
+	prev = NULL;
 	c = 0;
 	while (temp)
 	{
@@ -69,10 +74,12 @@ void	organize_cmds(t_cmd *args)
 		{
 			swap_node(temp, temp->next, args->pipe, c);
 			temp = *args->pipe;
+			prev = NULL;
 			c = -1;
 		}
 		if (c > -1)
 		{
+			prev = temp;
 			temp = temp->next;
 		}
 		c++;
@@ -102,5 +109,6 @@ int	flag_list(t_cmd *args)
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
+
 	return (1);
 }
