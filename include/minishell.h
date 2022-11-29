@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 00:36:45 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 01:58:23 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		is_spc_tb(char c);
 int		is_q(char c);
 char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
-void	remove_quotes(t_pipe **head, int single_q, int double_q);
+void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args);
 char	*expand(char *line, int i, t_cmd *args, int x);
 char	*insert_expand(char *line, char *exp, char *temp);
 int		check_newline(char **echo, int *i, int len);
@@ -83,7 +83,7 @@ int		string_count(char *line);
 int		two_d_strlen(char **str);
 t_list	**create_env(char **exp);
 char	*find_env(char *temp, t_cmd *args);
-void	check_expand(t_cmd *args);
+void	check_expand(t_pipe **head, t_cmd *args);
 int		find_equal(char *str);
 int		check_dir(t_cmd *args);
 char	*my_getenv(char *str_env, t_cmd *args);
@@ -100,6 +100,7 @@ int		search_all_paths(t_cmd *args, char **search);
 int		search_current_dir(t_cmd *args, char *current);
 char	**remove_str(char **str, int index);
 char	**special_split(char const *s);
+void	confirm_path(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
