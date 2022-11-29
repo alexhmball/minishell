@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/30 02:55:29 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/30 03:21:56 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	pipex(t_cmd *args)
 	prev_pipe = STDIN_FILENO;
 	here_doc_len = 0;
 	typed_len = 0;
-	if (temp->here_doc)
+	while (temp && temp->here_doc)
 	{
 		here_doc_len = ft_strlen(temp->cmd[0]);
 		here_doc = readline("> ");
