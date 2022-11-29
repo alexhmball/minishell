@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/29 18:40:41 by codespace        ###   ########.fr       */
+/*   Updated: 2022/11/29 23:47:30 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,16 +146,16 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (args->err);
-		// args->pid = fork();
-		// if (args->pid == 0)
-		// {
-		// 	sigaction(SIGINT, &sig, NULL);
-		// 	pipex(args);
-		// 	while (waitpid(-1, &args->pid, 0) > 0)
-		// 		;
-		// 	exit(args->err);
-		// }
-		// waitpid(-1, &args->pid, 0);
+		args->pid = fork();
+		if (args->pid == 0)
+		{
+			sigaction(SIGINT, &sig, NULL);
+			pipex(args);
+			while (waitpid(-1, &args->pid, 0) > 0)
+				;
+			exit(args->err);
+		}
+		waitpid(-1, &args->pid, 0);
 	}
 	// freedom(args->cmd);
 	// my_free(args->s);
