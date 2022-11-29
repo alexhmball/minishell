@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 07:47:39 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:31:22 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_pipe
 	int				is_pipe;
 	int				in;
 	int				out;
+	int				single_q;
+	int				double_q;
 	char			*path;
 	char			**cmd;
 	struct s_pipe	*next;
@@ -70,7 +72,7 @@ int		is_spc_tb(char c);
 int		is_q(char c);
 char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
-char	**remove_quotes(t_cmd *args, int single_q, int double_q);
+void	remove_quotes(t_pipe **head, int single_q, int double_q);
 char	*expand(char *line, int i, t_cmd *args, int x);
 char	*insert_expand(char *line, char *exp, char *temp);
 int		check_newline(char **echo, int *i, int len);
@@ -95,6 +97,7 @@ void	set_error(t_cmd *args, int code);
 int		search_all_paths(t_cmd *args, char **search);
 int		search_current_dir(t_cmd *args, char *current);
 char	**remove_str(char **str, int index);
+char	**special_split(char const *s);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -119,7 +122,7 @@ void	lstadd_back_pipe(t_pipe **lst, t_pipe *new);
 t_pipe	*lstlast_pipe(t_pipe *lst);
 void	lstclear_pipe(t_pipe **lst, void (*del)(void *));
 void	lstdelone_pipe(t_pipe *lst, void (*del)(void *));
-void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, t_pipe *prev);
+void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int c);
 void	organize_cmds(t_cmd *args);
 int		flag_list(t_cmd *args);
 void	parse_args_back(t_cmd *args, int i);

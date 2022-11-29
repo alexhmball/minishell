@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 08:08:22 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/29 18:50:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,46 @@ int	check_quotes(char c, int *single_q, int *double_q)
 	return (0);
 }
 
-char	**remove_quotes(t_cmd *args, int single_q, int double_q)
+void	flag_quotes(t_pipe *node, int *single_q, int *double_q)
+{
+	if (*single_q)
+		node->single_q = 1;
+	else if (*double_q)
+		node->double_q = 1;
+}
+
+void	remove_quotes(t_pipe **head, int single_q, int double_q)
 {
 	int		i;
-	int		x;
-	char	**new_line;
+	int		flag;
 	char	*tmp;
+	t_pipe	*current;
 
-	new_line = (char **)malloc(sizeof(char *) * 1);
-	if (!new_line)
-		return (NULL);
 	i = 0;
-	x = 0;
-	new_line[0] = NULL;
-	while (args->s[i])
+	flag = 0;
+	current = *head;
+	while (current)
 	{
 		tmp = NULL;
-		while (is_spc_tb(args->s[i]) && args->s[i])
-			i++;
-		while (args->s[i] && (single_q || double_q || !is_spc_tb(args->s[i])))
+		while (current->cmd && current->cmd[0][i] && (single_q || double_q || !is_spc_tb(current->cmd[0][i])))
 		{
-			if (!check_quotes(args->s[i], &single_q, &double_q) && args->s[i])
-				tmp = add_char(tmp, args->s[i]);
+			if (current->cmd[0][i] && !check_quotes(current->cmd[0][i], &single_q, &double_q))
+				tmp = add_char(tmp, current->cmd[0][i]);
+			if (!is_q(current->cmd[0][i]) && !flag)
+			{
+				flag_quotes(current, &single_q, &double_q);
+				flag = 1;
+			}
 			i++;
 		}
-		new_line = append_str(new_line, tmp);
+		flag = 0;
+		current->cmd = remove_str(current->cmd, 0);
+		current->cmd = append_str(current->cmd, tmp);
+		// my_free(current->cmd[0]);
+		// current->cmd[0] = ft_strdup(tmp);
 		my_free(tmp);
-		x++;
+		current = current->next;
 	}
-	return (new_line);
 }
 
 void	flag_expansion(t_cmd *args, int single_q, int i, int *x)
@@ -110,6 +121,6 @@ char	**quote_validator(t_cmd *args, int single_q, int double_q)
 		i++;
 	}
 	if (!single_q && !double_q)
-		return (remove_quotes(args, 0, 0));
+		return (special_split(args->s));
 	return (NULL);
 }

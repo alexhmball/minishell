@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 18:58:26 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/29 18:52:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,12 @@ void	create_pipe_list(t_cmd *args)
 		i++;
 		temp = temp->next;
 	}
+	remove_quotes(args->pipe, 0, 0);
 	temp = *args->pipe;
 	i = 0;
 	while (temp)
 	{
-		if (temp->cmd[0][0] == '|')
+		if (temp->cmd[0][0] == '|' && !temp->double_q && !temp->single_q)
 			temp->is_pipe = 1;
 		else if (temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) == 1)
 		{
@@ -132,9 +133,9 @@ void	create_pipe_list(t_cmd *args)
 			temp = remove_node(args->pipe, temp, prev, i);
 			i = 0;
 		}
-		else if (temp->cmd[0][0] == '<')
+		else if (temp->cmd[0][0] == '<' && temp->cmd[0][1] != '<' && !temp->double_q && !temp->single_q)
 			temp->in = 1;
-		else if (temp->cmd[0][0] == '>')
+		else if (temp->cmd[0][0] == '>' && temp->cmd[0][1] != '<' && !temp->double_q && !temp->single_q)
 			temp->out = 1;
 		prev = temp;
 		temp = temp->next;
