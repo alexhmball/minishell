@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/29 20:03:14 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:32:43 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_pipe	*setting_up_ins(t_pipe *temp, int *prev_pipe)
 {
 	int	infile;
 
+	if (!temp->in && temp->next->in)
+		temp = temp->next;
 	if (temp->in)
 	{
 		while (temp->next->in)
