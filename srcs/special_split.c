@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 20:01:28 by aball             #+#    #+#             */
-/*   Updated: 2022/11/29 20:03:57 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/29 20:25:31 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,28 @@ static int	word_count(const char *s)
 {
 	int		i;
 	int		j;
+	int		single_q;
+	int		double_q;
 	size_t	len;
 
 	i = 0;
 	j = 0;
+	single_q = 0;
+	double_q = 0;
 	len = ft_strlen(s);
 	while (s[i])
 	{
-		if (is_spc_tb(s[i]) && i != 0 && s[i - 1] != c && s[i])
+		check_quotes(s[i], single_q, double_q);
+		if (is_spc_tb(s[i]) && i != 0 && !is_spc_tb(s[i - 1]) && s[i] && !single_q && !double_q)
 			j++;
 		i++;
 	}
-	if (s[i] == 0 && len != 0 && s[i - 1] != c)
+	if (s[i] == 0 && len != 0 && !is_spc_tb(s[i - 1]))
 		j++;
 	return (j);
 }
 
-static char	**cut(char const *s, char **split)
+static char	**cut(char const *s, char **split, int single_q, int double_q)
 {
 	size_t	i;
 	size_t	j;
@@ -45,7 +50,7 @@ static char	**cut(char const *s, char **split)
 	len = ft_strlen(s);
 	while (s[j])
 	{
-		while (s[j] == c && j++ <= len)
+		while (is_spc_tb(s[j]) && j <= len)
 			i++;
 		while (s[j] != c && j < len)
 			j++;
@@ -54,6 +59,7 @@ static char	**cut(char const *s, char **split)
 			split[k++] = ft_substr(s, i, j - i);
 			i = j;
 		}
+		j++;
 	}
 	if (s[j] == 0 && s[j - 1] != c)
 		split[k] = ft_substr(s, i, j - i);
@@ -68,14 +74,11 @@ char	**special_split(char const *s)
 	if (!s)
 		return (0);
 	d = word_count(s);
-	split = (char **)malloc((d + 1) * sizeof(char *));
 	if (*s == 0)
-	{
-		split[0] = 0;
-		return (split);
-	}
+		return (NULL);
+	split = (char **)malloc((d + 1) * sizeof(char *));
 	if (!split)
 		return (0);
 	split[d] = 0;
-	return (cut(s, split, c));
+	return (cut(s, split, 0, 0));
 }

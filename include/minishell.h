@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 07:47:39 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:31:47 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	lstadd_back_pipe(t_pipe **lst, t_pipe *new);
 t_pipe	*lstlast_pipe(t_pipe *lst);
 void	lstclear_pipe(t_pipe **lst, void (*del)(void *));
 void	lstdelone_pipe(t_pipe *lst, void (*del)(void *));
-void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, t_pipe *prev);
+void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int c);
 void	organize_cmds(t_cmd *args);
 int		flag_list(t_cmd *args);
 void	parse_args_back(t_cmd *args, int i);
