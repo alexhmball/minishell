@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/30 02:44:37 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/30 02:55:29 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,24 @@ void	pipex(t_cmd *args)
 	int		prev_out;
 	char	*here_doc;
 	int		here_doc_len;
+	int		typed_len;
 
 	temp = *args->pipe;
 	prev_out = 0;
 	prev_pipe = STDIN_FILENO;
 	here_doc_len = 0;
+	typed_len = 0;
 	if (temp->here_doc)
 	{
 		here_doc_len = ft_strlen(temp->cmd[0]);
 		here_doc = readline("> ");
-		while (ft_strncmp(here_doc, temp->cmd[0], here_doc_len))
+		typed_len = ft_strlen(here_doc);
+		while (1)
 		{
+			if (!ft_strncmp(here_doc, temp->cmd[0], here_doc_len) && here_doc_len == typed_len)
+				break ;
 			here_doc = readline("> ");
+			typed_len = ft_strlen(here_doc);
 		}
 		temp = temp->next;
 	}
