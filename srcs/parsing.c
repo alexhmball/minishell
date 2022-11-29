@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 00:04:05 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 00:42:07 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,24 @@ int	parse_pipe(t_cmd *args)
 		temp = temp->next;
 		i++;
 	}
-	// printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	// temp = *args->pipe;
-	// while (temp)
-	// {
-	// 	i = 0;
-	// 	while (temp->cmd[i])
-	// 	{
-	// 		printf("cmd: %s\n", temp->cmd[i++]);
-	// 	}
-	// 	printf("path: %s\n", temp->path);
-	// 	printf("pipe? %d\n", temp->is_pipe);
-	// 	printf("in? %d\n", temp->in);
-	// 	printf("out? %d\n", temp->out);
-	// 	printf("single? %d\n", temp->single_q);
-	// 	printf("double? %d\n", temp->double_q);
-	// 	printf(".....\n");
-	// 	temp = temp->next;
-	// }
+	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	temp = *args->pipe;
+	while (temp)
+	{
+		i = 0;
+		while (temp->cmd[i])
+		{
+			printf("cmd: %s\n", temp->cmd[i++]);
+		}
+		printf("path: %s\n", temp->path);
+		printf("pipe? %d\n", temp->is_pipe);
+		printf("in? %d\n", temp->in);
+		printf("out? %d\n", temp->out);
+		printf("single? %d\n", temp->single_q);
+		printf("double? %d\n", temp->double_q);
+		printf(".....\n");
+		temp = temp->next;
+	}
 	return (1);
 }
 

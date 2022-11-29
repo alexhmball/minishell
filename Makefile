@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
+#    By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/11/29 22:53:59 by aball            ###   ########.fr        #
+#    Updated: 2022/11/30 00:57:17 by talsaiaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ RM = rm -fr
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1/include
+CFLAGS = -g -Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.1/include -I /usr/local/Cellar/readline/8.1.1/include
 
 INCLUDE = include/minishell.h
 
@@ -39,7 +39,7 @@ all: libft $(NAME)
 	@tput setaf 7
 
 $(NAME): ${OBJS}
-	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline -ltermcap
+	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1.1/lib -lreadline -ltermcap
 
 libft:
 	make -C libft
