@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/27 21:13:07 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/29 22:36:51 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	parse_pipe(t_cmd *args)
 		printf("pipe? %d\n", temp->is_pipe);
 		printf("in? %d\n", temp->in);
 		printf("out? %d\n", temp->out);
+		printf("single? %d\n", temp->single_q);
+		printf("double? %d\n", temp->double_q);
 		printf(".....\n");
 		temp = temp->next;
 	}
@@ -113,8 +115,8 @@ int	parsing(t_cmd *args)
 		printf("minishell: Error: invalid quotes\n");
 		return (1);
 	}
-	if (args->need_exp)
-		check_expand(args);
+	// if (args->need_exp)
+	// 	check_expand(args);
 	// if (args->pipe_n || args->redirect)
 	// {
 		// create_pipe_list(args);
@@ -144,16 +146,16 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (args->err);
-		args->pid = fork();
-		if (args->pid == 0)
-		{
-			sigaction(SIGINT, &sig, NULL);
-			pipex(args);
-			while (waitpid(-1, &args->pid, 0) > 0)
-				;
-			exit(args->err);
-		}
-		waitpid(-1, &args->pid, 0);
+		// args->pid = fork();
+		// if (args->pid == 0)
+		// {
+		// 	sigaction(SIGINT, &sig, NULL);
+		// 	pipex(args);
+		// 	while (waitpid(-1, &args->pid, 0) > 0)
+		// 		;
+		// 	exit(args->err);
+		// }
+		// waitpid(-1, &args->pid, 0);
 	}
 	// freedom(args->cmd);
 	// my_free(args->s);
