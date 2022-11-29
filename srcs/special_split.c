@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 20:01:28 by aball             #+#    #+#             */
-/*   Updated: 2022/11/29 21:21:23 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 00:04:33 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**special_split(char const *s)
 	if (!s)
 		return (0);
 	d = word_count(s);
-	printf("word count: %d\n", d);
+	// printf("word count: %d\n", d);
 	if (*s == 0)
 		return (NULL);
 	split = (char **)malloc((d + 1) * sizeof(char *));

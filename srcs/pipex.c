@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/29 23:55:24 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/11/30 00:14:13 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	pipex(t_cmd *args)
 			temp = temp->next;
 			prev_out = 1;
 		}
-		if (!temp->next)
+		if (temp && !temp->next)
 		{
-			close(fd[0]);
+			// close(fd[0]);
 			close(fd[1]);
 		}
 	}
