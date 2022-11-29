@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 01:11:52 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 01:26:26 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,8 @@ void	create_pipe_list(t_cmd *args)
 		{
 			temp->in = 1;
 			temp->cmd[0] = ft_strdup(temp->cmd[0] + 1);
+			validate_path(temp->cmd[0], args);
+			temp->path = ft_strdup(args->path);
 		}
 		else if (temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) > 1 && temp->cmd[0][1] != '<' && !temp->double_q && !temp->single_q)
 			temp->here_doc = 1;
