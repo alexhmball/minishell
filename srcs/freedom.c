@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:10:42 by aball             #+#    #+#             */
-/*   Updated: 2022/11/24 16:06:41 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 22:25:20 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	total_freedom(t_cmd *args)
 	my_free(args->env);
 	my_free(args->s);
 	freedom(args->cmd);
-	my_free(args->expand);
 	rl_clear_history();
 }
 

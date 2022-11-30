@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 02:27:33 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 22:42:31 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	find_cmd_args(t_cmd *args)
 	{
 		while (pipe && temp)
 		{
-			if (temp->path && !temp->in && !temp->out && arg == -1 && !temp->is_pipe && cmd == -1)
+			if (!temp->in && !temp->out && !temp->here_doc && arg == -1 && !temp->is_pipe && cmd == -1)
 				cmd = counter;
-			else if (!temp->in && !temp->out && cmd != -1  && arg == -1 && !temp->is_pipe)
+			else if (!temp->in && !temp->out && !temp->here_doc && cmd != -1  && arg == -1 && !temp->is_pipe)
 				arg = counter;
 			else if (temp->is_pipe)
 				pipe = 0;
