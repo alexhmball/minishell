@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/11/30 02:14:35 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/01 01:16:23 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 			close(outfile);
 			temp = temp->next;
 		}
-		if (temp->append)
+		if (temp && temp->append)
 			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0666);
 		else
 			outfile = open(temp->cmd[0], O_RDWR| O_CREAT | O_TRUNC, 0666);
@@ -84,7 +84,7 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 			temp = temp->next;
 		*prev_out = 1;
 	}
-	if (temp->next && *prev_out == 0 && args->pipe_n)
+	else if (temp->next && args->pipe_n)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
