@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 03:06:37 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 22:40:01 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ void	confirm_path(t_cmd *args)
 	temp = *args->pipe;
 	while (temp)
 	{
-		temp->cmd[0] = check_single_path(temp->cmd[0], args);
-		if (args->path)
-			temp->path = ft_strdup(args->path);
+		if (check_single_path(temp->cmd[0]))
+		{
+			temp->path = ft_strdup(temp->cmd[0]);
+		}
 		temp = temp->next;
 	}
 }
@@ -49,7 +50,6 @@ int	parse_pipe(t_cmd *args)
 	i = 0;
 	if (!flag_list(args))
 		return (0);
-	// confirm_path(args);
 	find_cmd_args(args);
 	organize_cmds(args);
 	temp = *args->pipe;
@@ -83,6 +83,7 @@ int	parse_pipe(t_cmd *args)
 		}
 		i++;
 	}
+	confirm_path(args);
 	print_pipe(args->pipe);
 	return (1);
 }
@@ -98,7 +99,6 @@ int	parsing(t_cmd *args)
 		add_history(args->s);
 	else
 		return (1);
-	args->expand = (int *)ft_calloc(count_dollar(args->s), sizeof(int));
 	args->cmd = quote_validator(args, 0, 0);
 	if (!args->cmd)
 	{
@@ -149,7 +149,6 @@ int	parsing(t_cmd *args)
 	}
 	// freedom(args->cmd);
 	// my_free(args->s);
-	// my_free(args->expand);
 	// my_free(args->path);
 	return (1);
 }

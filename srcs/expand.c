@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 01:40:05 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 22:27:29 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*insert_error(char *line, t_cmd *args)
 	return (new_line);
 }
 
-char	*expand(char *line, int i, t_cmd *args, int x)
+char	*expand(char *line, int i, t_cmd *args)
 {
 	char	*exp;
 	char	*temp;
@@ -89,10 +89,7 @@ char	*expand(char *line, int i, t_cmd *args, int x)
 	temp = (char *)malloc(sizeof(char) * (len - i) + 1);
 	ft_strlcpy(temp, line + i, len - i + 1);
 	temp[len - i] = 0;
-	if (args->expand[x])
-		exp = my_getenv(temp, args);
-	else
-		exp = ft_strjoin("$", temp);
+	exp = my_getenv(temp, args);
 	if (!exp)
 		exp = (char *)ft_calloc(1, sizeof(char));
 	new_line = insert_expand(line, exp, temp);
@@ -118,21 +115,18 @@ int	locate_dollar(char *str)
 
 void	check_expand(t_pipe **head, t_cmd *args)
 {
-	int		x;
 	int		pos;
 	char	*ret;
 	t_pipe	*temp;
 
-	x = 0;
 	temp = *head;
 	while (temp)
 	{
 		pos = locate_dollar(temp->cmd[0]);
-		if (pos != -1)
+		if (pos != -1 && !temp->single_q)
 		{
-			ret = expand(temp->cmd[0], pos, args, x);
+			ret = expand(temp->cmd[0], pos, args);
 			temp->cmd[0] = ret;
-			x++;
 		}
 		temp = temp->next;
 	}

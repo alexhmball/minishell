@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 02:28:26 by aball            ###   ########.fr       */
+/*   Updated: 2022/11/30 22:39:40 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct	s_cmd
 	char				*path;
 	char				*s;
 	int					err;
-	int					*expand;
 	int					need_exp;
 	int					pid;
 	int					fd;
@@ -75,7 +74,7 @@ int		is_q(char c);
 char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
 void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args);
-char	*expand(char *line, int i, t_cmd *args, int x);
+char	*expand(char *line, int i, t_cmd *args);
 char	*insert_expand(char *line, char *exp, char *temp);
 int		check_newline(char **echo, int *i, int len);
 char	*add_char(char *s1, char c);
@@ -92,7 +91,7 @@ int		validate_dir(t_cmd *args, char *search, char *cmd);
 int		validate_path(char	*cmd, t_cmd *args);
 char	**append_str(char **str, char *append);
 int		check_path(t_cmd *args);
-char	*check_single_path(char *cmd, t_cmd *args);
+int		check_single_path(char *cmd);
 int		locate_dollar(char *str);
 void	init_struct(t_cmd *args);
 void	set_error(t_cmd *args, int code);
