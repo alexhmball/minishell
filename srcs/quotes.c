@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/01 00:37:09 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/01 01:25:52 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,14 +161,6 @@ void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args)
 	}
 }
 
-void	flag_expansion(t_cmd *args, int i)
-{
-	if (args->s[i] == '|')
-		args->pipe_n++;
-	if (args->s[i] == '>' || args->s[i] == '<')
-		args->redirect++;
-}
-
 char	**quote_validator(t_cmd *args, int single_q, int double_q)
 {
 	int		i;
@@ -176,11 +168,8 @@ char	**quote_validator(t_cmd *args, int single_q, int double_q)
 
 	i = 0;
 	x = 0;
-	args->pipe_n = 0;
-	args->redirect = 0;
 	while (args->s[i])
 	{
-		flag_expansion(args, i);
 		if (args->s[i] == '"' && !single_q && !double_q)
 			double_q = 1;
 		else if (args->s[i] == 39 && !single_q && !double_q)

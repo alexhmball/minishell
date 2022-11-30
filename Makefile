@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/01 00:49:55 by aball            ###   ########.fr        #
+#    Updated: 2022/12/01 01:42:44 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 FILES = main parsing echo quotes freedom utils pwd cd env expand unset check export \
 		str_utils linked_list path init error execute linked_list_utils pipex \
-		linked_list_utils2 setting_up_fds special_split
+		linked_list_utils2 setting_up_fds special_split desperation
 
 OBJDIR = objects
 

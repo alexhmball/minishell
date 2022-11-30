@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/01 00:37:40 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/01 01:52:56 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c);
 t_pipe	*pre_pipe(t_pipe **head, int count);
 void	group_args(t_cmd *args, int arg, int cmd);
 void	print_pipe(t_pipe **head);
+void	desperation(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
