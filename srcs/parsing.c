@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/01 01:44:32 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/01 02:35:39 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	confirm_path(t_cmd *args)
 		{
 			temp->path = ft_strdup(temp->cmd[0]);
 		}
+		else if (!temp->path)
+			temp->path = NULL;
 		temp = temp->next;
 	}
 }
