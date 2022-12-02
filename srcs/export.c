@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 22:51:03 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 02:21:51 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,29 @@ int	compare_env(t_cmd *args)
 	return (0);
 }
 
-void	my_export(t_cmd *args, int fd)
+void	my_export(t_cmd *args, t_pipe *node)
 {
 	t_list	*temp;
 
 	temp = *args->env;
-	if (two_d_strlen(args->cmd) > 1 && !compare_env(args))
+	if (two_d_strlen(node->cmd) > 1 && !compare_env(args))
 	{
 		while (temp)
 		{
-			if (ft_strlen(temp->content) == ft_strlen(args->cmd[1])
-				&& !ft_strncmp(temp->content, args->cmd[1],
-					ft_strlen(args->cmd[1])))
+			if (ft_strlen(temp->content) == ft_strlen(node->cmd[1])
+				&& !ft_strncmp(temp->content, node->cmd[1],
+					ft_strlen(node->cmd[1])))
 				return ;
 			temp = temp->next;
 		}
-		if (find_equal(args->cmd[1]) != -1)
-			ft_lstadd_back(args->env, ft_lstnew(ft_strdup(args->cmd[1])));
+		if (find_equal(node->cmd[1]) != -1)
+			ft_lstadd_back(args->env, ft_lstnew(ft_strdup(node->cmd[1])));
 	}
-	else if (two_d_strlen(args->cmd) <= 1)
+	else if (two_d_strlen(node->cmd) <= 1)
 	{
 		while (temp)
 		{
-			ft_putstr_fd("declare -x ", fd);
-			ft_putstr_fd((char *)temp->content, fd);
-			ft_putchar_fd('\n', fd);
+			printf("declare -x %s\n", (char *)temp->content);
 			temp = temp->next;
 		}
 	}

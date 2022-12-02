@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 00:52:10 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 02:25:21 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,30 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (args->err);
-		args->pid = fork();
-		if (args->pid == 0)
+		if (!args->pipe_n)
 		{
-			pipex(args);
-			while (waitpid(-1, &args->pid, 0) > 0)
-				;
-			lstclear_pipe(args->pipe, my_free);
-			exit(args->err);
+			t_pipe *temp;
+
+			temp = *args->pipe;
+			if (is_us(temp))
+				excecute_us(args, temp);
+			else
+				execute_them(args, temp);
 		}
-		waitpid(-1, &args->pid, 0);
-		lstclear_pipe(args->pipe, my_free);
+		else
+		{
+			args->pid = fork();
+			if (args->pid == 0)
+			{
+				pipex(args);
+				while (waitpid(-1, &args->pid, 0) > 0)
+					;
+				lstclear_pipe(args->pipe, my_free);
+				exit(args->err);
+			}
+			waitpid(-1, &args->pid, 0);
+			lstclear_pipe(args->pipe, my_free);
+		}
 	}
 	my_free(args->s);
 	return (1);

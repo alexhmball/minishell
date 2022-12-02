@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 23:42:54 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 00:55:38 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_newline(char **echo, int *start, int len)
 	return (new_line);
 }
 
-int	my_echo(char **echo, t_cmd *args, int fd)
+int	my_echo(char **echo, t_cmd *args)
 {
 	int	i;
 	int	counter;
@@ -63,20 +63,20 @@ int	my_echo(char **echo, t_cmd *args, int fd)
 	if (i >= counter)
 	{
 		if (new_line)
-			ft_putstr_fd("\n", fd);
+			printf("\n");
 		return (0);
 	}
 	counter = 0;
 	while (echo[i])
 	{
 		if (counter > 0)
-			ft_putstr_fd(" ", fd);
-		ft_putstr_fd(echo[i], fd);
+			printf(" ");
+		printf("%s", echo[i]);
 		i++;
 		counter++;
 	}
 	if (new_line)
-		ft_putstr_fd("\n", fd);
+		printf("\n");
 	args->err = 0;
 	return (0);
 }

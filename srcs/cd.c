@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 23:00:48 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 01:41:53 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ void	change_dir(char **cmd, t_cmd *args)
 		path = cmd[1];
 	else
 		path = my_getenv("HOME", args);
+	if (ft_strlen(path) == 1 && path[0] == '-')
+		path = my_getenv("OLDPWD", args);
 	if (chdir(path) != 0)
 	{
-		
-		perror(ft_strjoin("minishell: cd: ", /*cmd[1], */strerror(errno)));
+
+		perror("minishell: cd");
 		args->err = 1;
 		return ;
 	}

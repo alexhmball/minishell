@@ -6,17 +6,16 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/02 23:32:03 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 01:02:52 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args)
+void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args)
 {
 	int	infile;
 
-	infile = *prev_pipe;
 	if (temp->next && temp->next->in && !temp->in)
 		temp = temp->next;
 	if (temp && temp->in)
@@ -45,18 +44,15 @@ int	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args)
 	}
 	else if (*prev_pipe != STDIN_FILENO && args->pipe_n)
 	{
-		infile = *prev_pipe;
-		dup2(infile, STDIN_FILENO);
-		close(infile);
+		dup2(*prev_pipe, STDIN_FILENO);
+		close(*prev_pipe);
 	}
-	return (infile);
 }
 
-int	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
+void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 {
 	int	outfile;
 
-	outfile = STDOUT_FILENO;
 	if (temp->next && temp->next->out && !temp->out)
 		temp = temp->next;
 	if (temp && temp->out)
@@ -89,9 +85,7 @@ int	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 	}
 	else if (temp->next && args->pipe_n)
 	{
-		outfile = fd[1];
-		dup2(outfile, STDOUT_FILENO);
-		close(outfile);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
 	}
-	return (outfile);
 }
