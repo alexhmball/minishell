@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 02:22:29 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 03:43:47 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,6 @@ void	my_env(t_cmd *args);
 void	my_unset(t_cmd *args);
 void	child_rangler(int signo, siginfo_t *info, void *context);
 void	exit_shell(t_cmd *args, t_pipe *node);
+void	us_not_printing(t_cmd *args);
 
 #endif

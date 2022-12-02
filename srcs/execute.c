@@ -6,11 +6,36 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 02:32:31 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 03:55:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	us_not_printing(t_cmd *args)
+{
+	t_pipe	*cmd;
+
+	cmd = *args->pipe;
+	while (cmd)
+	{
+		if (ft_strlen(cmd->cmd[0]) == 2 && !ft_strncmp(cmd->cmd[0], "cd", 2))
+		{
+			change_dir(cmd->cmd, args);
+			freedom(cmd->cmd);
+			cmd->cmd = (char **)malloc(sizeof(char *) * 2);
+			cmd->cmd[0] = ft_strdup("exit");
+			cmd->cmd[1] = NULL;
+		}
+		else if (ft_strlen(cmd->cmd[0]) == 6
+			&& !ft_strncmp(cmd->cmd[0], "export", 6) && two_d_strlen(cmd->cmd) > 1)
+			my_export(args, cmd);
+		else if (ft_strlen(cmd->cmd[0]) == 5
+			&& !ft_strncmp(cmd->cmd[0], "unset", 5))
+			my_unset(args);
+		cmd = cmd->next;
+	}
+}
 
 int	is_us(t_pipe *cmd)
 {

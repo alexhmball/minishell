@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 03:26:34 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 03:52:26 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,26 +129,39 @@ int	parsing(t_cmd *args)
 			return (args->err);
 		if (!args->pipe_n)
 		{
-			t_pipe *temp;
+			us_not_printing(args);
+			// t_pipe	*temp;
+			// int		outfile;
 
-			temp = *args->pipe;
-			if (is_us(temp))
-				excecute_us(args, temp);
-			else
-				execute_them(args, temp);
-			waitpid(-1, &args->pid, 0);
+			// temp = *args->pipe;
+			// outfile = 0;
+			// if (is_us(temp))
+			// {
+				// if (temp && temp->next && temp->next->out)
+				// {
+				// 	outfile = open(temp->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0666);
+				// 	dup2(outfile, STDOUT_FILENO);
+				// 	close(outfile);
+				// }
+			// 	if (temp)
+			// 		excecute_us(args, temp);
+			// 	while (temp)
+			// 		temp = temp-> next;
+			// }
+			// if (!temp->next)
+			// 	return -69;
 		}
-			args->pid = fork();
-			if (args->pid == 0)
-			{
-				pipex(args);
-				while (waitpid(-1, &args->pid, 0) > 0)
-					;
-				lstclear_pipe(args->pipe, my_free);
-				exit(args->err);
-			}
-			waitpid(-1, &args->pid, 0);
+		args->pid = fork();
+		if (args->pid == 0)
+		{
+			pipex(args);
+			while (waitpid(-1, &args->pid, 0) > 0)
+				;
 			lstclear_pipe(args->pipe, my_free);
+			exit(args->err);
+		}
+		waitpid(-1, &args->pid, 0);
+		lstclear_pipe(args->pipe, my_free);
 	}
 	my_free(args->s);
 	return (1);
