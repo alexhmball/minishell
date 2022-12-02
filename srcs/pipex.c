@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/03 01:08:13 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 02:52:49 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ void	pipex(t_cmd *args)
 					exit(EXIT_SUCCESS);
 				}
 				else
+				{
 					execute_them(args, cmd);
+					exit(EXIT_SUCCESS);
+				}
 				// execve(cmd->path, cmd->cmd, args->env_for_excecute);
 				// perror(ft_strjoin("minishell: ", cmd->cmd[0]));
 				// exit(EXIT_FAILURE);
