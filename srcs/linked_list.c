@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:30:22 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 01:01:52 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/02 18:29:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ t_pipe	*lstnew_pipe(char *content, char *path)
 	new->append = 0;
 	new->in = 0;
 	new->out = 0;
-	new->path = ft_strdup(path);
+	if (path)
+		new->path = ft_strdup(path);
+	else
+		new->path = NULL;
 	new->next = NULL;
 	return (new);
 }

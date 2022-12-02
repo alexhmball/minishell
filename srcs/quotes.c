@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/01 01:25:52 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/02 18:41:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	insert_expansion(t_pipe *node, char *expand, t_cmd *args)
 	new_line[i] = 0;
 	node->cmd = remove_str(node->cmd, 0);
 	node->cmd = append_str(node->cmd, new_line);
+	my_free(env);
+	my_free(new_line);
 }
 
 void	expand_dollar(t_pipe *node, t_cmd *args)
@@ -90,7 +92,7 @@ void	expand_dollar(t_pipe *node, t_cmd *args)
 	single_q = 0;
 	double_q = 0;
 	dollar = locate_dollar(node->cmd[0]);
-	while (node->cmd[0][i])
+	while (*node->cmd && node->cmd && node->cmd[0][i])
 	{
 		check_quotes(node->cmd[0][i], &single_q, &double_q);
 		if (node->cmd[0][i] == '$' && !single_q)
@@ -104,6 +106,8 @@ void	expand_dollar(t_pipe *node, t_cmd *args)
 				dollar++;
 				tmp = ft_substr(node->cmd[0], dollar, i - dollar);
 				insert_expansion(node, tmp, args);
+				my_free(tmp);
+				break ;
 			}
 		}
 		i++;
@@ -153,9 +157,15 @@ void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args)
 		flag = 0;
 		current->cmd = remove_str(current->cmd, 0);
 		current->cmd = append_str(current->cmd, tmp);
-		validate_path(current->cmd[0], args);
-		if (args->path)
-			current->path = ft_strdup(args->path);
+		if (!current->path)
+		{
+			validate_path(current->cmd[0], args);
+			if (args->path)
+			{
+				current->path = ft_strdup(args->path);
+				my_free(args->path);
+			}
+		}
 		my_free(tmp);
 		current = current->next;
 	}
@@ -164,10 +174,8 @@ void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args)
 char	**quote_validator(t_cmd *args, int single_q, int double_q)
 {
 	int		i;
-	int		x;
 
 	i = 0;
-	x = 0;
 	while (args->s[i])
 	{
 		if (args->s[i] == '"' && !single_q && !double_q)
