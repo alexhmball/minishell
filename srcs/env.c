@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:37:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 22:53:47 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 01:00:29 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,14 @@ char	*find_env(char *temp, t_cmd *args)
 	return (NULL);
 }
 
-void	my_env(t_cmd *args, int fd)
+void	my_env(t_cmd *args)
 {
 	t_list	*temp;
 
 	temp = *args->env;
 	while (temp)
 	{
-		ft_putstr_fd((char *)temp->content, fd);
-		ft_putchar_fd('\n', fd);
+		printf("%s\n", (char *)temp->content);
 		temp = temp->next;
 	}
 }

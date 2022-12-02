@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 22:51:03 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 00:59:16 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	compare_env(t_cmd *args)
 	return (0);
 }
 
-void	my_export(t_cmd *args, int fd)
+void	my_export(t_cmd *args)
 {
 	t_list	*temp;
 
@@ -60,9 +60,7 @@ void	my_export(t_cmd *args, int fd)
 	{
 		while (temp)
 		{
-			ft_putstr_fd("declare -x ", fd);
-			ft_putstr_fd((char *)temp->content, fd);
-			ft_putchar_fd('\n', fd);
+			printf("declare -x %s\n", (char *)temp->content);
 			temp = temp->next;
 		}
 	}

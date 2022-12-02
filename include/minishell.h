@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 23:21:58 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 01:03:06 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ char	*insert_error(char *line, t_cmd *args);
 
 int		is_us(t_pipe *cmd);
 int		check_exec(t_cmd *args);
-void	excecute_us(t_cmd *args, int fd, t_pipe *cmd);
+void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
-int		setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args);
-int		setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out);
+void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args);
+void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -142,11 +142,11 @@ void	desperation(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-int		my_echo(char **echo, t_cmd *args, int fd);
-void	print_working_dir(int fd);
+int		my_echo(char **echo, t_cmd *args);
+void	print_working_dir(void);
 void	change_dir(char **cmd, t_cmd *args);
-void	my_export(t_cmd *args, int fd);
-void	my_env(t_cmd *args, int fd);
+void	my_export(t_cmd *args);
+void	my_env(t_cmd *args);
 void	my_unset(t_cmd *args);
 
 #endif

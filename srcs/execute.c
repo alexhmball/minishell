@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 23:49:42 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 01:00:47 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ int	is_us(t_pipe *cmd)
 	return (0);
 }
 
-void	excecute_us(t_cmd *args, int fd, t_pipe *cmd)
+void	excecute_us(t_cmd *args, t_pipe *cmd)
 {
 	if (ft_strlen(cmd->cmd[0]) == 4 && !ft_strncmp(cmd->cmd[0], "echo", 4))
-		my_echo(cmd->cmd, args, fd);
+		my_echo(cmd->cmd, args);
 	else if (ft_strlen(cmd->cmd[0]) == 3
 		&& !ft_strncmp(cmd->cmd[0], "pwd", 3))
-		print_working_dir(fd);
+		print_working_dir();
 	else if (ft_strlen(cmd->cmd[0]) == 2 && !ft_strncmp(cmd->cmd[0], "cd", 2))
 		change_dir(cmd->cmd, args);
 	else if (ft_strlen(cmd->cmd[0]) == 6
 		&& !ft_strncmp(cmd->cmd[0], "export", 6))
-		my_export(args, fd);
+		my_export(args);
 	else if (ft_strlen(cmd->cmd[0]) == 3
 		&& !ft_strncmp(cmd->cmd[0], "env", 3))
-		my_env(args, fd);
+		my_env(args);
 	else if (ft_strlen(cmd->cmd[0]) == 5
 		&& !ft_strncmp(cmd->cmd[0], "unset", 5))
 		my_unset(args);
