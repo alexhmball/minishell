@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 23:21:58 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/03 00:41:58 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,6 @@ void	change_dir(char **cmd, t_cmd *args);
 void	my_export(t_cmd *args, int fd);
 void	my_env(t_cmd *args, int fd);
 void	my_unset(t_cmd *args);
+void	child_rangler(int signo, siginfo_t *info, void *context);
 
 #endif

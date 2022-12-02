@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 00:06:00 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 00:52:10 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ void	child_rangler(int signo, siginfo_t *info, void *context)
 	(void)info;
 	if (signo == SIGINT)
 	{
+		// printf("hey\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		printf("\n\a");
 		rl_redisplay();
-		kill(info->si_pid, SIGQUIT);
+		// kill(info->si_pid, SIGINT);
+		// if (info->si_pid == 0)
+		// 	printf("hey\n");
+		exit(1);
 	}
 }
 
@@ -108,13 +112,18 @@ int	parsing(t_cmd *args)
 		printf("minishell: Error: invalid quotes\n");
 		return (1);
 	}
-	if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1)
+	if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1 && ft_strlen(args->cmd[0]) == 4)
 	{
 		ft_printf("%s\n", args->cmd[0]);
 		return (0);
 	}
 	else
 	{
+		// struct sigaction	act;
+
+		// act.sa_sigaction = child_rangler;
+		// act.sa_flags = SA_SIGINFO;
+		// sigaction(SIGINT, &act, NULL);
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (args->err);
