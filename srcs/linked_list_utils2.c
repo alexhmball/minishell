@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/01 00:07:51 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/02 18:38:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	parse_args_back(t_cmd *args, int i)
 {
 	validate_path(args->cmd[i], args);
-	// args->cmd[i] = check_single_path(args->cmd[i], args);
 	lstadd_back_pipe(args->pipe, lstnew_pipe(args->cmd[i], args->path));
 	my_free(args->path);
 }
@@ -23,9 +22,7 @@ void	parse_args_back(t_cmd *args, int i)
 void	setup_lst_front(t_cmd *args, int i)
 {
 	args->pipe = (t_pipe **)malloc(sizeof(t_pipe *));
-	// my_free(args->path);
 	validate_path(args->cmd[i], args);
-	// args->cmd[i] = check_single_path(args->cmd[i], args);
 
 }
 
@@ -141,10 +138,7 @@ void	create_pipe_list(t_cmd *args)
 		i++;
 		temp = temp->next;
 	}
-	// print_pipe(args->pipe);
-	// confirm_path(args);
 	remove_quotes(args->pipe, 0, 0, args);
-	// check_expand(args->pipe, args);
 	temp = *args->pipe;
 	i = 0;
 	while (temp)
@@ -199,4 +193,5 @@ void	create_pipe_list(t_cmd *args)
 		i++;
 	}
 	print_pipe(args->pipe);
+	freedom(args->cmd);
 }

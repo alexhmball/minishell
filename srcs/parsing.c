@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/01 02:35:39 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 00:06:00 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,50 +108,28 @@ int	parsing(t_cmd *args)
 		printf("minishell: Error: invalid quotes\n");
 		return (1);
 	}
-	// if (args->need_exp)
-	// 	check_expand(args);
-	// if (args->pipe_n || args->redirect)
-	// {
-		// create_pipe_list(args);
-		// if (!print_pipe_list(args))
-		// 	return (args->err);
-		// args->pid = fork();
-		// if (args->pid == 0)
-		// 	pipex(args);
-		// wait(&args->pid);
-		// lstclear_pipe(args->pipe, my_free);
-	// }
-	if (!ft_strncmp(args->cmd[0], "exit", 4))
+	if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1)
 	{
 		ft_printf("%s\n", args->cmd[0]);
 		return (0);
 	}
-	// else if (is_us(args))
-	// 	excecute_us(args);
-	else /*if (check_dir(args) || check_path(args))*/
+	else
 	{
-		struct sigaction	sig;
-
-		sig.sa_sigaction = &child_rangler;
-		sig.sa_flags = SA_NOCLDSTOP;
-		sigemptyset(&sig.sa_mask);
-		// execute_them(args);
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (args->err);
 		args->pid = fork();
 		if (args->pid == 0)
 		{
-			sigaction(SIGINT, &sig, NULL);
 			pipex(args);
 			while (waitpid(-1, &args->pid, 0) > 0)
 				;
+			lstclear_pipe(args->pipe, my_free);
 			exit(args->err);
 		}
 		waitpid(-1, &args->pid, 0);
+		lstclear_pipe(args->pipe, my_free);
 	}
-	// freedom(args->cmd);
-	// my_free(args->s);
-	// my_free(args->path);
+	my_free(args->s);
 	return (1);
 }
