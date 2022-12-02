@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 02:23:36 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 02:32:31 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 		{
 			execve(cmd->path, cmd->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", strerror(errno)));
-			// exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
-		return ;
 	}
 }

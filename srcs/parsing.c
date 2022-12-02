@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 02:25:21 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 03:26:34 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,8 @@ int	parsing(t_cmd *args)
 				excecute_us(args, temp);
 			else
 				execute_them(args, temp);
+			waitpid(-1, &args->pid, 0);
 		}
-		else
-		{
 			args->pid = fork();
 			if (args->pid == 0)
 			{
@@ -150,7 +149,6 @@ int	parsing(t_cmd *args)
 			}
 			waitpid(-1, &args->pid, 0);
 			lstclear_pipe(args->pipe, my_free);
-		}
 	}
 	my_free(args->s);
 	return (1);
