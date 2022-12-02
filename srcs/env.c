@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:37:28 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 00:40:37 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/02 22:53:47 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,15 @@ char	*find_env(char *temp, t_cmd *args)
 	return (NULL);
 }
 
-void	my_env(t_cmd *args)
+void	my_env(t_cmd *args, int fd)
 {
 	t_list	*temp;
 
 	temp = *args->env;
 	while (temp)
 	{
-		printf("%s\n", (char *)temp->content);
+		ft_putstr_fd((char *)temp->content, fd);
+		ft_putchar_fd('\n', fd);
 		temp = temp->next;
 	}
 }

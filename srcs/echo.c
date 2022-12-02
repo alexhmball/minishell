@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:34:35 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/02 23:42:54 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_newline(char **echo, int *start, int len)
 	return (new_line);
 }
 
-int	my_echo(char **echo, t_cmd *args)
+int	my_echo(char **echo, t_cmd *args, int fd)
 {
 	int	i;
 	int	counter;
@@ -61,18 +61,22 @@ int	my_echo(char **echo, t_cmd *args)
 	counter = two_d_strlen(echo);
 	new_line = check_newline(echo, &i, counter);
 	if (i >= counter)
+	{
+		if (new_line)
+			ft_putstr_fd("\n", fd);
 		return (0);
+	}
 	counter = 0;
 	while (echo[i])
 	{
 		if (counter > 0)
-			printf(" ");
-		printf("%s", echo[i]);
+			ft_putstr_fd(" ", fd);
+		ft_putstr_fd(echo[i], fd);
 		i++;
 		counter++;
 	}
 	if (new_line)
-		printf("\n");
+		ft_putstr_fd("\n", fd);
 	args->err = 0;
 	return (0);
 }

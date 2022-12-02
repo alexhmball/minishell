@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/11/22 18:43:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/02 22:51:03 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	compare_env(t_cmd *args)
 	return (0);
 }
 
-void	my_export(t_cmd *args)
+void	my_export(t_cmd *args, int fd)
 {
 	t_list	*temp;
 
@@ -60,7 +60,9 @@ void	my_export(t_cmd *args)
 	{
 		while (temp)
 		{
-			printf("declare -x %s\n", (char *)temp->content);
+			ft_putstr_fd("declare -x ", fd);
+			ft_putstr_fd((char *)temp->content, fd);
+			ft_putchar_fd('\n', fd);
 			temp = temp->next;
 		}
 	}
