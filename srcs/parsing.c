@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 04:33:10 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/04 00:57:49 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,15 @@ int	parsing(t_cmd *args)
 			exit(args->err);
 		}
 		waitpid(-1, &args->pid, 0);
+		int	status;
+		// waitpid(args->pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			int exit_status = WEXITSTATUS(status);
+			printf("bruh %d", exit_status);
+		}
+		else
+			printf("nani\n");
 		lstclear_pipe(args->pipe, my_free);
 	}
 	my_free(args->s);
