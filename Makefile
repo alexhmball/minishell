@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/01 01:42:44 by aball            ###   ########.fr        #
+#    Updated: 2022/12/02 17:11:31 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ all: libft $(NAME)
 	@tput setaf 7
 
 $(NAME): ${OBJS}
-	${CC} -fsanitize=address ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline -ltermcap
+	${CC} ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline -ltermcap
 
 libft:
 	make -C libft
