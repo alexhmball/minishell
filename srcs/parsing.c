@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/04 00:57:49 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/04 01:35:17 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,25 @@ void	child_rangler(int signo, siginfo_t *info, void *context)
 	(void)info;
 	if (signo == SIGINT)
 	{
-		// printf("hey\n");
+		exit (0);
+		printf("\n\a");
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		printf("\n\a");
 		rl_redisplay();
+		// rl_redisplay();
+	}
+	if (signo == SIGCHLD && info->si_status != 0)
+	{
+		// printf("\n\a");
+		// rl_on_new_line();
+		// rl_replace_line("", 0);
+		// rl_redisplay();
+		// signal(SIGINT, SIG_IGN);
 		// kill(info->si_pid, SIGINT);
-		// if (info->si_pid == 0)
-		// 	printf("hey\n");
-		exit(1);
+		// printf("%d\n", info->si_pid);
+		// printf("%d\n", info->si_status);
+		// printf("%d\n", info->si_code);
+		exit (0);
 	}
 }
 
@@ -98,7 +108,6 @@ int	parse_pipe(t_cmd *args)
 int	parsing(t_cmd *args)
 {
 	init_struct(args);
-	rl_redisplay();
 	args->s = readline("\x1b[30m\x1b[46mminishell$\x1b[m ");
 	if (!args->s)
 		return (0);
@@ -119,41 +128,22 @@ int	parsing(t_cmd *args)
 	}
 	else
 	{
-		// struct sigaction	act;
-
-		// act.sa_sigaction = child_rangler;
-		// act.sa_flags = SA_SIGINFO;
-		// sigaction(SIGINT, &act, NULL);
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (args->err);
 		if (!args->pipe_n)
-		{
 			us_not_printing(args);
-			// t_pipe	*temp;
-			// int		outfile;
-
-			// temp = *args->pipe;
-			// outfile = 0;
-			// if (is_us(temp))
-			// {
-				// if (temp && temp->next && temp->next->out)
-				// {
-				// 	outfile = open(temp->next->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0666);
-				// 	dup2(outfile, STDOUT_FILENO);
-				// 	close(outfile);
-				// }
-			// 	if (temp)
-			// 		excecute_us(args, temp);
-			// 	while (temp)
-			// 		temp = temp-> next;
-			// }
-			// if (!temp->next)
-			// 	return -69;
-		}
 		args->pid = fork();
 		if (args->pid == 0)
 		{
+			struct sigaction	act;
+
+			act.sa_sigaction = child_rangler;
+			act.sa_flags = SA_RESETHAND;
+			sigemptyset(&act.sa_mask);
+			sigaction(SIGCHLD, &act, NULL);
+			signal(SIGINT, SIG_IGN);
+			sigaction(SIGINT, &act, NULL);
 			pipex(args);
 			while (waitpid(-1, &args->pid, 0) > 0)
 				;
