@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 03:52:26 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 04:33:10 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	parse_pipe(t_cmd *args)
 		i++;
 	}
 	confirm_path(args);
-	print_pipe(args->pipe);
+	// print_pipe(args->pipe);
 	return (1);
 }
 
