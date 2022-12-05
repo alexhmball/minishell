@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 05:54:42 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 21:02:05 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,7 @@ void	child_rangler(int signo, siginfo_t *info, void *context)
 {
 	(void)context;
 	(void)info;
-	if (signo == SIGINT)
-	{
-		exit (0);
-		printf("\n\a");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		// rl_redisplay();
-	}
-	if (signo == SIGCHLD && info->si_status != 0)
+	if (signo == SIGCHLD)
 	{
 		// printf("\n\a");
 		// rl_on_new_line();
@@ -36,6 +27,7 @@ void	child_rangler(int signo, siginfo_t *info, void *context)
 		// printf("%d\n", info->si_pid);
 		// printf("%d\n", info->si_status);
 		// printf("%d\n", info->si_code);
+		kill(info->si_pid, SIGTERM);
 		exit (0);
 	}
 }
@@ -139,18 +131,18 @@ int	parsing(t_cmd *args)
 			struct sigaction	act;
 
 			act.sa_sigaction = child_rangler;
-			act.sa_flags = SA_RESETHAND;
+			act.sa_flags = SA_SIGINFO;
 			sigemptyset(&act.sa_mask);
 			sigaction(SIGCHLD, &act, NULL);
-			signal(SIGINT, SIG_IGN);
-			sigaction(SIGINT, &act, NULL);
+			// signal(SIGINT, SIG_IGN);
+			// sigaction(SIGINT, &act, NULL);
 			pipex(args);
-			while (waitpid(-1, &args->pid, 0) > 0)
+			while (waitpid(-1, &args->pid, WIFSTOPPED) > 0)
 				;
 			lstclear_pipe(args->pipe, my_free);
 			exit(args->err);
 		}
-		waitpid(-1, &args->pid, 0);
+		waitpid(-1, &args->pid, WIFSTOPPED);
 		lstclear_pipe(args->pipe, my_free);
 	}
 	my_free(args->s);

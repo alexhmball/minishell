@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 05:29:26 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 20:41:39 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	handler(int signo, siginfo_t *info, void *context)
 		printf("\n\a");
 		rl_redisplay();
 	}
+	if (signo == SIGTERM)
+	{
+		kill(info->si_pid, SIGKILL);
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -36,6 +40,7 @@ int	main(int ac, char **av, char **env)
 	sa.sa_flags = SA_NOCLDSTOP;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGTERM, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	args.err = 0;
 	args.env = create_env(env);
