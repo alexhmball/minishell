@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 16:22:27 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/05 17:52:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,45 @@ void	child_rangler(int signo, siginfo_t *info, void *context)
 {
 	(void)context;
 	(void)info;
-	if (signo == SIGCHLD)
+	if (signo == SIGINT)
 	{
+		// rl_replace_line("", 0);
+		// write(1, "\n", 1);
 		// printf("\n\a");
 		// rl_on_new_line();
-		// rl_replace_line("", 0);
 		// rl_redisplay();
 		// signal(SIGINT, SIG_IGN);
 		// kill(info->si_pid, SIGINT);
 		// printf("%d\n", info->si_pid);
 		// printf("%d\n", info->si_status);
 		// printf("%d\n", info->si_code);
-		kill(info->si_pid, SIGTERM);
-		exit (0);
+		// printf("%ld\n", info->si_band);
+		// printf("%d\n", info->si_errno);
+		// // printf("%d\n", info->si_value);
+		// printf("%d\n", info->si_uid);
+		// printf("%d\n", info->si_addr);
+		// kill(info->si_pid, SIGTERM);
+		// exit (0);
+	}
+	if (signo == SIGCHLD && info->si_status == 2)
+	{
+		rl_replace_line("", 0);
+		write(1, "\n", 1);
+		// printf("\n\a");
+		rl_on_new_line();
+		// rl_redisplay();
+		// signal(SIGINT, SIG_IGN);
+		// kill(info->si_pid, SIGINT);
+		// printf("%d\n", info->si_pid);
+		// printf("%d\n", info->si_status);
+		// printf("%d\n", info->si_code);
+		// printf("%ld\n", info->si_band);
+		// printf("%d\n", info->si_errno);
+		// // printf("%d\n", info->si_value);
+		// printf("%d\n", info->si_uid);
+		// printf("%d\n", info->si_addr);
+		// kill(info->si_pid, SIGTERM);
+		// exit (0);
 	}
 }
 
@@ -125,25 +151,20 @@ int	parsing(t_cmd *args)
 			return (args->err);
 		if (!args->pipe_n)
 			us_not_printing(args);
-		args->pid = fork();
-		if (args->pid == 0)
-		{
-			struct sigaction	act;
+		// args->pid = fork();
+		// if (args->pid == 0)
+		// {
 
-			act.sa_sigaction = child_rangler;
-			act.sa_flags = SA_SIGINFO;
-			sigemptyset(&act.sa_mask);
-			sigaction(SIGCHLD, &act, NULL);
+		// 	sigaction(SIGCHLD, &act, NULL);
 			// signal(SIGINT, SIG_IGN);
-			// sigaction(SIGINT, &act, NULL);
 			pipex(args);
-			while (waitpid(-1, &args->pid, 0) > 0)
-				;
-			lstclear_pipe(args->pipe, my_free);
-			exit(args->err);
-		}
-		waitpid(-1, &args->pid, 0);
-		lstclear_pipe(args->pipe, my_free);
+		// 	while (waitpid(-1, &args->pid, 0) > 0)
+		// 		;
+		// 	lstclear_pipe(args->pipe, my_free);
+		// 	exit(args->err);
+		// }
+		// waitpid(-1, &args->pid, 0);
+		// lstclear_pipe(args->pipe, my_free);
 	}
 	my_free(args->s);
 	return (1);
