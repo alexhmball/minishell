@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 19:06:55 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/05 16:04:02 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	flag_list(t_cmd *args)
 	t_pipe	*temp;
 
 	temp = *args->pipe;
-	if (temp->cmd[0][0] == '|' || lstlast_pipe(*args->pipe)->is_pipe)
+	if (temp->is_pipe|| lstlast_pipe(*args->pipe)->is_pipe)
 	{
 		args->err = 258;
 		lstclear_pipe(args->pipe, my_free);

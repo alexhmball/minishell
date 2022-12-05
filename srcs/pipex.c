@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/03 05:38:00 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/05 15:37:50 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,16 @@ void	pipex(t_cmd *args)
 			temp = temp->next;
 			prev_out = 1;
 		}
+		int	status;
+		waitpid(child, &status, 0);
+		if (WIFEXITED(status))
+		{
+			int exit_status = WEXITSTATUS(status);
+			printf("Exit status of the child was %d\n", exit_status);
+			// kill(getpid(), SIGKILL);
+		}
+		// else
+		// 	kill(child, SIGKILL);
 	}
 	waitpid(-1, &child, 0);
 	if (args->pipe_n)

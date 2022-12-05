@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 21:10:04 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 22:39:19 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/05 16:05:01 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	check_single_path(char *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd[i])
+	while (cmd && cmd[i])
 	{
 		if (cmd[i] == '/')
 			return (1);

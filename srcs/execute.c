@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 05:48:11 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/05 16:18:24 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,12 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 	if (!cmd->path)
 	{
 		args->err = 127;
-		perror(ft_strjoin("minishell222222: ", /*args->cmd[0]*/strerror(errno)));
+		if (*cmd->cmd)
+			args->s = ft_strdup(cmd->cmd[0]);
+		else
+			args->s = "";
+		// printf("minishell: %s: command not found\n", args->s);
+		perror(ft_strjoin(args->s, "command not found"));
 		exit(EXIT_FAILURE);
 	}
 	else if (access(cmd->path, X_OK) != 0)

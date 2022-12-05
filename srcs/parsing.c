@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 21:02:05 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/05 16:19:19 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	parsing(t_cmd *args)
 		ft_printf("%s\n", args->cmd[0]);
 		return (0);
 	}
-	else
+	else if (*args->cmd)
 	{
 		create_pipe_list(args);
 		if (!parse_pipe(args))
@@ -137,12 +137,21 @@ int	parsing(t_cmd *args)
 			// signal(SIGINT, SIG_IGN);
 			// sigaction(SIGINT, &act, NULL);
 			pipex(args);
-			while (waitpid(-1, &args->pid, WIFSTOPPED) > 0)
+			while (waitpid(-1, &args->pid, 0) > 0)
 				;
 			lstclear_pipe(args->pipe, my_free);
 			exit(args->err);
 		}
-		waitpid(-1, &args->pid, WIFSTOPPED);
+		waitpid(-1, &args->pid, 0);
+		// int	status;
+		// waitpid(args->pid, &status, 0);
+		// if (WIFEXITED(status))
+		// {
+		// 	int exit_status = WEXITSTATUS(status);
+		// 	printf("bruh %d", exit_status);
+		// }
+		// else
+		// 	printf("nani\n");
 		lstclear_pipe(args->pipe, my_free);
 	}
 	my_free(args->s);
