@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/01 02:24:43 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 00:28:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,23 @@ void	pipex(t_cmd *args)
 				cmd = temp;
 			else
 				cmd = NULL;
-			temp = setting_up_ins(temp, &prev_pipe, args);
-			temp = setting_up_outs(temp, args, fd, &prev_out);
+			setting_up_ins(temp, &prev_pipe, args);
+			setting_up_outs(temp, args, fd, &prev_out);
 			if (cmd != NULL)
 			{
-				execve(cmd->path, cmd->cmd, args->env_for_excecute);
-				perror(ft_strjoin("minishell: ", cmd->cmd[0]));
-				exit(EXIT_FAILURE);
+				if (is_us(cmd))
+				{
+					excecute_us(args, cmd);
+					exit(EXIT_SUCCESS);
+				}
+				else
+				{
+					execute_them(args, cmd);
+					exit(EXIT_SUCCESS);
+				}
+				// execve(cmd->path, cmd->cmd, args->env_for_excecute);
+				// perror(ft_strjoin("minishell: ", cmd->cmd[0]));
+				// exit(EXIT_FAILURE);
 			}
 		}
 		close(prev_pipe);

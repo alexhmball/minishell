@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/11/18 22:34:35 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 00:55:38 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ int	my_echo(char **echo, t_cmd *args)
 	counter = two_d_strlen(echo);
 	new_line = check_newline(echo, &i, counter);
 	if (i >= counter)
+	{
+		if (new_line)
+			printf("\n");
 		return (0);
+	}
 	counter = 0;
 	while (echo[i])
 	{

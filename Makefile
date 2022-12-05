@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/02 17:11:31 by codespace        ###   ########.fr        #
+#    Updated: 2022/12/03 00:14:40 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 FILES = main parsing echo quotes freedom utils pwd cd env expand unset check export \
 		str_utils linked_list path init error execute linked_list_utils pipex \
-		linked_list_utils2 setting_up_fds special_split desperation
+		linked_list_utils2 setting_up_fds special_split desperation exit
 
 OBJDIR = objects
 
@@ -24,7 +24,7 @@ RM = rm -fr
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror -I  /usr/local/Cellar/readline/8.1/include
+CFLAGS = -g -Wall -Wextra -Werror -I  /usr/local/Cellar/readline/8.1.1/include
 
 INCLUDE = include/minishell.h
 
