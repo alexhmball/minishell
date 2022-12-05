@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 15:14:24 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/05 15:32:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 			args->s = "";
 		// printf("minishell: %s: command not found\n", args->s);
 		perror(ft_strjoin(args->s, "command not found"));
-		exit(EXIT_FAILURE);
+		// exit(EXIT_FAILURE);
 	}
 	else if (access(cmd->path, X_OK) != 0)
 	{
 		set_error(args, errno);
 		perror(ft_strjoin("minishell: ", /*args->path, */strerror(errno)));
-		exit(EXIT_FAILURE);
+		// exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -112,7 +112,10 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 		// {
 			execve(cmd->path, cmd->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", strerror(errno)));
-			exit(EXIT_FAILURE);
+			// exit(EXIT_FAILURE);
 		// }
 	}
+	total_freedom(args);
+	lstclear_pipe(args->pipe, my_free);
+	exit(EXIT_FAILURE);
 }
