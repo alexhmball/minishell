@@ -6,13 +6,15 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 03:43:47 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/03 21:05:28 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define _XOPEN_SOURCE 700
 
 # include "../libft/libft.h"
 # include <limits.h>
@@ -26,6 +28,7 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
+# include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>

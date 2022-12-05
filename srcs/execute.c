@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 03:55:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/05 15:14:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	us_not_printing(t_cmd *args)
 		else if (ft_strlen(cmd->cmd[0]) == 5
 			&& !ft_strncmp(cmd->cmd[0], "unset", 5))
 			my_unset(args);
+		else if (ft_strlen(cmd->cmd[0]) == 4 && !ft_strncmp(cmd->cmd[0], "exit", 4))
+			exit_shell(args, cmd);
 		cmd = cmd->next;
 	}
 }
@@ -89,23 +91,28 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 	if (!cmd->path)
 	{
 		args->err = 127;
-		perror(ft_strjoin("minishell: ", /*args->cmd[0]*/strerror(errno)));
-		// exit(EXIT_FAILURE);
+		if (*cmd->cmd)
+			args->s = ft_strdup(cmd->cmd[0]);
+		else
+			args->s = "";
+		// printf("minishell: %s: command not found\n", args->s);
+		perror(ft_strjoin(args->s, "command not found"));
+		exit(EXIT_FAILURE);
 	}
 	else if (access(cmd->path, X_OK) != 0)
 	{
 		set_error(args, errno);
 		perror(ft_strjoin("minishell: ", /*args->path, */strerror(errno)));
-		// exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		int fuck = fork();
-		if (!fuck)
-		{
+		// int fuck = fork();
+		// if (!fuck)
+		// {
 			execve(cmd->path, cmd->cmd, args->env_for_excecute);
 			perror(ft_strjoin("minishell: ", strerror(errno)));
 			exit(EXIT_FAILURE);
-		}
+		// }
 	}
 }

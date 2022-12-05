@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/03 00:14:40 by codespace        ###   ########.fr        #
+#    Updated: 2022/12/05 14:48:49 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ RM = rm -fr
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror -I  /usr/local/Cellar/readline/8.1.1/include
+CFLAGS = -g -Wall -Wextra -Werror -I  /usr/local/Cellar/readline/8.1/include
 
 INCLUDE = include/minishell.h
 

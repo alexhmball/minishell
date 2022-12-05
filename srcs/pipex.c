@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/03 00:28:09 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/05 15:07:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	pipex(t_cmd *args)
 
 	temp = *args->pipe;
 	prev_out = 0;
-	prev_pipe = STDIN_FILENO;
+	prev_pipe = 0;
 	here_doc_len = 0;
 	typed_len = 0;
 	while (temp && temp->here_doc)
@@ -82,19 +82,18 @@ void	pipex(t_cmd *args)
 				if (is_us(cmd))
 				{
 					excecute_us(args, cmd);
+					total_freedom(args);
+					lstclear_pipe(args->pipe, my_free);
 					exit(EXIT_SUCCESS);
 				}
 				else
-				{
 					execute_them(args, cmd);
-					exit(EXIT_SUCCESS);
-				}
 				// execve(cmd->path, cmd->cmd, args->env_for_excecute);
 				// perror(ft_strjoin("minishell: ", cmd->cmd[0]));
 				// exit(EXIT_FAILURE);
 			}
 		}
-		close(prev_pipe);
+		// close(prev_pipe);
 		close(fd[1]);
 		prev_pipe = fd[0];
 		temp = temp->next;
@@ -106,7 +105,8 @@ void	pipex(t_cmd *args)
 			prev_out = 1;
 		}
 	}
-	waitpid(-1, &child, 0);
+	while (waitpid(-1, &child, 0) > 0)
+		;
 	if (args->pipe_n)
 	{
 		close(fd[0]);
