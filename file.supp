@@ -1,0 +1,20 @@
+{
+   readline suppresion
+   Memcheck:Leak
+   ...
+   fun:readline
+}
+
+{
+   history suppresion
+   Memcheck:Leak
+   ...
+   fun:add_history
+}
+
+{
+   exec suppresion
+   Memcheck:Leak
+   ...
+   fun:execve
+}

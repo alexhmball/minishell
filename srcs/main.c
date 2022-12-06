@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 18:32:39 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/06 15:16:19 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handler(int signo, siginfo_t *info, void *context)
 		// rl_on_new_line();
 		// rl_replace_line("", 0);
 		// rl_redisplay();
-		kill(info->si_pid, SIGINT);
+		// kill(info->si_pid, SIGINT);
 		// return ;
 	}
 	else if (signo == SIGINT)
