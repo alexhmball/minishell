@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/06 15:16:19 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/06 15:23:43 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	handler(int signo, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
-	if (signo == SIGCHLD && info->si_status == 2)
+	if (signo == SIGCHLD)
 	{
 		// rl_replace_line("", 0);
-		// write(1, "\n", 1);
+		write(1, "\n", 1);
 		// printf("\n\a");
-		// rl_on_new_line();
+		rl_on_new_line();
 		// rl_replace_line("", 0);
 		// rl_redisplay();
 		// kill(info->si_pid, SIGINT);
@@ -52,10 +52,10 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	sa.sa_sigaction = &handler;
-	sa.sa_flags = SA_NOCLDSTOP;
+	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
-	// sigaction(SIGCHLD, &sa, NULL);
+	sigaction(SIGCHLD, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	args.err = 0;
 	args.env = create_env(env);
