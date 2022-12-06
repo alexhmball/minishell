@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/06 15:39:06 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/06 17:09:26 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	confirm_path(t_cmd *args)
 int	parse_pipe(t_cmd *args)
 {
 	t_pipe	*temp;
-	t_pipe	*prev;
+	// t_pipe	*prev;
 	int		i;
 
 	i = 0;
@@ -86,40 +86,40 @@ int	parse_pipe(t_cmd *args)
 		return (0);
 	find_cmd_args(args);
 	organize_cmds(args);
-	desperation(args);
+	// desperation(args);
 	temp = *args->pipe;
 	args->pipe_n = 0;
 	while (temp)
 	{
 		if (temp->next && temp->is_pipe)
 		{
-			temp = remove_node(args->pipe, temp, prev, i);
+			// temp = remove_node(args->pipe, temp, prev, i);
 			args->pipe_n++;
 		}
-		prev = temp;
+		// prev = temp;
 		temp = temp->next;
 		i++;
 	}
-	temp = *args->pipe;
-	i = 0;
-	while (temp)
-	{
-		if (temp->next && temp->next->here_doc && !temp->here_doc)
-		{
-			swap_node(temp, temp->next, args->pipe, i);
-			temp = *args->pipe;
-			prev = NULL;
-			i = -1;
-		}
-		if (i > -1)
-		{
-			prev = temp;
-			temp = temp->next;
-		}
-		i++;
-	}
+	// temp = *args->pipe;
+	// i = 0;
+	// while (temp)
+	// {
+	// 	if (temp->next && temp->next->here_doc && !temp->here_doc)
+	// 	{
+	// 		swap_node(temp, temp->next, args->pipe, i);
+	// 		temp = *args->pipe;
+	// 		prev = NULL;
+	// 		i = -1;
+	// 	}
+	// 	if (i > -1)
+	// 	{
+	// 		prev = temp;
+	// 		temp = temp->next;
+	// 	}
+	// 	i++;
+	// }
 	confirm_path(args);
-	// print_pipe(args->pipe);
+	print_pipe(args->pipe);
 	return (1);
 }
 
