@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 15:32:32 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/06 15:34:37 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	us_not_printing(t_cmd *args)
 	t_pipe	*cmd;
 
 	cmd = *args->pipe;
-	while (cmd)
+	while (cmd && !cmd->here_doc)
 	{
 		if (ft_strlen(cmd->cmd[0]) == 2 && !ft_strncmp(cmd->cmd[0], "cd", 2))
 		{
