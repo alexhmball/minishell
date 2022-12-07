@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/06 15:10:27 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:10:57 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	pipex(t_cmd *args)
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
+	int		hd_fd[2];
 	int		prev_out;
 	char	*here_doc;
 	int		here_doc_len;
@@ -44,6 +45,7 @@ void	pipex(t_cmd *args)
 	typed_len = 0;
 	while (temp && temp->here_doc)
 	{
+		// pipe(hd_fd);
 		here_doc_len = ft_strlen(temp->cmd[0]);
 		here_doc = readline("> ");
 		typed_len = ft_strlen(here_doc);
@@ -53,7 +55,9 @@ void	pipex(t_cmd *args)
 				break ;
 			here_doc = readline("> ");
 			typed_len = ft_strlen(here_doc);
+			write(fd[0], here_doc, typed_len * sizeof(char));
 		}
+		prev_pipe = fd[0];
 		temp = temp->next;
 	}
 	while (temp)
