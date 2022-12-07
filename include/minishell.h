@@ -6,15 +6,13 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 21:05:28 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/07 18:09:56 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define _XOPEN_SOURCE 700
 
 # include "../libft/libft.h"
 # include <limits.h>
@@ -55,7 +53,7 @@ typedef struct	s_cmd
 	char				**cmd;
 	char				*path;
 	char				*s;
-	int					err;
+	int					*err;
 	int					need_exp;
 	int					pid;
 	int					fd;

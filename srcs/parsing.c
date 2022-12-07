@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 17:52:18 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/07 18:17:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	parse_pipe(t_cmd *args)
 	{
 		if (temp->next && temp->is_pipe)
 		{
-			temp = remove_node(args->pipe, temp, prev, i);
+			// temp = remove_node(args->pipe, temp, prev, i);
 			args->pipe_n++;
 		}
 		prev = temp;
@@ -148,7 +148,7 @@ int	parsing(t_cmd *args)
 	{
 		create_pipe_list(args);
 		if (!parse_pipe(args))
-			return (args->err);
+			return (*args->err);
 		if (!args->pipe_n)
 			us_not_printing(args);
 		// args->pid = fork();

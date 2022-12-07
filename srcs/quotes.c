@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 18:41:31 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/06 15:13:39 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_quotes(char c, int *single_q, int *double_q)
+int check_quotes(char c, int *single_q, int *double_q)
 {
 	if (c == '"' && !*single_q && !*double_q)
 	{
@@ -37,7 +37,7 @@ int	check_quotes(char c, int *single_q, int *double_q)
 	return (0);
 }
 
-void	flag_quotes(t_pipe *node, int *single_q, int *double_q)
+void flag_quotes(t_pipe *node, int *single_q, int *double_q)
 {
 	if (*single_q)
 		node->single_q = 1;
@@ -45,14 +45,14 @@ void	flag_quotes(t_pipe *node, int *single_q, int *double_q)
 		node->double_q = 1;
 }
 
-void	insert_expansion(t_pipe *node, char *expand, t_cmd *args)
+void insert_expansion(t_pipe *node, char *expand, t_cmd *args, int dollar)
 {
-	char	*env;
-	char	*new_line;
-	int		i;
-	int		save;
-	int		j;
-	size_t	len;
+	char *env;
+	char *new_line;
+	int i;
+	int save;
+	int j;
+	size_t len;
 
 	env = my_getenv(expand, args);
 	if (!env)
@@ -61,7 +61,7 @@ void	insert_expansion(t_pipe *node, char *expand, t_cmd *args)
 	len -= ft_strlen(expand);
 	new_line = (char *)malloc(sizeof(char) * len);
 	i = 0;
-	while (node->cmd[0][i] && node->cmd[0][i] != '$')
+	while (node->cmd[0][i] && i < dollar - 1)
 	{
 		new_line[i] = node->cmd[0][i];
 		i++;
@@ -80,13 +80,13 @@ void	insert_expansion(t_pipe *node, char *expand, t_cmd *args)
 	my_free(new_line);
 }
 
-void	expand_dollar(t_pipe *node, t_cmd *args)
+void expand_dollar(t_pipe *node, t_cmd *args)
 {
-	int		i;
-	int		dollar;
-	int		single_q;
-	int		double_q;
-	char	*tmp;
+	int i;
+	int dollar;
+	int single_q;
+	int double_q;
+	char *tmp;
 
 	i = 0;
 	single_q = 0;
@@ -97,30 +97,37 @@ void	expand_dollar(t_pipe *node, t_cmd *args)
 		check_quotes(node->cmd[0][i], &single_q, &double_q);
 		if (node->cmd[0][i] == '$' && !single_q)
 		{
+			dollar = i;
 			while (node->cmd[0][i] && node->cmd[0][i] != 39 && node->cmd[0][i] != '"')
 				i++;
 			if (node->cmd[0][dollar + 1] == '?')
+			{
 				node->cmd[0] = insert_error(node->cmd[0], args);
+				return;
+			}
 			else
 			{
 				dollar++;
-				tmp = ft_substr(node->cmd[0], dollar, i - dollar);
-				insert_expansion(node, tmp, args);
-				my_free(tmp);
-				break ;
+				if (i - dollar > 0)
+				{
+					tmp = ft_substr(node->cmd[0], dollar, i - dollar);
+					insert_expansion(node, tmp, args, dollar);
+					my_free(tmp);
+					return;
+				}
 			}
 		}
 		i++;
 	}
 }
 
-void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args)
+void remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args)
 {
-	int		i;
-	int		flag;
-	char	*tmp;
-	int		dollar;
-	t_pipe	*current;
+	int i;
+	int flag;
+	char *tmp;
+	int dollar;
+	t_pipe *current;
 
 	i = 0;
 	flag = 0;
@@ -171,9 +178,9 @@ void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args)
 	}
 }
 
-char	**quote_validator(t_cmd *args, int single_q, int double_q)
+char **quote_validator(t_cmd *args, int single_q, int double_q)
 {
-	int		i;
+	int i;
 
 	i = 0;
 	while (args->s[i])
@@ -183,7 +190,7 @@ char	**quote_validator(t_cmd *args, int single_q, int double_q)
 		else if (args->s[i] == 39 && !single_q && !double_q)
 			single_q = 1;
 		else if (args->s[i] == '"' && !single_q && double_q)
-				double_q = 0;
+			double_q = 0;
 		else if (args->s[i] == 39 && single_q && !double_q)
 			single_q = 0;
 		i++;

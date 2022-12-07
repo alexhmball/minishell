@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 23:22:03 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 23:56:13 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:13:03 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	set_error(t_cmd *args, int code)
 {
 	if (code == 13)
-		args->err = 126;
+		*args->err = 126;
 	if (code == 2)
-		args->err = 127;
+		*args->err = 127;
 }

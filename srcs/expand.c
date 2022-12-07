@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/01 00:10:15 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/07 18:12:30 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*insert_error(char *line, t_cmd *args)
 	int		i;
 	int		j;
 
-	err_num = ft_itoa(args->err);
+	err_num = ft_itoa(*args->err);
 	len = ft_strlen(line) - 1;
 	len += ft_strlen(err_num);
 	new_line = (char *)malloc(sizeof(char) * (len + 1));

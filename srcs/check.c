@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 23:02:37 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/07 18:12:51 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_dir(t_cmd *args)
 	current = get_working_dir();
 	if (search_current_dir(args, current))
 		return (1);
-	args->err = 127;
+	*args->err = 127;
 	freedom(search);
 	my_free(current);
 	args->path = NULL;
