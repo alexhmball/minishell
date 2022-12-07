@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/07 18:10:57 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:20:33 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	pipex(t_cmd *args)
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
-	int		hd_fd[2];
+	// int		hd_fd[2];
 	int		prev_out;
 	char	*here_doc;
 	int		here_doc_len;
