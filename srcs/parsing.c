@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 18:22:19 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/07 20:28:29 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,8 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (*args->err);
-		// if (!args->pipe_n)
-		// 	us_not_printing(args);
+		if (!args->pipe_n)
+			us_not_printing(args);
 		print_pipe(args->pipe);
 		// args->pid = fork();
 		// if (args->pid == 0)

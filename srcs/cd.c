@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 18:12:11 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/07 20:38:21 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ void	insert_env(char *env, char *path, t_cmd *args)
 		{
 			my_free (temp->content);
 			temp->content = ft_strjoin(env, path);
+			return ;
 		}
 		temp = temp->next;
 	}
+	ft_lstadd_back(args->env, ft_lstnew(ft_strjoin(env, path)));
 }
 
 void	change_pwd_env(t_cmd *args)
@@ -54,7 +56,15 @@ void	change_dir(char **cmd, t_cmd *args)
 	else
 		path = my_getenv("HOME", args);
 	if (ft_strlen(path) == 1 && path[0] == '-')
+	{
 		path = my_getenv("OLDPWD", args);
+		if (!path)
+		{
+			perror("minishell: cd");
+			*args->err = 1;
+			return ;
+		}
+	}
 	if (chdir(path) != 0)
 	{
 
