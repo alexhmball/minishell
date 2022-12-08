@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 02:16:28 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 02:32:29 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 					break ;
 			}
 			temp = temp->next;
+			here_doc_len = ft_strlen(temp->cmd[0]);
 		}
 		while (1)
 		{
