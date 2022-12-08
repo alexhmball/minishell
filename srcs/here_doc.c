@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 02:32:29 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 03:46:07 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 	close(fd[0]);
 	if (temp && temp->here_doc)
 	{
-		while(temp->next && temp->next->here_doc)
-		{
-			while(1)
-			{
-				here_doc = readline("> ");
-				if (!here_doc)
-					break ;
-				typed_len = ft_strlen(here_doc);
-				if (!ft_strncmp(temp->cmd[0], here_doc, typed_len) && typed_len == here_doc_len)
-					break ;
-			}
-			temp = temp->next;
-			here_doc_len = ft_strlen(temp->cmd[0]);
-		}
+		// while(temp->next && temp->next->here_doc)
+		// {
+		// 	while(1)
+		// 	{
+		// 		here_doc = readline("> ");
+		// 		if (!here_doc)
+		// 			break ;
+		// 		typed_len = ft_strlen(here_doc);
+		// 		if (!ft_strncmp(temp->cmd[0], here_doc, typed_len) && typed_len == here_doc_len)
+		// 			break ;
+		// 	}
+		// 	temp = temp->next;
+		// 	here_doc_len = ft_strlen(temp->cmd[0]);
+		// }
 		while (1)
 		{
 			here_doc = readline("> ");

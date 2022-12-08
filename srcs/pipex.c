@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 00:47:11 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 03:41:56 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,12 @@ void	pipex(t_cmd *args)
 				cmd = temp;
 			else
 				cmd = NULL;
-			setting_up_ins(temp, &prev_pipe,fd);
-			setting_up_outs(temp, args, fd, &prev_out);
+			if (temp->here_doc)
+				ms_heredoc(temp, fd);
+			else if (temp->in)
+				setting_up_ins(temp, &prev_pipe,fd);
+			else if (temp->out)
+				setting_up_outs(temp, args, fd, &prev_out);
 			if (cmd != NULL)
 			{
 				if (is_us(cmd))
@@ -75,15 +79,15 @@ void	pipex(t_cmd *args)
 		close(fd[1]);
 		prev_pipe = fd[0];
 		temp = temp->next;
-		while (temp && temp->here_doc)
-			temp = temp->next;
-		while (temp && temp->in)
-			temp = temp->next;
-		while (temp && temp->out)
-		{
-			temp = temp->next;
-			prev_out = 1;
-		}
+		// while (temp && temp->here_doc)
+		// 	temp = temp->next;
+		// while (temp && temp->in)
+		// 	temp = temp->next;
+		// while (temp && temp->out)
+		// {
+		// 	temp = temp->next;
+		// 	prev_out = 1;
+		// }
 	}
 	wait(&child);
 	close(fd[0]);
