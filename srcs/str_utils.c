@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:56:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 19:40:20 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 21:10:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**append_str(char **str, char *append)
 	int		size;
 	char	**new;
 
-	if (*str)
+	if (str)
 		size = two_d_strlen(str) + 2;
 	else
 		size = 2;
@@ -26,7 +26,7 @@ char	**append_str(char **str, char *append)
 	if (!new)
 		return (NULL);
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		new[i] = ft_strdup(str[i]);
 		i++;
