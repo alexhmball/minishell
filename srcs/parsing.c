@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 05:29:59 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 21:12:13 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	parse_pipe(t_cmd *args)
 	i = 0;
 	while (temp)
 	{
-		if (temp->next && temp->here_doc && !temp->next->here_doc && !temp->next->is_pipe
+		if (temp->next && !temp->here_doc && temp->next->here_doc && !temp->next->is_pipe
 			&& !temp->next->in && !temp->next->out)
 		{
 			swap_node(temp, temp->next, args->pipe, i);
@@ -107,7 +107,7 @@ int	parsing(t_cmd *args)
 			return (*args->err);
 		if (!args->pipe_n)
 			us_not_printing(args);
-		// print_pipe(args->pipe);
+		print_pipe(args->pipe);
 		pipex(args);
 	}
 	my_free(args->s);

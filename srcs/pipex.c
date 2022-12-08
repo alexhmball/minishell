@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 20:04:37 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 22:09:32 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,13 @@ void	pipex(t_cmd *args)
 				// exit(EXIT_FAILURE);
 			}
 			// exit(0);
+			// wait(NULL);
 		}
 		// close(prev_pipe);
-		wait(NULL);
-		// close(fd[1]);
+		wait(&child);
+		// waitpid(-1, &child, 0);
+		// sleep(5);
+		close(fd[1]);
 		prev_pipe = fd[0];
 		temp = temp->next;
 		while (temp && temp->here_doc)
@@ -115,11 +118,11 @@ void	pipex(t_cmd *args)
 			prev_out = 1;
 		}
 	}
-	while (waitpid(-1, &child, 0) > 0)
-		;
-	if (args->pipe_n)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
+	wait(&child);
+		// ;
+	close(fd[0]);
+	close(fd[1]);
+	// if (temp)
+	// {
+	// }
 }
