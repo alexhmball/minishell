@@ -6,7 +6,7 @@
 #    By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/07 21:16:04 by talsaiaa         ###   ########.fr        #
+#    Updated: 2022/12/08 18:48:49 by talsaiaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 FILES = main parsing echo quotes freedom utils pwd cd env expand unset check export \
 		str_utils linked_list path init error execute linked_list_utils pipex \
-		linked_list_utils2 setting_up_fds special_split desperation exit
+		linked_list_utils2 setting_up_fds special_split desperation exit here_doc
 
 OBJDIR = objects
 
