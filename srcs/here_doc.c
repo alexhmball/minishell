@@ -6,16 +6,14 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 22:10:19 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:31:47 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ms_heredoc(t_pipe *temp, t_cmd *args, t_pipe *cmd, int (*fd))
+void	ms_heredoc(t_pipe *temp, int (*fd))
 {
-	(void)cmd;
-	(void)args;
 	char	**saving;
 	char	*here_doc;
 	int		here_doc_len;
