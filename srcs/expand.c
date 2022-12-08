@@ -6,38 +6,26 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 18:12:30 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 20:16:54 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*insert_expand(char *line, char *exp, char *temp)
+void	find_expansion(t_pipe *current, int single_q, int double_q, t_cmd *args)
 {
-	int		i;
-	int		x;
-	int		save;
-	int		len;
-	char	*new_line;
+	int	dollar;
+	int	i;
 
 	i = 0;
-	len = ft_strlen(line) - ft_strlen(temp);
-	len += ft_strlen(exp) - 1;
-	new_line = (char *)malloc(sizeof(char) * len + 1);
-	while (line[i] != '$' && line[i])
+	dollar = locate_dollar(current->cmd[0]);
+	if (dollar != -1)
 	{
-		new_line[i] = line[i];
-		i++;
+		while (current->cmd[0][i] && current->cmd[0][i] != '$')
+			check_quotes(current->cmd[0][i++], &single_q, &double_q);
+		flag_quotes(current, &single_q, &double_q);
+		expand_dollar(current, args);
 	}
-	save = i;
-	x = 0;
-	while (exp[x])
-		new_line[i++] = exp[x++];
-	save += ft_strlen(temp) + 1;
-	while (line[save])
-		new_line[i++] = line[save++];
-	new_line[i] = 0;
-	return (new_line);
 }
 
 char	*insert_error(char *line, t_cmd *args)
@@ -49,9 +37,8 @@ char	*insert_error(char *line, t_cmd *args)
 	int		j;
 
 	err_num = ft_itoa(*args->err);
-	len = ft_strlen(line) - 1;
-	len += ft_strlen(err_num);
-	new_line = (char *)malloc(sizeof(char) * (len + 1));
+	len = ft_strlen(err_num) + ft_strlen(line);
+	new_line = (char *)malloc(sizeof(char) * (len));
 	i = 0;
 	j = 0;
 	while (line[i] && line[i] != '$')
@@ -70,59 +57,85 @@ char	*insert_error(char *line, t_cmd *args)
 	return (new_line);
 }
 
-char	*expand(char *line, int i, t_cmd *args)
+void	insert_expansion(t_pipe *node, char *expand, t_cmd *args, int dollar)
 {
-	char	*exp;
-	char	*temp;
+	char	*env;
 	char	*new_line;
-	int		len;
+	int		i;
+	size_t	len;
 
-	i++;
-	len = i;
-	if (line[locate_dollar(line) + 1] == '?')
+	env = my_getenv(expand, args);
+	if (!env)
+		env = (char *)ft_calloc(1, sizeof(char));
+	len = (ft_strlen(env) + ft_strlen(node->cmd[0]) + 1) - ft_strlen(expand);
+	new_line = (char *)malloc(sizeof(char) * len);
+	i = -1;
+	while (node->cmd[0][i] && ++i < dollar - 1)
 	{
-		new_line = insert_error(line, args);
-		return (new_line);
+		new_line[i] = node->cmd[0][i];
+		// i++;
 	}
-	while (!is_spc_tb(line[len]) && !is_q(line[len]) && line[len])
-		len++;
-	temp = (char *)malloc(sizeof(char) * (len - i) + 1);
-	ft_strlcpy(temp, line + i, len - i + 1);
-	temp[len - i] = 0;
-	exp = my_getenv(temp, args);
-	if (!exp)
-		exp = (char *)ft_calloc(1, sizeof(char));
-	new_line = insert_expand(line, exp, temp);
-	my_free (line);
-	my_free (temp);
-	my_free (exp);
-	return (new_line);
+	dollar = i;
+	dollar += ft_strlen(expand) + 1;
+	len = 0;
+	while (env[len])
+		new_line[i++] = env[len++];
+	while (node->cmd[0][dollar])
+		new_line[i++] = node->cmd[0][dollar++];
+	new_line[i] = 0;
+	node->cmd = remove_str(node->cmd, 0);
+	node->cmd = append_str(node->cmd, new_line);
+	my_free(env);
+	my_free(new_line);
 }
 
-int	locate_dollar(char *str)
+int	check_need(int i, t_pipe *node, t_cmd *args)
 {
-	int	i;
+	int		dollar;
+	char	*tmp;
+
+	dollar = i;
+	while (node->cmd[0][i] && node->cmd[0][i] != 39
+			&& node->cmd[0][i] != '"')
+		i++;
+	if (node->cmd[0][dollar + 1] == '?')
+	{
+		node->cmd[0] = insert_error(node->cmd[0], args);
+		return (1);
+	}
+	else
+	{
+		dollar++;
+		if (i - dollar > 0)
+		{
+			tmp = ft_substr(node->cmd[0], dollar, i - dollar);
+			insert_expansion(node, tmp, args, dollar);
+			my_free(tmp);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+void	expand_dollar(t_pipe *node, t_cmd *args)
+{
+	int		i;
+	int		dollar;
+	int		single_q;
+	int		double_q;
 
 	i = 0;
-	while (str[i])
+	single_q = 0;
+	double_q = 0;
+	dollar = locate_dollar(node->cmd[0]);
+	while (*node->cmd && node->cmd && node->cmd[0][i])
 	{
-		if (str[i] == '$')
-			return (i);
+		check_quotes(node->cmd[0][i], &single_q, &double_q);
+		if (node->cmd[0][i] == '$' && !single_q)
+		{
+			if (check_need(i, node, args))
+				return ;
+		}
 		i++;
 	}
-	return (-1);
-}
-
-void	check_expand(t_pipe *node, t_cmd *args)
-{
-	int		pos;
-	char	*ret;
-
-
-		pos = locate_dollar(node->cmd[0]);
-		if (pos != -1 && !node->single_q)
-		{
-			ret = expand(node->cmd[0], pos, args);
-			node->cmd[0] = ret;
-		}
 }

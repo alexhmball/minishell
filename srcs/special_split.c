@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 20:01:28 by aball             #+#    #+#             */
-/*   Updated: 2022/11/30 00:04:33 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 18:42:57 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int	word_count(const char *s)
 	while (s[i])
 	{
 		check_quotes(s[i], &single_q, &double_q);
-		if (is_spc_tb(s[i]) && i != 0 && !is_spc_tb(s[i - 1]) && s[i] && !single_q && !double_q)
+		if (is_spc_tb(s[i]) && i != 0 && !is_spc_tb(s[i - 1])
+			&& s[i] && !single_q && !double_q)
 			j++;
 		i++;
 	}
@@ -48,17 +49,11 @@ static char	**cut(char const *s, char **split, int single_q, int double_q)
 	k = 0;
 	while (s[end])
 	{
-		start = end;
 		while (s[end] && is_spc_tb(s[end]))
-		{
-			start++;
 			end++;
-		}
+		start = end;
 		while (s[end] && (single_q || double_q || !is_spc_tb(s[end])))
-		{
-			check_quotes(s[end], &single_q, &double_q);
-			end++;
-		}
+			check_quotes(s[end++], &single_q, &double_q);
 		if (s[end] && is_spc_tb(s[end]))
 			split[k++] = ft_substr(s, start, end - start);
 	}
@@ -76,7 +71,6 @@ char	**special_split(char const *s)
 	if (!s)
 		return (0);
 	d = word_count(s);
-	// printf("word count: %d\n", d);
 	if (*s == 0)
 		return (NULL);
 	split = (char **)malloc((d + 1) * sizeof(char *));

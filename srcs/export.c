@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 02:21:51 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 19:16:21 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ int	compare_env(t_cmd *args)
 		{
 			len_env = find_equal(current->content);
 			if (len_env == len)
+			{
 				if (!ft_strncmp(current->content, args->cmd[1], len))
 				{
 					my_free(current->content);
 					current->content = ft_strdup(args->cmd[1]);
 					return (1);
 				}
+			}
 			current = current->next;
 		}
 	}
