@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 18:09:56 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 04:20:47 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ char	**remove_str(char **str, int index);
 char	**special_split(char const *s);
 void	confirm_path(t_cmd *args);
 char	*insert_error(char *line, t_cmd *args);
+void	find_errors(t_cmd *args, t_pipe **head);
+long long	ft_atol(const char *str);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

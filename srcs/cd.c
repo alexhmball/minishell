@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 20:38:21 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 05:01:19 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	change_dir(char **cmd, t_cmd *args)
 	}
 	if (chdir(path) != 0)
 	{
-
 		perror("minishell: cd");
 		*args->err = 1;
 		return ;

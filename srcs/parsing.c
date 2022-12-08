@@ -6,57 +6,11 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 22:54:25 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 04:37:23 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	child_rangler(int signo, siginfo_t *info, void *context)
-{
-	(void)context;
-	(void)info;
-	if (signo == SIGINT)
-	{
-		// rl_replace_line("", 0);
-		// write(1, "\n", 1);
-		// printf("\n\a");
-		// rl_on_new_line();
-		// rl_redisplay();
-		// signal(SIGINT, SIG_IGN);
-		// kill(info->si_pid, SIGINT);
-		// printf("%d\n", info->si_pid);
-		// printf("%d\n", info->si_status);
-		// printf("%d\n", info->si_code);
-		// printf("%ld\n", info->si_band);
-		// printf("%d\n", info->si_errno);
-		// // printf("%d\n", info->si_value);
-		// printf("%d\n", info->si_uid);
-		// printf("%d\n", info->si_addr);
-		// kill(info->si_pid, SIGTERM);
-		// exit (0);
-	}
-	if (signo == SIGCHLD && info->si_status == 2)
-	{
-		rl_replace_line("", 0);
-		write(1, "\n", 1);
-		// printf("\n\a");
-		rl_on_new_line();
-		// rl_redisplay();
-		// signal(SIGINT, SIG_IGN);
-		// kill(info->si_pid, SIGINT);
-		// printf("%d\n", info->si_pid);
-		// printf("%d\n", info->si_status);
-		// printf("%d\n", info->si_code);
-		// printf("%ld\n", info->si_band);
-		// printf("%d\n", info->si_errno);
-		// // printf("%d\n", info->si_value);
-		// printf("%d\n", info->si_uid);
-		// printf("%d\n", info->si_addr);
-		// kill(info->si_pid, SIGTERM);
-		// exit (0);
-	}
-}
 
 void	confirm_path(t_cmd *args)
 {
@@ -86,7 +40,6 @@ int	parse_pipe(t_cmd *args)
 		return (0);
 	find_cmd_args(args);
 	organize_cmds(args);
-	// desperation(args);
 	temp = *args->pipe;
 	args->pipe_n = 0;
 	while (temp)
@@ -141,7 +94,8 @@ int	parsing(t_cmd *args)
 		printf("minishell: Error: invalid quotes\n");
 		return (1);
 	}
-	if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1 && ft_strlen(args->cmd[0]) == 4)
+	if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1
+		&& ft_strlen(args->cmd[0]) == 4)
 	{
 		ft_printf("%s\n", args->cmd[0]);
 		return (0);
