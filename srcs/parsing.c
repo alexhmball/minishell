@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 19:19:57 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 00:30:20 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	parsing(t_cmd *args)
 			return (*args->err);
 		if (!args->pipe_n)
 			us_not_printing(args);
-		print_pipe(args->pipe);
+		// print_pipe(args->pipe);
 		pipex(args);
 	}
 	my_free(args->s);

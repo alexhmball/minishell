@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setting_up_fds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 23:32:34 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:39:26 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, t_pipe *cmd, int (*fd))
+void	setting_up_ins(t_pipe *temp, int *prev_pipe, int (*fd))
 {
 	int	infile;
 

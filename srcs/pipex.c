@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 23:33:57 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 00:47:11 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	pipex(t_cmd *args)
 	int		child;
 	int		fd[2];
 	int		prev_out;
-	int		ms_hd;
 
 	temp = *args->pipe;
 	prev_out = 0;
@@ -57,7 +56,7 @@ void	pipex(t_cmd *args)
 				cmd = temp;
 			else
 				cmd = NULL;
-			setting_up_ins(temp, &prev_pipe, args, cmd, fd);
+			setting_up_ins(temp, &prev_pipe,fd);
 			setting_up_outs(temp, args, fd, &prev_out);
 			if (cmd != NULL)
 			{
