@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 18:47:52 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:16:32 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,18 @@
 // 	dup2(fd[0], STDIN_FILENO);
 // }
 
-void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, char *cmd, int ms_hd, int (*fd))
+void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, t_pipe *cmd, int ms_hd, int (*fd))
 {
 	int	infile;
-	(void)args;
-	(void)cmd;
 
+	(void)ms_hd;
 	if (temp->next && !temp->in && !temp->out && !temp->here_doc)
 		temp = temp->next;
 	if (temp && temp->here_doc)
 	{
-		ms_heredoc(temp, fd);
+		ms_heredoc(temp, args, cmd, fd);
 		temp = temp->next;
-		ms_hd = 1;
+		// ms_hd = 1;
 	}
 	if (temp && temp->in)
 	{
@@ -81,7 +80,7 @@ void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, char *cmd, int ms
 		if (temp->next && temp->next->out)
 			temp = temp->next;
 	}
-	else if (*prev_pipe != STDIN_FILENO || ms_hd)
+	else if (*prev_pipe != STDIN_FILENO)
 	{
 		dup2(*prev_pipe, STDIN_FILENO);
 		close(*prev_pipe);
