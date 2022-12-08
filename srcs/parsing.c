@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 04:34:23 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 05:28:04 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	parse_pipe(t_cmd *args)
 		i++;
 	}
 	confirm_path(args);
+	find_errors(args, args->pipe);
 	// print_pipe(args->pipe);
 	return (1);
 }
@@ -150,23 +151,10 @@ int	parsing(t_cmd *args)
 		create_pipe_list(args);
 		if (!parse_pipe(args))
 			return (*args->err);
-		// if (!args->pipe_n)
-		// 	us_not_printing(args);
-		print_pipe(args->pipe);
-		// args->pid = fork();
-		// if (args->pid == 0)
-		// {
-
-		// 	sigaction(SIGCHLD, &act, NULL);
-			// signal(SIGINT, SIG_IGN);
-			pipex(args);
-		// 	while (waitpid(-1, &args->pid, 0) > 0)
-		// 		;
-		// 	lstclear_pipe(args->pipe, my_free);
-		// 	exit(args->err);
-		// }
-		// waitpid(-1, &args->pid, 0);
-		// lstclear_pipe(args->pipe, my_free);
+		if (!args->pipe_n)
+			us_not_printing(args);
+		// print_pipe(args->pipe);
+		pipex(args);
 	}
 	my_free(args->s);
 	return (1);

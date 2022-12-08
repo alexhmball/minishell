@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:16:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 18:14:16 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/07 23:07:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	exit_shell(t_cmd *args, t_pipe *node)
 	if (two_d_strlen(node->cmd) > 1)
 	{
 		perror("minishell: exit");
-		*args->err = 255;
+		if (!ft_isdigit(node->cmd[1][0]))
+			*args->err = 255;
 	}
 	total_freedom(args);
 	lstclear_pipe(args->pipe, my_free);

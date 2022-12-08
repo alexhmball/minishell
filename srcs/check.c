@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/12/07 18:12:51 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/07 21:15:53 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,14 @@ int	validate_path(char *cmd, t_cmd *args)
 	{
 		args->dir = readdir(args->folder);
 		while (args->dir)
+		{
 			if (validate_dir(args, current, cmd))
 			{
 				my_free(current);
 				freedom(search);
 				return (1);
 			}
+		}
 		closedir(args->folder);
 	}
 	my_free(current);
