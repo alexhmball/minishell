@@ -1,0 +1,25 @@
+total 864
+drwxr-xr-x   24 aball  2021_abudhabi     816 Dec  8 22:43 .
+drwxr-xr-x   18 aball  2021_abudhabi     612 Nov 21 12:03 ..
+drwxr-xr-x   15 aball  2021_abudhabi     510 Dec  8 20:20 .git
+drwxr-xr-x    3 aball  2021_abudhabi     102 Nov 12 19:48 .vscode
+-rw-r--r--    1 aball  2021_abudhabi    1921 Dec  8 22:43 Makefile
+-rwxrwxrwx    1 aball  2021_abudhabi     208 Dec  8 21:52 a.out
+-rw-r--r--    1 aball  2021_abudhabi    4276 Nov 12 19:48 allowed_func.txt
+-rw-r--r--    1 aball  2021_abudhabi    1531 Dec  8 20:11 code_grave_yard.c
+-rw-r--r--    1 aball  2021_abudhabi     198 Dec  7 17:10 file.supp
+drwxr-xr-x    9 aball  2021_abudhabi     306 Dec  8 22:43 gnl
+drwxr-xr-x    3 aball  2021_abudhabi     102 Dec  8 05:29 include
+-rw-r--r--    1 aball  2021_abudhabi      72 Nov 29 19:37 infile
+-rw-r--r--    1 aball  2021_abudhabi    1728 Dec  8 05:29 liars.c
+drwxr-xr-x  114 aball  2021_abudhabi    3876 Dec  8 22:43 libft
+-rwxr-xr-x    1 aball  2021_abudhabi   84848 Dec  8 22:43 minishell
+-rw-r--r--    1 aball  2021_abudhabi   82677 Nov 21 12:02 minishell.log
+drwxr-xr-x   32 aball  2021_abudhabi    1088 Dec  8 22:43 objects
+-rw-r--r--    1 aball  2021_abudhabi       0 Dec  8 22:44 out
+-rw-r--r--    1 aball  2021_abudhabi       0 Dec  8 18:38 out1
+-rw-r--r--    1 aball  2021_abudhabi    1895 Dec  8 18:38 out2
+-rw-r--r--    1 aball  2021_abudhabi   72680 Nov 27 08:57 patel.txt
+drwxr-xr-x   32 aball  2021_abudhabi    1088 Dec  8 22:43 srcs
+-rwxr-xr-x    1 aball  2021_abudhabi    2631 Nov 21 12:02 suppress.sh
+-rw-r--r--    1 aball  2021_abudhabi  153758 Nov 27 09:10 talal.ansi.txt
