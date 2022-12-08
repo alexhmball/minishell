@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 20:21:03 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:02:05 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -48,7 +47,6 @@ typedef struct s_pipe
 	struct s_pipe	*next;
 }	t_pipe;
 
-
 typedef struct s_cmd
 {
 	char				**cmd;
@@ -61,6 +59,7 @@ typedef struct s_cmd
 	int					pipe_n;
 	int					redirect;
 	char				**env_for_excecute;
+	char				*err_msg;
 	DIR					*folder;
 	t_list				**env;
 	t_pipe				**pipe;
@@ -75,7 +74,7 @@ int		is_spc_tb(char c);
 int		is_q(char c);
 char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
-void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args);
+void	remove_quotes(t_pipe **h, int single_q, int double_q, t_cmd *args);
 char	*expand(char *line, int i, t_cmd *args);
 char	*insert_expand(char *line, char *exp, char *temp);
 char	*add_char(char *s1, char c);
@@ -103,9 +102,8 @@ char	**special_split(char const *s);
 void	confirm_path(t_cmd *args);
 char	*insert_error(char *line, t_cmd *args);
 void	find_errors(t_cmd *args, t_pipe **head);
-long long	ft_atol(const char *str);
 void	expand_dollar(t_pipe *node, t_cmd *args);
-void	find_expansion(t_pipe *current, int single_q, int double_q, t_cmd *args);
+void	find_expand(t_pipe *current, int single_q, int double_q, t_cmd *args);
 void	flag_quotes(t_pipe *node, int *single_q, int *double_q);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -143,8 +141,11 @@ void	find_cmd_args(t_cmd *args);
 t_pipe	*ret_pipe_location(t_pipe **head, int node);
 t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c);
 t_pipe	*pre_pipe(t_pipe **head, int count);
-void	group_args(t_cmd *args, int arg, int cmd);
 void	print_pipe(t_pipe **head);
+void	flag_pipe(t_cmd *args);
+void	flag_in(t_cmd *args);
+void	flag_here_doc(t_cmd *args);
+void	flag_out(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

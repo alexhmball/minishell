@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 04:33:44 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 22:45:19 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	setup_lst_front(t_cmd *args, int i)
 {
 	args->pipe = (t_pipe **)malloc(sizeof(t_pipe *));
 	validate_path(args->cmd[i], args);
-
 }
 
 t_pipe	*ret_pipe_location(t_pipe **head, int node)
@@ -37,58 +36,6 @@ t_pipe	*ret_pipe_location(t_pipe **head, int node)
 		node--;
 	}
 	return (temp);
-}
-
-void	group_args(t_cmd *args, int arg, int cmd)
-{
-	t_pipe	*cmd_pipe;
-	t_pipe	*arg_pipe;
-	int		i;
-
-	i = 0;
-	cmd_pipe = ret_pipe_location(args->pipe, cmd);
-	arg_pipe = ret_pipe_location(args->pipe, arg);
-	while (arg_pipe->cmd[i])
-		cmd_pipe->cmd = append_str(cmd_pipe->cmd, arg_pipe->cmd[i++]);
-	remove_node(args->pipe, arg_pipe, ret_pipe_location(args->pipe, arg - 1), arg);
-}
-
-void	find_cmd_args(t_cmd *args)
-{
-	t_pipe	*temp;
-	int		cmd;
-	int		arg;
-	int		counter;
-	int		pipe;
-
-	temp = *args->pipe;
-	cmd = -1;
-	counter = 0;
-	pipe = 1;
-	arg = -1;
-	while (temp)
-	{
-		while (pipe && temp)
-		{
-			if (!temp->in && !temp->out && !temp->here_doc && arg == -1 && !temp->is_pipe && cmd == -1)
-				cmd = counter;
-			else if (!temp->in && !temp->out && !temp->here_doc && cmd != -1  && arg == -1 && !temp->is_pipe)
-				arg = counter;
-			else if (temp->is_pipe)
-				pipe = 0;
-			counter++;
-			temp = temp->next;
-		}
-		if (cmd != -1 && arg != -1)
-		{
-			group_args(args, arg, cmd);
-			counter = 0;
-			temp = *args->pipe;
-		}
-		pipe = 1;
-		arg = -1;
-		cmd = -1;
-	}
 }
 
 void	print_pipe(t_pipe **head)
@@ -115,13 +62,12 @@ void	print_pipe(t_pipe **head)
 		printf(".....\n");
 		temp = temp->next;
 	}
-		printf("...~~~~~~~~~~~~~~..\n");
+	printf("...~~~~~~~~~~~~~~..\n");
 }
 
 void	create_pipe_list(t_cmd *args)
 {
 	t_pipe	*temp;
-	t_pipe	*prev;
 	int		i;
 
 	i = 0;
@@ -130,7 +76,6 @@ void	create_pipe_list(t_cmd *args)
 	my_free(args->path);
 	*args->pipe = temp;
 	temp->next = NULL;
-	prev = NULL;
 	i++;
 	while (args->cmd[i])
 	{
@@ -139,67 +84,5 @@ void	create_pipe_list(t_cmd *args)
 		temp = temp->next;
 	}
 	remove_quotes(args->pipe, 0, 0, args);
-	temp = *args->pipe;
-	i = 0;
-	while (temp)
-	{
-		if (temp->cmd[0] && temp->cmd[0][0] == '|' && !temp->double_q && !temp->single_q)
-			temp->is_pipe = 1;
-		else if (temp->cmd[0] && temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) == 1)
-		{
-			temp->next->in = 1;
-			temp = remove_node(args->pipe, temp, prev, i);
-			i = 0;
-		}
-		else if (temp->cmd[0] && temp->cmd[0][0] == '>' && ft_strlen(temp->cmd[0]) == 1)
-		{
-			temp->next->out = 1;
-			temp = remove_node(args->pipe, temp, prev, i);
-			i = 0;
-		}
-		else if (temp->cmd[0] && temp->cmd[0][0] == '<' && temp->cmd[0][1] != '<' && !temp->double_q && !temp->single_q)
-		{
-			temp->in = 1;
-			temp->cmd[0] = ft_strdup(temp->cmd[0] + 1);
-			validate_path(temp->cmd[0], args);
-			temp->path = ft_strdup(args->path);
-		}
-		else if (temp->cmd[0] && temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) > 1 && temp->cmd[0][1] == '<' && !temp->double_q && !temp->single_q)
-		{
-			if (ft_strlen(temp->cmd[0]) == 2 && temp->next)
-			{
-				temp->next->here_doc = 1;
-				temp = remove_node(args->pipe, temp, prev, i);
-			}
-			else if (ft_strlen(temp->cmd[0]) > 2)
-			{
-				temp->here_doc = 1;
-				temp->cmd[0] = ft_strdup(temp->cmd[0] + 2);
-			}
-			i = 0;
-		}
-		else if (temp->cmd[0] && temp->cmd[0][0] == '>' && temp->cmd[0][1] != '>' && !temp->double_q && !temp->single_q)
-		{
-			temp->out = 1;
-			temp->cmd[0] = ft_strdup(temp->cmd[0] + 1);
-		}
-		else if (temp->cmd[0] && temp->cmd[0][0] == '>' && temp->cmd[0][1] == '>' && !temp->double_q && !temp->single_q)
-		{
-			temp->append = 1;
-			temp->out = 1;
-			if (ft_strlen(temp->cmd[0]) > 2)
-				temp->cmd[0] = ft_strdup(temp->cmd[0] + 2);
-			else
-			{
-				temp->next->out = 1;
-				temp->next->append = 1;
-				temp = remove_node(args->pipe, temp, prev, i);
-			}
-		}
-		prev = temp;
-		temp = temp->next;
-		i++;
-	}
-	// print_pipe(args->pipe);
 	freedom(args->cmd);
 }

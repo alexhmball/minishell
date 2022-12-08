@@ -6,13 +6,13 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 20:16:54 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 21:02:32 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	find_expansion(t_pipe *current, int single_q, int double_q, t_cmd *args)
+void	find_expand(t_pipe *current, int single_q, int double_q, t_cmd *args)
 {
 	int	dollar;
 	int	i;
@@ -70,13 +70,9 @@ void	insert_expansion(t_pipe *node, char *expand, t_cmd *args, int dollar)
 	len = (ft_strlen(env) + ft_strlen(node->cmd[0]) + 1) - ft_strlen(expand);
 	new_line = (char *)malloc(sizeof(char) * len);
 	i = -1;
-	while (node->cmd[0][i] && ++i < dollar - 1)
-	{
+	while (++i < dollar - 1 && node->cmd[0][i])
 		new_line[i] = node->cmd[0][i];
-		// i++;
-	}
-	dollar = i;
-	dollar += ft_strlen(expand) + 1;
+	dollar = i + ft_strlen(expand) + 1;
 	len = 0;
 	while (env[len])
 		new_line[i++] = env[len++];
