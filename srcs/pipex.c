@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 22:09:32 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:33:57 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,12 @@ void	pipex(t_cmd *args)
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
-	// int		hd_fd[2];
 	int		prev_out;
 	int		ms_hd;
-	// char	*here_doc;
-	// int		here_doc_len;
-	// int		typed_len;
 
 	temp = *args->pipe;
 	prev_out = 0;
 	prev_pipe = 0;
-	ms_hd = 0;
-	// here_doc_len = 0;
-	// typed_len = 0;
-	// while (temp && temp->here_doc)
-	// {
-	// 	// pipe(hd_fd);
-	// 	here_doc_len = ft_strlen(temp->cmd[0]);
-	// 	here_doc = readline("> ");
-	// 	typed_len = ft_strlen(here_doc);
-	// 	while (1)
-	// 	{
-	// 		if (!ft_strncmp(here_doc, temp->cmd[0], here_doc_len) && here_doc_len == typed_len)
-	// 			break ;
-	// 		here_doc = readline("> ");
-	// 		typed_len = ft_strlen(here_doc);
-	// 		write(fd[0], here_doc, typed_len * sizeof(char));
-	// 	}
-	// 	prev_pipe = fd[0];
-	// 	temp = temp->next;
-	// }
 	while (temp)
 	{
 		if (pipe(fd) == -1)
@@ -81,7 +57,7 @@ void	pipex(t_cmd *args)
 				cmd = temp;
 			else
 				cmd = NULL;
-			setting_up_ins(temp, &prev_pipe, args, cmd, ms_hd, fd);
+			setting_up_ins(temp, &prev_pipe, args, cmd, fd);
 			setting_up_outs(temp, args, fd, &prev_out);
 			if (cmd != NULL)
 			{
@@ -94,17 +70,9 @@ void	pipex(t_cmd *args)
 				}
 				else
 					execute_them(args, cmd);
-				// execve(cmd->path, cmd->cmd, args->env_for_excecute);
-				// perror(ft_strjoin("minishell: ", cmd->cmd[0]));
-				// exit(EXIT_FAILURE);
 			}
-			// exit(0);
-			// wait(NULL);
 		}
-		// close(prev_pipe);
 		wait(&child);
-		// waitpid(-1, &child, 0);
-		// sleep(5);
 		close(fd[1]);
 		prev_pipe = fd[0];
 		temp = temp->next;
@@ -119,10 +87,6 @@ void	pipex(t_cmd *args)
 		}
 	}
 	wait(&child);
-		// ;
 	close(fd[0]);
 	close(fd[1]);
-	// if (temp)
-	// {
-	// }
 }
