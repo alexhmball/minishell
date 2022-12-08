@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 22:42:50 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 23:02:05 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
-void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, char *cmd, int ms_hd, int (*fd));
+void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, t_pipe *cmd, int ms_hd, int (*fd));
 void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out);
-void	ms_heredoc(t_pipe *temp, int (*fd));
+void	ms_heredoc(t_pipe *temp, t_cmd *args, t_pipe *cmd, int (*fd));
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

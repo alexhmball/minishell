@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 05:28:30 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:04:37 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	pipex(t_cmd *args)
 				cmd = temp;
 			else
 				cmd = NULL;
-			setting_up_ins(temp, &prev_pipe, args, temp->cmd[0], ms_hd, fd);
+			setting_up_ins(temp, &prev_pipe, args, cmd, ms_hd, fd);
 			setting_up_outs(temp, args, fd, &prev_out);
 			if (cmd != NULL)
 			{
