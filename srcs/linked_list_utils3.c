@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   desperation.c                                      :+:      :+:    :+:   */
+/*   linked_list_utils3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 01:42:34 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 01:15:02 by aball            ###   ########.fr       */
+/*   Created: 2022/12/08 19:19:18 by aball             #+#    #+#             */
+/*   Updated: 2022/12/08 19:19:34 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	insert_exit(t_pipe *node)
+int	flag_list(t_cmd *args)
 {
-	t_pipe	*next;
-	t_pipe	*new;
+	t_pipe	*temp;
 
-	next = node->next;
-	new = lstnew_pipe("exit", "");
-	new->next = next;
-	node->next = new;
-}
-
-void	desperation(t_cmd *args)
-{
-	t_pipe	*node;
-
-	node = *args->pipe;
-	while (node)
+	temp = *args->pipe;
+	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe)
 	{
-		if (node->here_doc)
-			insert_exit(node);
-		node = node->next;
+		*args->err = 258;
+		lstclear_pipe(args->pipe, my_free);
+		my_free(args->s);
+		printf("minishell: syntax error near unexpected token `|'\n");
+		return (0);
 	}
+	return (1);
 }

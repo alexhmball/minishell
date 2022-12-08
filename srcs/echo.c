@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 04:45:40 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:25:01 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	two_d_strlen(char **str)
 	return (i);
 }
 
-int	check_newline(char **echo, int *start, int len)
+static int	check_newline(char **echo, int *start, int len)
 {
 	int	i;
 	int	j;
@@ -51,6 +51,18 @@ int	check_newline(char **echo, int *start, int len)
 	return (new_line);
 }
 
+static void	print_echo(char **echo, int i, int counter)
+{
+	while (echo[i])
+	{
+		if (counter > 0)
+			printf(" ");
+		printf("%s", echo[i]);
+		i++;
+		counter++;
+	}
+}
+
 int	my_echo(char **echo, t_cmd *args)
 {
 	int	i;
@@ -60,6 +72,7 @@ int	my_echo(char **echo, t_cmd *args)
 	i = 1;
 	counter = two_d_strlen(echo);
 	new_line = check_newline(echo, &i, counter);
+	*args->err = 0;
 	if (i >= counter)
 	{
 		if (new_line)
@@ -67,16 +80,8 @@ int	my_echo(char **echo, t_cmd *args)
 		return (0);
 	}
 	counter = 0;
-	while (echo[i])
-	{
-		if (counter > 0)
-			printf(" ");
-		printf("%s", echo[i]);
-		i++;
-		counter++;
-	}
+	print_echo(echo, i, counter);
 	if (new_line)
 		printf("\n");
-	*args->err = 0;
 	return (0);
 }

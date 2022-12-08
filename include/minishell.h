@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 20:06:38 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:21:03 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ typedef struct s_pipe
 	char			*path;
 	char			**cmd;
 	struct s_pipe	*next;
-}		t_pipe;
+}	t_pipe;
 
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char				**cmd;
 	char				*path;
@@ -65,7 +65,7 @@ typedef struct	s_cmd
 	t_list				**env;
 	t_pipe				**pipe;
 	struct dirent		*dir;
-}			t_cmd;
+}	t_cmd;
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -78,7 +78,6 @@ int		check_quotes(char c, int *single_q, int *double_q);
 void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args);
 char	*expand(char *line, int i, t_cmd *args);
 char	*insert_expand(char *line, char *exp, char *temp);
-int		check_newline(char **echo, int *i, int len);
 char	*add_char(char *s1, char c);
 int		string_count(char *line);
 int		two_d_strlen(char **str);
@@ -105,6 +104,9 @@ void	confirm_path(t_cmd *args);
 char	*insert_error(char *line, t_cmd *args);
 void	find_errors(t_cmd *args, t_pipe **head);
 long long	ft_atol(const char *str);
+void	expand_dollar(t_pipe *node, t_cmd *args);
+void	find_expansion(t_pipe *current, int single_q, int double_q, t_cmd *args);
+void	flag_quotes(t_pipe *node, int *single_q, int *double_q);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -143,7 +145,6 @@ t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c);
 t_pipe	*pre_pipe(t_pipe **head, int count);
 void	group_args(t_cmd *args, int arg, int cmd);
 void	print_pipe(t_pipe **head);
-void	desperation(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:56:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 04:56:21 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:40:20 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	**append_str(char **str, char *append)
 		size = two_d_strlen(str) + 2;
 	else
 		size = 2;
-	// write(1, "hi\n", 3);
 	new = (char **)malloc(sizeof(char *) * size);
 	if (!new)
 		return (NULL);
@@ -86,4 +85,18 @@ char	*add_char(char *s1, char c)
 	ret[i] = '\0';
 	my_free (s1);
 	return (ret);
+}
+
+int	locate_dollar(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (i);
+		i++;
+	}
+	return (-1);
 }

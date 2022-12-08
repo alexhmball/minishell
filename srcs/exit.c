@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:16:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 04:21:10 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 19:21:07 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	exit_shell(t_cmd *args, t_pipe *node)
 			i++;
 		}
 		*args->err = ft_atol(node->cmd[1]);
-		// if (*args->err == 255)
-		// 	exit (25654534);
 	}
 	total_freedom(args);
 	lstclear_pipe(args->pipe, my_free);
