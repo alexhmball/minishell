@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 22:31:51 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 01:35:32 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	flag_pipe(t_cmd *args)
 	}
 }
 
-static void	flag_here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
+static t_pipe	*flag_here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 {
 	if (ft_strlen(temp->cmd[0]) == 2 && temp->next)
 	{
@@ -40,6 +40,7 @@ static void	flag_here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 		temp->here_doc = 1;
 		temp->cmd[0] = ft_strdup(temp->cmd[0] + 2);
 	}
+	return (temp);
 }
 
 void	flag_here_doc(t_cmd *args)
@@ -53,10 +54,11 @@ void	flag_here_doc(t_cmd *args)
 	prev = NULL;
 	while (temp)
 	{
+		printf("i: %d node: %s\n", i, temp->cmd[0]);
 		if (temp->cmd[0] && temp->cmd[0][0] == '<'
 				&& ft_strlen(temp->cmd[0]) > 1 && temp->cmd[0][1] == '<'
 					&& !temp->double_q && !temp->single_q)
-			flag_here_doc_2(temp, prev, &i, args);
+			temp = flag_here_doc_2(temp, prev, &i, args);
 		prev = temp;
 		temp = temp->next;
 		i++;
@@ -69,9 +71,13 @@ int	flag_list(t_cmd *args)
 
 	temp = *args->pipe;
 	flag_pipe(args);
+	// print_pipe(args->pipe);
 	flag_out(args);
+	// print_pipe(args->pipe);
 	flag_in(args);
+	// print_pipe(args->pipe);
 	flag_here_doc(args);
+	print_pipe(args->pipe);
 	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe)
 	{
 		*args->err = 258;

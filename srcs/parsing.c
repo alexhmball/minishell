@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 00:30:20 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 01:25:14 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,20 @@ void	move_here_doc(t_cmd *args)
 void	remove_pipes(t_cmd *args)
 {
 	t_pipe	*temp;
-	// t_pipe	*prev;
+	t_pipe	*prev;
 	int		i;
 
 	i = 0;
 	temp = *args->pipe;
-	// prev = NULL;
+	prev = NULL;
 	while (temp)
 	{
 		if (temp->next && temp->is_pipe)
 		{
-			// temp = remove_node(args->pipe, temp, prev, i);
+			temp = remove_node(args->pipe, temp, prev, i);
 			args->pipe_n++;
 		}
-		// prev = temp;
+		prev = temp;
 		temp = temp->next;
 		i++;
 	}
@@ -112,7 +112,7 @@ int	parsing(t_cmd *args)
 			return (*args->err);
 		if (!args->pipe_n)
 			us_not_printing(args);
-		// print_pipe(args->pipe);
+		print_pipe(args->pipe);
 		pipex(args);
 	}
 	my_free(args->s);
