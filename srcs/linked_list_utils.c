@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 03:31:06 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 03:48:41 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	organize_cmd(t_cmd *args)
 	while (temp)
 	{
 		if (temp->next && !temp->in && !temp->out && !temp->is_pipe
-			&& !temp->here_doc && !temp->next->out)
+			&& !temp->here_doc)
 		{
 			swap_node(temp, temp->next, args->pipe, c);
 			temp = *args->pipe;
