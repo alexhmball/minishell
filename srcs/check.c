@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 05:27:30 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 19:34:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	validate_path(char *cmd, t_cmd *args)
 	search = find_path(args);
 	current = get_working_dir();
 	search = append_str(search, current);
+	my_free(current);
 	if (!search)
 		return (0);
 	while (search[i])
@@ -110,7 +111,6 @@ int	validate_path(char *cmd, t_cmd *args)
 			return (1);
 		i++;
 	}
-	my_free(current);
 	args->path = NULL;
 	return (0);
 }

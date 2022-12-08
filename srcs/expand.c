@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 21:02:32 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 19:20:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,12 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 void	expand_dollar(t_pipe *node, t_cmd *args)
 {
 	int		i;
-	int		dollar;
 	int		single_q;
 	int		double_q;
 
 	i = 0;
 	single_q = 0;
 	double_q = 0;
-	dollar = locate_dollar(node->cmd[0]);
 	while (*node->cmd && node->cmd && node->cmd[0][i])
 	{
 		check_quotes(node->cmd[0][i], &single_q, &double_q);

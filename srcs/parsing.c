@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 23:12:36 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 19:19:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void	move_here_doc(t_cmd *args)
 {
 	t_pipe	*temp;
-	t_pipe	*prev;
 	int		i;
 
 	i = 0;
 	temp = *args->pipe;
-	prev = NULL;
 	while (temp)
 	{
 		if (temp->next && !temp->here_doc && temp->next->here_doc
@@ -28,12 +26,10 @@ void	move_here_doc(t_cmd *args)
 		{
 			swap_node(temp, temp->next, args->pipe, i);
 			temp = *args->pipe;
-			prev = NULL;
 			i = -1;
 		}
 		if (i > -1)
 		{
-			prev = temp;
 			temp = temp->next;
 		}
 		i++;
@@ -43,12 +39,12 @@ void	move_here_doc(t_cmd *args)
 void	remove_pipes(t_cmd *args)
 {
 	t_pipe	*temp;
-	t_pipe	*prev;
+	// t_pipe	*prev;
 	int		i;
 
 	i = 0;
 	temp = *args->pipe;
-	prev = NULL;
+	// prev = NULL;
 	while (temp)
 	{
 		if (temp->next && temp->is_pipe)
@@ -56,7 +52,7 @@ void	remove_pipes(t_cmd *args)
 			// temp = remove_node(args->pipe, temp, prev, i);
 			args->pipe_n++;
 		}
-		prev = temp;
+		// prev = temp;
 		temp = temp->next;
 		i++;
 	}
