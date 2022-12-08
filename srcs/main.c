@@ -6,41 +6,36 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 18:32:39 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 05:02:56 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int	g_error;
+
 void	handler(int signo, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
-	if (signo == SIGCHLD && info->si_status == 2)
+	if (signo == SIGCHLD)
 	{
-		// rl_replace_line("", 0);
-		// write(1, "\n", 1);
-		// printf("\n\a");
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// rl_redisplay();
-		kill(info->si_pid, SIGINT);
-		// return ;
+		if (info->si_status == 2 && info->si_code == 2)
+			g_error = 130;
+		else if (info->si_code == 1 && info->si_status == 2)
+			g_error = 2;
+		else if (info->si_code == 1 && info->si_status == 1
+			&& g_error != 127 && g_error != 126)
+			g_error = 1;
 	}
-	else if (signo == SIGINT)
+	if (signo == SIGINT)
 	{
+		write(1, "\n\a", 2);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		printf("\n\a");
-		rl_redisplay();
-		// printf("%d\n", info->si_pid);
-		// printf("%d\n", info->si_status);
-		// printf("%d\n", info->si_code);
-		// printf("%ld\n", info->si_band);
-		// printf("%d\n", info->si_errno);
-		// // printf("%d\n", info->si_value);
-		// printf("%d\n", info->si_uid);
-		// printf("%d\n", info->si_addr);
+		if (g_error != 130)
+			rl_redisplay();
+		g_error = 1;
 	}
 }
 
@@ -51,18 +46,21 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	g_error = 0;
 	sa.sa_sigaction = &handler;
 	sa.sa_flags = SA_NOCLDSTOP;
 	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaddset(&sa.sa_mask, SIGCHLD);
 	sigaction(SIGINT, &sa, NULL);
-	// sigaction(SIGCHLD, &sa, NULL);
+	sigaction(SIGCHLD, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
-	args.err = 0;
+	args.err = &g_error;
 	args.env = create_env(env);
 	args.env_for_excecute = env;
 	while (1)
 		if (!parsing(&args))
 			break ;
 	total_freedom(&args);
-	return (args.err);
+	return (*args.err);
 }

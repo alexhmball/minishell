@@ -1,5 +1,3 @@
-
-
 {
    readline suppresion
    Memcheck:Leak

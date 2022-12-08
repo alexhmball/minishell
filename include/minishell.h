@@ -6,15 +6,12 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/03 21:05:28 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 23:11:47 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define _XOPEN_SOURCE 700
 
 # include "../libft/libft.h"
 # include <limits.h>
@@ -47,26 +44,26 @@ typedef struct s_pipe
 	char			*path;
 	char			**cmd;
 	struct s_pipe	*next;
-}		t_pipe;
+}	t_pipe;
 
-
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char				**cmd;
 	char				*path;
 	char				*s;
-	int					err;
+	int					*err;
 	int					need_exp;
 	int					pid;
 	int					fd;
 	int					pipe_n;
 	int					redirect;
 	char				**env_for_excecute;
+	char				*err_msg;
 	DIR					*folder;
 	t_list				**env;
 	t_pipe				**pipe;
 	struct dirent		*dir;
-}			t_cmd;
+}	t_cmd;
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -76,10 +73,9 @@ int		is_spc_tb(char c);
 int		is_q(char c);
 char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
-void	remove_quotes(t_pipe **head, int single_q, int double_q, t_cmd *args);
+void	remove_quotes(t_pipe **h, int single_q, int double_q, t_cmd *args);
 char	*expand(char *line, int i, t_cmd *args);
 char	*insert_expand(char *line, char *exp, char *temp);
-int		check_newline(char **echo, int *i, int len);
 char	*add_char(char *s1, char c);
 int		string_count(char *line);
 int		two_d_strlen(char **str);
@@ -104,6 +100,10 @@ char	**remove_str(char **str, int index);
 char	**special_split(char const *s);
 void	confirm_path(t_cmd *args);
 char	*insert_error(char *line, t_cmd *args);
+void	find_errors(t_cmd *args, t_pipe **head);
+void	expand_dollar(t_pipe *node, t_cmd *args);
+void	find_expand(t_pipe *current, int single_q, int double_q, t_cmd *args);
+void	flag_quotes(t_pipe *node, int *single_q, int *double_q);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -112,8 +112,9 @@ int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
-void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args);
+void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, t_pipe *cmd, int ms_hd, int (*fd));
 void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out);
+void	ms_heredoc(t_pipe *temp, t_cmd *args, t_pipe *cmd, int (*fd));
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -139,9 +140,11 @@ void	find_cmd_args(t_cmd *args);
 t_pipe	*ret_pipe_location(t_pipe **head, int node);
 t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c);
 t_pipe	*pre_pipe(t_pipe **head, int count);
-void	group_args(t_cmd *args, int arg, int cmd);
 void	print_pipe(t_pipe **head);
-void	desperation(t_cmd *args);
+void	flag_pipe(t_cmd *args);
+void	flag_in(t_cmd *args);
+void	flag_here_doc(t_cmd *args);
+void	flag_out(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

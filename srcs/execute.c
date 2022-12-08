@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 15:32:32 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/08 20:33:51 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 void	us_not_printing(t_cmd *args)
 {
-	t_pipe	*cmd;
+	t_pipe	*c;
 
-	cmd = *args->pipe;
-	while (cmd)
+	c = *args->pipe;
+	while (c && !c->here_doc)
 	{
-		if (ft_strlen(cmd->cmd[0]) == 2 && !ft_strncmp(cmd->cmd[0], "cd", 2))
+		if (ft_strlen(c->cmd[0]) == 2 && !ft_strncmp(c->cmd[0], "cd", 2))
 		{
-			change_dir(cmd->cmd, args);
-			freedom(cmd->cmd);
-			cmd->cmd = (char **)malloc(sizeof(char *) * 2);
-			cmd->cmd[0] = ft_strdup("exit");
-			cmd->cmd[1] = NULL;
+			change_dir(c->cmd, args);
+			freedom(c->cmd);
+			c->cmd = (char **)malloc(sizeof(char *) * 2);
+			c->cmd[0] = ft_strdup("exit");
+			c->cmd[1] = NULL;
 		}
-		else if (ft_strlen(cmd->cmd[0]) == 6
-			&& !ft_strncmp(cmd->cmd[0], "export", 6) && two_d_strlen(cmd->cmd) > 1)
-			my_export(args, cmd);
-		else if (ft_strlen(cmd->cmd[0]) == 5
-			&& !ft_strncmp(cmd->cmd[0], "unset", 5))
+		else if (ft_strlen(c->cmd[0]) == 6
+			&& !ft_strncmp(c->cmd[0], "export", 6) && two_d_strlen(c->cmd) > 1)
+			my_export(args, c);
+		else if (ft_strlen(c->cmd[0]) == 5
+			&& !ft_strncmp(c->cmd[0], "unset", 5))
 			my_unset(args);
-		else if (ft_strlen(cmd->cmd[0]) == 4 && !ft_strncmp(cmd->cmd[0], "exit", 4))
-			exit_shell(args, cmd);
-		cmd = cmd->next;
+		else if (ft_strlen(c->cmd[0]) == 4 && !ft_strncmp(c->cmd[0], "exit", 4))
+			exit_shell(args, c);
+		c = c->next;
 	}
 }
 
@@ -90,32 +90,22 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 {
 	if (!cmd->path)
 	{
-		args->err = 127;
-		if (*cmd->cmd)
-			args->s = ft_strdup(cmd->cmd[0]);
-		else
-			args->s = "";
-		// printf("minishell: %s: command not found\n", args->s);
-		perror(ft_strjoin(args->s, "command not found"));
-		// exit(EXIT_FAILURE);
+		*args->err = 127;
+		args->err_msg = ft_strjoin("minishell: ", cmd->cmd[0]);
+		perror(args->err_msg);
+		my_free(args->err_msg);
 	}
 	else if (access(cmd->path, X_OK) != 0)
 	{
 		set_error(args, errno);
-		perror(ft_strjoin("minishell: ", /*args->path, */strerror(errno)));
-		// exit(EXIT_FAILURE);
+		perror("minishell: ");
 	}
 	else
 	{
-		// int fuck = fork();
-		// if (!fuck)
-		// {
-			execve(cmd->path, cmd->cmd, args->env_for_excecute);
-			perror(ft_strjoin("minishell: ", strerror(errno)));
-			// exit(EXIT_FAILURE);
-		// }
+		execve(cmd->path, cmd->cmd, args->env_for_excecute);
+		perror("minishell: ");
 	}
 	total_freedom(args);
 	lstclear_pipe(args->pipe, my_free);
-	exit(EXIT_FAILURE);
+	exit(*args->err);
 }

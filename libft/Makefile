@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/12 14:07:38 by aball             #+#    #+#              #
-#    Updated: 2022/11/11 22:39:45 by aball            ###   ########.fr        #
+#    Updated: 2022/12/08 20:57:14 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS = ft_isdigit.c ft_memset.c ft_strjoin.c ft_isprint.c ft_substr.c ft_atoi.c 
 	ft_memcmp.c ft_strncmp.c ft_isalpha.c ft_memcpy.c ft_strchr.c ft_strnstr.c \
 	ft_isascii.c ft_memmove.c ft_strdup.c ft_strrchr.c ft_strtrim.c ft_bzero.c \
 	ft_strlcpy.c ft_strlcat.c ft_putchar_fd.c ft_putendl_fd.c ft_putstr_fd.c \
-	ft_putnbr_fd.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_split.c ft_swap.c
+	ft_putnbr_fd.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_split.c ft_swap.c \
+	ft_atol.c
 
 SRCS += printf/ft_putchar.c printf/ft_putstr.c printf/ft_putnbr.c printf/ft_printf.c \
 		printf/ft_putnbr_uns.c printf/ft_hex.c printf/ft_strlen.c printf/ft_hex_up.c \
@@ -52,11 +53,9 @@ bonus: ${OBJSBONUS}
 		ar crs ${NAME} ${OBJSBONUS}
 
 clean:
-		make clean -C printf
 		${RM} ${OBJS} ${OBJSBONUS}
 
 fclean:	clean
-		make fclean -C printf
 		${RM} ${NAME}
 
 re:		fclean all

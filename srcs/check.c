@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/11/23 23:02:37 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/08 05:27:30 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_dir(t_cmd *args)
 	current = get_working_dir();
 	if (search_current_dir(args, current))
 		return (1);
-	args->err = 127;
+	*args->err = 127;
 	freedom(search);
 	my_free(current);
 	args->path = NULL;
@@ -62,7 +62,6 @@ int	validate_dir(t_cmd *args, char *search, char *cmd)
 		&& !ft_strncmp(args->dir->d_name, cmd,
 			ft_strlen(args->dir->d_name)))
 	{
-		// my_free(args->path);
 		temp = ft_strjoin(search, "/");
 		args->path = ft_strjoin(temp, cmd);
 		my_free (temp);
@@ -70,6 +69,25 @@ int	validate_dir(t_cmd *args, char *search, char *cmd)
 		return (1);
 	}
 	args->dir = readdir(args->folder);
+	return (0);
+}
+
+int	searching_dirs(char *search, t_cmd *args, char *cmd, char **delete)
+{
+	args->folder = opendir(search);
+	if (args->folder)
+	{
+		args->dir = readdir(args->folder);
+		while (args->dir)
+		{
+			if (validate_dir(args, search, cmd))
+			{
+				freedom(delete);
+				return (1);
+			}
+		}
+		closedir(args->folder);
+	}
 	return (0);
 }
 
@@ -81,42 +99,18 @@ int	validate_path(char *cmd, t_cmd *args)
 
 	i = 0;
 	search = find_path(args);
+	current = get_working_dir();
+	search = append_str(search, current);
 	if (!search)
 		return (0);
 	while (search[i])
 	{
 		args->folder = opendir(search[i]);
-		if (args->folder)
-		{
-			args->dir = readdir(args->folder);
-			while (args->dir)
-			{
-				if (validate_dir(args, search[i], cmd))
-				{
-					freedom(search);
-					return (1);
-				}
-			}
-			closedir(args->folder);
-		}
+		if (searching_dirs(search[i], args, cmd, search))
+			return (1);
 		i++;
 	}
-	current = get_working_dir();
-	args->folder = opendir(current);
-	if (args->folder)
-	{
-		args->dir = readdir(args->folder);
-		while (args->dir)
-			if (validate_dir(args, current, cmd))
-			{
-				my_free(current);
-				freedom(search);
-				return (1);
-			}
-		closedir(args->folder);
-	}
 	my_free(current);
-	freedom(search);
 	args->path = NULL;
 	return (0);
 }

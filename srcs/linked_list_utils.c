@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 16:04:02 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 19:19:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_pipe	*pre_pipe(t_pipe **head, int count)
 	temp = *head;
 	i = 0;
 	count -= 2;
-	while(i < count)
+	while (i < count)
 	{
 		temp = temp->next;
 		i++;
@@ -38,7 +38,7 @@ void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int c)
 	node2->next = node1;
 }
 
-void	organize_cmds(t_cmd *args)
+void	organize_ins(t_cmd *args)
 {
 	t_pipe	*temp;
 	int		c;
@@ -58,6 +58,14 @@ void	organize_cmds(t_cmd *args)
 			temp = temp->next;
 		c++;
 	}
+}
+
+void	organize_cmds(t_cmd *args)
+{
+	t_pipe	*temp;
+	int		c;
+
+	organize_ins(args);
 	temp = *args->pipe;
 	c = 0;
 	while (temp)
@@ -77,7 +85,6 @@ void	organize_cmds(t_cmd *args)
 
 t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c)
 {
-
 	if (c == 0)
 		*head = node->next;
 	else
@@ -85,21 +92,4 @@ t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c)
 	node->next = NULL;
 	lstdelone_pipe(node, my_free);
 	return (*head);
-}
-
-int	flag_list(t_cmd *args)
-{
-	t_pipe	*temp;
-
-	temp = *args->pipe;
-	if (temp->is_pipe|| lstlast_pipe(*args->pipe)->is_pipe)
-	{
-		args->err = 258;
-		lstclear_pipe(args->pipe, my_free);
-		my_free(args->s);
-		printf("minishell: syntax error near unexpected token `|'\n");
-		return (0);
-	}
-
-	return (1);
 }

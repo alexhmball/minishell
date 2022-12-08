@@ -3,108 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 15:11:12 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/08 23:12:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	child_rangler(int signo, siginfo_t *info, void *context)
-{
-	(void)context;
-	(void)info;
-	if (signo == SIGINT)
-	{
-		// rl_replace_line("", 0);
-		// write(1, "\n", 1);
-		// printf("\n\a");
-		// rl_on_new_line();
-		// rl_redisplay();
-		// signal(SIGINT, SIG_IGN);
-		// kill(info->si_pid, SIGINT);
-		// printf("%d\n", info->si_pid);
-		// printf("%d\n", info->si_status);
-		// printf("%d\n", info->si_code);
-		// printf("%ld\n", info->si_band);
-		// printf("%d\n", info->si_errno);
-		// // printf("%d\n", info->si_value);
-		// printf("%d\n", info->si_uid);
-		// printf("%d\n", info->si_addr);
-		// kill(info->si_pid, SIGTERM);
-		// exit (0);
-	}
-	if (signo == SIGCHLD && info->si_status == 2)
-	{
-		rl_replace_line("", 0);
-		write(1, "\n", 1);
-		// printf("\n\a");
-		rl_on_new_line();
-		// rl_redisplay();
-		// signal(SIGINT, SIG_IGN);
-		// kill(info->si_pid, SIGINT);
-		// printf("%d\n", info->si_pid);
-		// printf("%d\n", info->si_status);
-		// printf("%d\n", info->si_code);
-		// printf("%ld\n", info->si_band);
-		// printf("%d\n", info->si_errno);
-		// // printf("%d\n", info->si_value);
-		// printf("%d\n", info->si_uid);
-		// printf("%d\n", info->si_addr);
-		// kill(info->si_pid, SIGTERM);
-		// exit (0);
-	}
-}
-
-void	confirm_path(t_cmd *args)
-{
-	t_pipe	*temp;
-
-	temp = *args->pipe;
-	while (temp)
-	{
-		if (check_single_path(temp->cmd[0]))
-		{
-			temp->path = ft_strdup(temp->cmd[0]);
-		}
-		else if (!temp->path)
-			temp->path = NULL;
-		temp = temp->next;
-	}
-}
-
-int	parse_pipe(t_cmd *args)
+void	move_here_doc(t_cmd *args)
 {
 	t_pipe	*temp;
 	t_pipe	*prev;
 	int		i;
 
 	i = 0;
-	if (!flag_list(args))
-		return (0);
-	find_cmd_args(args);
-	organize_cmds(args);
-	desperation(args);
 	temp = *args->pipe;
-	args->pipe_n = 0;
+	prev = NULL;
 	while (temp)
 	{
-		if (temp->next && temp->is_pipe)
-		{
-			temp = remove_node(args->pipe, temp, prev, i);
-			args->pipe_n++;
-		}
-		prev = temp;
-		temp = temp->next;
-		i++;
-	}
-	temp = *args->pipe;
-	i = 0;
-	while (temp)
-	{
-		if (temp->next && temp->next->here_doc && !temp->here_doc)
+		if (temp->next && !temp->here_doc && temp->next->here_doc
+			&& !temp->next->is_pipe && !temp->next->in && !temp->next->out)
 		{
 			swap_node(temp, temp->next, args->pipe, i);
 			temp = *args->pipe;
@@ -118,12 +38,44 @@ int	parse_pipe(t_cmd *args)
 		}
 		i++;
 	}
+}
+
+void	remove_pipes(t_cmd *args)
+{
+	t_pipe	*temp;
+	t_pipe	*prev;
+	int		i;
+
+	i = 0;
+	temp = *args->pipe;
+	prev = NULL;
+	while (temp)
+	{
+		if (temp->next && temp->is_pipe)
+		{
+			// temp = remove_node(args->pipe, temp, prev, i);
+			args->pipe_n++;
+		}
+		prev = temp;
+		temp = temp->next;
+		i++;
+	}
+}
+
+int	parse_pipe(t_cmd *args)
+{
+	if (!flag_list(args))
+		return (0);
+	find_cmd_args(args);
+	organize_cmds(args);
+	remove_pipes(args);
+	move_here_doc(args);
 	confirm_path(args);
-	// print_pipe(args->pipe);
+	find_errors(args, args->pipe);
 	return (1);
 }
 
-int	parsing(t_cmd *args)
+int	init_cmd(t_cmd *args)
 {
 	init_struct(args);
 	args->s = readline("\x1b[30m\x1b[46mminishell$\x1b[m ");
@@ -139,32 +91,33 @@ int	parsing(t_cmd *args)
 		printf("minishell: Error: invalid quotes\n");
 		return (1);
 	}
-	// if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1 && ft_strlen(args->cmd[0]) == 4)
-	// {
-	// 	ft_printf("%s\n", args->cmd[0]);
-	// 	return (0);
-	// }
+	return (5);
+}
+
+int	parsing(t_cmd *args)
+{
+	int		ret;
+
+	ret = init_cmd(args);
+	if (ret == 0)
+		return (0);
+	if (ret == 1)
+		return (1);
+	if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1
+		&& ft_strlen(args->cmd[0]) == 4)
+	{
+		ft_printf("%s\n", args->cmd[0]);
+		return (0);
+	}
 	else if (*args->cmd)
 	{
 		create_pipe_list(args);
 		if (!parse_pipe(args))
-			return (args->err);
+			return (*args->err);
 		if (!args->pipe_n)
 			us_not_printing(args);
-		// args->pid = fork();
-		// if (args->pid == 0)
-		// {
-
-		// 	sigaction(SIGCHLD, &act, NULL);
-			// signal(SIGINT, SIG_IGN);
-			pipex(args);
-		// 	while (waitpid(-1, &args->pid, 0) > 0)
-		// 		;
-		// 	lstclear_pipe(args->pipe, my_free);
-		// 	exit(args->err);
-		// }
-		// waitpid(-1, &args->pid, 0);
-		lstclear_pipe(args->pipe, my_free);
+		print_pipe(args->pipe);
+		pipex(args);
 	}
 	my_free(args->s);
 	return (1);
