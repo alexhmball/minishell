@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 23:02:05 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 23:11:47 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include "../gnl/get_next_line_bonus.h"
 # include <limits.h>
 # include <errno.h>
 # include <unistd.h>

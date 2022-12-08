@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 23:04:37 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:12:36 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	move_here_doc(t_cmd *args)
 	prev = NULL;
 	while (temp)
 	{
-		if (temp->next && temp->here_doc && !temp->next->here_doc
+		if (temp->next && !temp->here_doc && temp->next->here_doc
 			&& !temp->next->is_pipe && !temp->next->in && !temp->next->out)
 		{
 			swap_node(temp, temp->next, args->pipe, i);
