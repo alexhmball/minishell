@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 01:25:14 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 03:32:09 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	parse_pipe(t_cmd *args)
 		return (0);
 	find_cmd_args(args);
 	organize_cmds(args);
+	// move_here_doc(args);
 	remove_pipes(args);
-	move_here_doc(args);
 	confirm_path(args);
 	find_errors(args, args->pipe);
 	return (1);

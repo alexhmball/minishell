@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 02:11:50 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 03:11:16 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	flag_list(t_cmd *args)
 	flag_in(args);
 	// print_pipe(args->pipe);
 	flag_here_doc(args);
-	print_pipe(args->pipe);
+	// print_pipe(args->pipe);
 	temp = *args->pipe;
 	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe)
 	{
