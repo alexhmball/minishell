@@ -6,46 +6,11 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 21:10:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/05 16:05:01 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 05:05:51 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	*parse_path(t_cmd *args, char *str)
-{
-	int		i;
-	char	*ret;
-
-	i = ft_strlen(str);
-	while (str[i] != '/')
-		i--;
-	i++;
-	ret = ft_strdup(str + i);
-	args->path = ft_strdup(str);
-	my_free (str);
-	return (ret);
-}
-
-int	check_path(t_cmd *args)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (args->cmd[i])
-	{
-		j = 0;
-		while (args->cmd[i][j])
-		{
-			if (args->cmd[i][j] == '/')
-				args->cmd[i] = parse_path(args, args->cmd[i]);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
 
 int	search_dir(t_cmd *args, char *search)
 {
