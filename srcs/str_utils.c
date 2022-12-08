@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:56:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/02 17:40:10 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/08 04:56:21 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	**append_str(char **str, char *append)
 		size = two_d_strlen(str) + 2;
 	else
 		size = 2;
+	// write(1, "hi\n", 3);
 	new = (char **)malloc(sizeof(char *) * size);
 	if (!new)
 		return (NULL);

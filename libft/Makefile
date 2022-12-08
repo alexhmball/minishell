@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
+#    By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/12 14:07:38 by aball             #+#    #+#              #
-#    Updated: 2022/11/11 22:39:45 by aball            ###   ########.fr        #
+#    Updated: 2022/12/07 21:16:31 by talsaiaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,11 +52,9 @@ bonus: ${OBJSBONUS}
 		ar crs ${NAME} ${OBJSBONUS}
 
 clean:
-		make clean -C printf
 		${RM} ${OBJS} ${OBJSBONUS}
 
 fclean:	clean
-		make fclean -C printf
 		${RM} ${NAME}
 
 re:		fclean all

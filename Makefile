@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/08 04:08:35 by aball            ###   ########.fr        #
+#    Updated: 2022/12/08 05:29:45 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,26 +32,30 @@ $(OBJDIR)/%.o : srcs/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all: libft $(NAME)
+all: libft gnl $(NAME)
 	@cat talal.ansi.txt
 	@tput setaf 2
 	@printf 'Executable Compiled\n'
 	@tput setaf 7
 
 $(NAME): ${OBJS}
-	${CC} ${CFLAGS} $^ libft/libft.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline -ltermcap
+	${CC} ${CFLAGS} $^ libft/libft.a gnl/gnl.a -o $@ -L /usr/local/Cellar/readline/8.1/lib -lreadline -ltermcap
 
 libft:
 	make -C libft
+gnl:
+	make -C gnl
 
 clean:
 	${RM} ${OBJDIR}
 	make clean -C libft
+	make clean -C gnl
 
 fclean: clean
 	${RM} $(NAME)
 	make fclean -C libft
+	make fclean -C gnl
 
 re: fclean all
 
-.PHONY: all clean libft fclean
+.PHONY: all clean libft gnl fclean

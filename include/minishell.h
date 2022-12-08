@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 04:20:47 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/08 05:29:23 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../gnl/get_next_line_bonus.h"
 # include <limits.h>
 # include <errno.h>
 # include <unistd.h>
@@ -112,8 +113,9 @@ int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
-void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args);
+void	setting_up_ins(t_pipe *temp, int *prev_pipe, t_cmd *args, char *cmd, int ms_hd, int (*fd));
 void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out);
+void	ms_heredoc(t_pipe *temp, int (*fd));
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
