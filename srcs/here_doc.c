@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 21:13:30 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 02:16:28 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,31 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 	saving = (char **)ft_calloc(1, sizeof(char *));
 	i = 0;
 	close(fd[0]);
-	while (1)
+	if (temp && temp->here_doc)
 	{
-		here_doc = readline("> ");
-		typed_len = ft_strlen(here_doc);
-		if (!ft_strncmp(temp->cmd[0], here_doc, typed_len) && typed_len == here_doc_len)
-			break;
-		saving = append_str(saving, here_doc);
+		while(temp->next && temp->next->here_doc)
+		{
+			while(1)
+			{
+				here_doc = readline("> ");
+				if (!here_doc)
+					break ;
+				typed_len = ft_strlen(here_doc);
+				if (!ft_strncmp(temp->cmd[0], here_doc, typed_len) && typed_len == here_doc_len)
+					break ;
+			}
+			temp = temp->next;
+		}
+		while (1)
+		{
+			here_doc = readline("> ");
+			if (!here_doc)
+				break ;
+			typed_len = ft_strlen(here_doc);
+			if (!ft_strncmp(temp->cmd[0], here_doc, typed_len) && typed_len == here_doc_len)
+				break ;
+			saving = append_str(saving, here_doc);
+		}
 	}
 	while (saving[i])
 	{
