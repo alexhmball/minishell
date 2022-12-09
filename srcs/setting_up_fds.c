@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting_up_fds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/08 23:39:26 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 03:49:16 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ void	setting_up_ins(t_pipe *temp, int *prev_pipe, int (*fd))
 {
 	int	infile;
 
-	if (temp->next && !temp->in && !temp->out && !temp->here_doc)
-		temp = temp->next;
-	if (temp && temp->here_doc)
-	{
-		ms_heredoc(temp, fd);
-		temp = temp->next;
-	}
+	// if (temp->next && !temp->in && !temp->out && !temp->here_doc)
+	// 	temp = temp->next;
+	// if (temp && temp->here_doc)
+	// {
+	// 	ms_heredoc(temp, fd);
+	// 	temp = temp->next;
+	// }
 	if (temp && temp->in)
 	{
-		while (temp->next && temp->next->in)
-		{
-			infile = open(temp->path, O_RDONLY);
-			if (infile < 0)
-			{
-				perror(ft_strjoin("minishell: ", temp->cmd[0]));
-				exit(EXIT_FAILURE);
-			}
-			close(infile);
-			temp = temp->next;
-		}
+		// while (temp->next && temp->next->in)
+		// {
+		// 	infile = open(temp->path, O_RDONLY);
+		// 	if (infile < 0)
+		// 	{
+		// 		perror(ft_strjoin("minishell: ", temp->cmd[0]));
+		// 		exit(EXIT_FAILURE);
+		// 	}
+		// 	close(infile);
+		// 	temp = temp->next;
+		// }
 		infile = open(temp->path, O_RDONLY);
 		if (infile < 0)
 		{
@@ -44,35 +44,36 @@ void	setting_up_ins(t_pipe *temp, int *prev_pipe, int (*fd))
 		}
 		dup2(infile, STDIN_FILENO);
 		close(infile);
-		if (temp->next && temp->next->out)
-			temp = temp->next;
+		// if (temp->next && temp->next->out)
+		// 	temp = temp->next;
 	}
 	else if (*prev_pipe != STDIN_FILENO)
 	{
 		dup2(*prev_pipe, STDIN_FILENO);
 		close(*prev_pipe);
 	}
+	exit (EXIT_SUCCESS);
 }
 
 void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 {
 	int	outfile;
 
-	if (temp->next && temp->next->out && !temp->out)
-		temp = temp->next;
+	// if (temp->next && temp->next->out && !temp->out)
+	// 	temp = temp->next;
 	if (temp && temp->out)
 	{
-		while (temp->next && temp->next->out)
-		{
-			outfile = open(temp->cmd[0], O_RDWR| O_CREAT | O_TRUNC, 0666);
-			if (outfile < 0)
-			{
-				perror(ft_strjoin("minishell: ", temp->cmd[0]));
-				exit(EXIT_FAILURE);
-			}
-			close(outfile);
-			temp = temp->next;
-		}
+		// while (temp->next && temp->next->out)
+		// {
+		// 	outfile = open(temp->cmd[0], O_RDWR| O_CREAT | O_TRUNC, 0666);
+		// 	if (outfile < 0)
+		// 	{
+		// 		perror(ft_strjoin("minishell: ", temp->cmd[0]));
+		// 		exit(EXIT_FAILURE);
+		// 	}
+		// 	close(outfile);
+		// 	temp = temp->next;
+		// }
 		if (temp && temp->append)
 			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0666);
 		else
@@ -84,8 +85,8 @@ void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 		}
 		dup2(outfile, STDOUT_FILENO);
 		close(outfile);
-		if (temp->next && temp->next->in)
-			temp = temp->next;
+		// if (temp->next && temp->next->in)
+		// 	temp = temp->next;
 		*prev_out = 1;
 	}
 	else if (temp->next && args->pipe_n)
