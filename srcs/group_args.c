@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   group_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 22:43:38 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 22:43:43 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 21:03:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void	find_cmd_args(t_cmd *args)
 		arg = -1;
 		cmd = -1;
 	}
+		// printf("cmd: %d, arg: %d, counter: %d\n", cmd, arg, counter);
 }

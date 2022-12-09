@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:34:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:43:14 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 23:19:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	clear_env(t_env **head)
 		my_free(*head);
 		*head = temp;
 	}
-	// my_free(head);
 }
 
 void	env_delone(t_env *node)
@@ -95,36 +94,4 @@ char	*get_key(char *str)
 	}
 	key[i] = '\0';
 	return (key);
-}
-
-char	*get_value(char *str)
-{
-	int		i;
-	int		j;
-	char	*value;
-
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '=')
-		i++;
-	if (i == (int)ft_strlen(str))
-		return (NULL);
-
-	i++;
-	j = i;
-	while (str[j])
-		j++;
-	value = (char *)malloc(sizeof(char) * (j - i + 1));
-	if (!value)
-		return (NULL);
-	j = 0;
-	while (str[i])
-	{
-		value[j] = str[i];
-		i++;
-		j++;
-	}
-	value[j] = '\0';
-	return (value);
 }

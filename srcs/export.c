@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:44:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 23:23:34 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,30 @@ int	compare_env(t_cmd *args, t_pipe *node, char *key, char *value)
 	return (0);
 }
 
+void	print_env(t_env *env)
+{
+	while (env)
+	{
+		printf("declare -x %s", env->key);
+		if (env->value)
+			printf("=\"%s\"\n", env->value);
+		else
+			printf("\n");
+		env = env->next;
+	}
+}
+
 void	my_export(t_cmd *args, t_pipe *node)
 {
 	t_env	*temp;
 	char	*key;
-	char 	*value;
+	char	*value;
 
 	temp = *args->env;
 	key = get_key(node->cmd[1]);
 	value = get_value(node->cmd[1]);
-	if (two_d_strlen(node->cmd) > 1 && value && !compare_env(args, node, key, value))
+	if (two_d_strlen(node->cmd) > 1 && value
+		&& !compare_env(args, node, key, value))
 	{
 		while (temp)
 		{
@@ -64,15 +78,5 @@ void	my_export(t_cmd *args, t_pipe *node)
 	else if (two_d_strlen(node->cmd) > 1 && !value)
 		env_addback(args->env, env_newlst(key, NULL));
 	else if (two_d_strlen(node->cmd) <= 1)
-	{
-		while (temp)
-		{
-			printf("declare -x %s", temp->key);
-			if (temp->value)
-				printf("=\"%s\"\n", temp->value);
-			else
-				printf("\n");
-			temp = temp->next;
-		}
-	}
+		print_env(*args->env);
 }

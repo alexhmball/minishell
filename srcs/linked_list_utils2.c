@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 22:45:19 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 20:48:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ void	create_pipe_list(t_cmd *args)
 		temp = temp->next;
 	}
 	remove_quotes(args->pipe, 0, 0, args);
-	freedom(args->cmd);
+	// freedom(args->cmd);
 }
