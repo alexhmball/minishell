@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:33:53 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 21:06:38 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 01:15:13 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	swap_node(t_pipe *node1, t_pipe *node2, t_pipe **head, int c)
 	node2->next = node1;
 }
 
-void	organize_cmd(t_cmd *args)
+void	organize(t_cmd *args)
 {
 	t_pipe	*temp;
 	int		c;
@@ -48,7 +48,7 @@ void	organize_cmd(t_cmd *args)
 	while (temp)
 	{
 		if (temp->next && !temp->in && !temp->out && !temp->is_pipe
-			&& !temp->here_doc)
+			&& !temp->here_doc && !temp->next->is_pipe)
 		{
 			swap_node(temp, temp->next, args->pipe, c);
 			temp = *args->pipe;
@@ -69,8 +69,8 @@ void	organize_cmds(t_cmd *args)
 	c = 0;
 	while (temp)
 	{
-		if (temp->next != NULL && temp->out == 1 && temp->next->out == 0
-			&& temp->is_pipe == 0 && temp->next->is_pipe == 0)
+		if (temp->next && temp->out && !temp->next->out
+			&& !temp->is_pipe && !temp->next->is_pipe)
 		{
 			swap_node(temp, temp->next, args->pipe, c);
 			temp = *args->pipe;
@@ -80,7 +80,7 @@ void	organize_cmds(t_cmd *args)
 			temp = temp->next;
 		c++;
 	}
-	organize_cmd(args);
+	organize(args);
 }
 
 t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c)
