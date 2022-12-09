@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 16:39:30 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 22:06:04 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 char	**find_path(t_cmd *args)
 {
 	char	**ret;
-	t_list	*current;
+	t_env	*current;
 
 	current = *args->env;
 	ret = NULL;
 	while (current)
 	{
-		if (ft_strlen(current->content) >= 4
-			&& !ft_strncmp(current->content, "PATH", 4))
+		if (ft_strlen(current->key) == 4
+			&& !ft_strncmp(current->key, "PATH", 4))
 			break ;
 		current = current->next;
 	}
 	if (current)
-		ret = ft_split(current->content + 5, ':');
+		ret = ft_split(current->value, ':');
 	return (ret);
 }
 

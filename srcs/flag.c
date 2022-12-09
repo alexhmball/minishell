@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 21:23:40 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 22:47:25 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static t_pipe	*here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 		temp->here_doc = 1;
 		temp->cmd[0] = ft_strdup(temp->cmd[0] + 2);
 	}
+	args->here_doc++;
 	return (temp);
 }
 
@@ -52,6 +53,7 @@ void	flag_here_doc(t_cmd *args)
 	i = 0;
 	temp = *args->pipe;
 	prev = NULL;
+	args->here_doc = 0;
 	while (temp)
 	{
 		if (temp->cmd[0] && temp->cmd[0][0] == '<'
@@ -62,6 +64,7 @@ void	flag_here_doc(t_cmd *args)
 		temp = temp->next;
 		i++;
 	}
+	printf("here_doc: %d\n", args->here_doc);
 }
 
 int	flag_list(t_cmd *args)

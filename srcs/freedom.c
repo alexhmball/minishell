@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:10:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 21:25:21 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 21:55:00 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	freedom(char **free_me)
 
 void	total_freedom(t_cmd *args)
 {
-	ft_lstclear(args->env, my_free);
+	clear_env(args->env);
+	// ft_lstclear(args->env, my_free);
 	my_free(args->env);
 	my_free(args->s);
 	rl_clear_history();

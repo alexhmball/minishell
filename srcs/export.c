@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 16:49:22 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 22:44:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	compare_env(t_cmd *args, t_pipe *node)
+int	compare_env(t_cmd *args, t_pipe *node, char *key, char *value)
 {
-	t_list	*current;
+	t_env	*current;
 	int		len;
 	int		len_env;
 
 	current = *args->env;
-	len = find_equal(node->cmd[1]);
+	len = ft_strlen(key);
 	if (two_d_strlen(node->cmd) > 1 && len != -1)
 	{
 		while (current)
 		{
-			len_env = find_equal(current->content);
+			len_env = ft_strlen(current->key);
 			if (len_env == len)
 			{
-				if (!ft_strncmp(current->content, node->cmd[1], len))
+				if (!ft_strncmp(current->key, key, len))
 				{
-					my_free(current->content);
-					current->content = ft_strdup(node->cmd[1]);
+					my_free(current->value);
+					current->value = value;
 					return (1);
 				}
 			}
@@ -42,27 +42,36 @@ int	compare_env(t_cmd *args, t_pipe *node)
 
 void	my_export(t_cmd *args, t_pipe *node)
 {
-	t_list	*temp;
+	t_env	*temp;
+	char	*key;
+	char 	*value;
 
 	temp = *args->env;
-	if (two_d_strlen(node->cmd) > 1 && !compare_env(args, node))
+	key = get_key(node->cmd[1]);
+	value = get_value(node->cmd[1]);
+	if (two_d_strlen(node->cmd) > 1 && value && !compare_env(args, node, key, value))
 	{
 		while (temp)
 		{
-			if (ft_strlen(temp->content) == ft_strlen(node->cmd[1])
-				&& !ft_strncmp(temp->content, node->cmd[1],
-					ft_strlen(node->cmd[1])))
+			if (ft_strlen(temp->key) == ft_strlen(key)
+				&& !ft_strncmp(temp->value, value, ft_strlen(value)))
 				return ;
 			temp = temp->next;
 		}
 		if (find_equal(node->cmd[1]) != -1)
-			ft_lstadd_back(args->env, ft_lstnew(ft_strdup(node->cmd[1])));
+			env_addback(args->env, env_newlst(key, value));
 	}
+	else if (two_d_strlen(node->cmd) > 1 && !value)
+		env_addback(args->env, env_newlst(key, NULL));
 	else if (two_d_strlen(node->cmd) <= 1)
 	{
 		while (temp)
 		{
-			printf("declare -x %s\n", (char *)temp->content);
+			printf("declare -x %s", temp->key);
+			if (temp->value)
+				printf("=\"%s\"\n", temp->value);
+			else
+				printf("\n");
 			temp = temp->next;
 		}
 	}
