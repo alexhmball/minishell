@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 01:02:05 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 23:45:34 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handler(int signo, siginfo_t *info, void *context)
 	if (signo == SIGCHLD)
 	{
 		// waitpid(-1, NULL, WNOHANG);
-		// wait(NULL);
+		wait(NULL);
 		if (info->si_status == 2 && info->si_code == 2)
 			g_error = 130;
 		else if (info->si_code == 1 && info->si_status == 2)

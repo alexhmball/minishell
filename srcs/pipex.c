@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 22:51:34 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 01:15:56 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,13 @@ void	pipex(t_cmd *args)
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
+	int		prev_in;
+	int		prev_out;
 
 	temp = *args->pipe;
 	prev_pipe = STDIN_FILENO;
+	prev_in = 0;
+	prev_out = 0;
 	while (temp)
 	{
 		if (pipe(fd) == -1)
@@ -53,15 +57,21 @@ void	pipex(t_cmd *args)
 			if (temp && temp->here_doc)
 				ms_heredoc(temp, fd, args);
 			if (temp && temp->in)
+			{
 				temp = setting_up_ins(temp);
-			else if (prev_pipe != STDIN_FILENO)
+				prev_in = 1;
+			}
+			if (prev_pipe != STDIN_FILENO && !prev_in || args->heredoc_n == 1)
 			{
 				dup2(prev_pipe, STDIN_FILENO);
 				close(prev_pipe);
 			}
 			if (temp && temp->out)
+			{
 				temp = setting_up_outs(temp);
-			else if (args->pipe_n || args->heredoc_n)
+				prev_out = 1;
+			}
+			if (!prev_out && args->pipe_n)
 			{
 				dup2(fd[1], STDOUT_FILENO);
 				close(fd[1]);
@@ -87,13 +97,17 @@ void	pipex(t_cmd *args)
 			temp = temp->next;
 		while (temp && temp->next && temp->out)
 			temp = temp->next;
-		while (temp && !temp->in && !temp->out && !temp->here_doc)
+		if (temp && !temp->in && !temp->out && !temp->here_doc)
 			temp = temp->next;
-		while (temp && temp->next && temp->here_doc)
+		if (temp && temp->next && temp->here_doc)
 		{
-			args->heredoc_n--;
+			if (args->heredoc_n > 1)
+				args->heredoc_n--;
+			args->pipe_n++;
 			temp = temp->next;
 		}
+		if (args->pipe_n > 0)
+			args->pipe_n--;
 	}
 	wait(&child);
 	close(fd[0]);
