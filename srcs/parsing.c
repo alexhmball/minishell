@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 21:02:17 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 21:58:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	parsing(t_cmd *args)
 	create_pipe_list(args);
 	if (!parse_pipe(args))
 		return (*args->err);
+	freedom(args->cmd);
 	// if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1
 	// 	&& ft_strlen(args->cmd[0]) == 4)
 	// {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 01:27:18 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:00:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_cmd
 	int					redirect;
 	int					heredoc_n;
 	char				**env_for_excecute;
-	char				*err_msg;
+	int					flag;
 	DIR					*folder;
 	t_env				**env;
 	t_pipe				**pipe;

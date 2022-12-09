@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 20:57:09 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 22:02:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	us_not_printing(t_cmd *args)
 			c->cmd = (char **)malloc(sizeof(char *) * 2);
 			c->cmd[0] = ft_strdup("exit");
 			c->cmd[1] = NULL;
+			args->flag = 1;
 		}
 		else if (ft_strlen(c->cmd[0]) == 6
 			&& !ft_strncmp(c->cmd[0], "export", 6) && two_d_strlen(c->cmd) > 1)

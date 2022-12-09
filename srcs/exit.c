@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:16:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 20:59:22 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 22:02:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exit_shell(t_cmd *args, t_pipe *node)
 	int	i;
 
 	i = 0;
-	if (pipe_size(args->pipe) == 1)
+	if (pipe_size(args->pipe) == 1 && !args->flag)
 		printf("exit\n");
 	if (two_d_strlen(node->cmd) > 1)
 	{
@@ -43,15 +43,15 @@ void	exit_shell(t_cmd *args, t_pipe *node)
 				errno = EINVAL;
 				perror("minishell: exit");
 				*args->err = 255;
-				total_freedom(args);
 				lstclear_pipe(args->pipe, my_free);
+				total_freedom(args);
 				exit(*args->err);
 			}
 			i++;
 		}
 		*args->err = ft_atol(node->cmd[1]);
 	}
-	total_freedom(args);
 	lstclear_pipe(args->pipe, my_free);
+	total_freedom(args);
 	exit(*args->err);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 01:32:21 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 21:53:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	pipex(t_cmd *args)
 				if (is_us(temp))
 				{
 					excecute_us(args, temp);
-					total_freedom(args);
 					lstclear_pipe(args->pipe, my_free);
+					total_freedom(args);
 					exit(EXIT_SUCCESS);
 				}
 				else

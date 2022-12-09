@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 23:23:34 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 21:48:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	compare_env(t_cmd *args, t_pipe *node, char *key, char *value)
 			{
 				if (!ft_strncmp(current->key, key, len))
 				{
-					my_free(current->value);
-					current->value = value;
+					// my_free(current->value);
+					current->value = ft_strdup(value);
 					return (1);
 				}
 			}
@@ -69,14 +69,20 @@ void	my_export(t_cmd *args, t_pipe *node)
 		{
 			if (ft_strlen(temp->key) == ft_strlen(key)
 				&& !ft_strncmp(temp->value, value, ft_strlen(value)))
+			{
+				free(key);
+				free(value);
 				return ;
+			}
 			temp = temp->next;
 		}
 		if (find_equal(node->cmd[1]) != -1)
-			env_addback(args->env, env_newlst(key, value));
+			env_addback(args->env, env_newlst(ft_strdup(key), ft_strdup(value)));
 	}
 	else if (two_d_strlen(node->cmd) > 1 && !value)
 		env_addback(args->env, env_newlst(key, NULL));
 	else if (two_d_strlen(node->cmd) <= 1)
 		print_env(*args->env);
+	free(key);
+	free(value);
 }
