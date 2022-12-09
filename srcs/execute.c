@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 20:33:51 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 05:32:15 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,25 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 	if (!cmd->path)
 	{
 		*args->err = 127;
-		args->err_msg = ft_strjoin("minishell: ", cmd->cmd[0]);
-		perror(args->err_msg);
-		my_free(args->err_msg);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->cmd[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 	}
 	else if (access(cmd->path, X_OK) != 0)
 	{
 		set_error(args, errno);
-		perror("minishell: ");
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->cmd[0], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
 	}
 	else
 	{
 		execve(cmd->path, cmd->cmd, args->env_for_excecute);
-		perror("minishell: ");
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->cmd[0], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
 	}
 	total_freedom(args);
 	lstclear_pipe(args->pipe, my_free);
