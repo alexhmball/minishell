@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 03:49:16 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 05:32:09 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	setting_up_ins(t_pipe *temp, int *prev_pipe, int (*fd))
 {
 	int	infile;
 
+	(void)fd;
 	// if (temp->next && !temp->in && !temp->out && !temp->here_doc)
 	// 	temp = temp->next;
 	// if (temp && temp->here_doc)
@@ -23,8 +24,10 @@ void	setting_up_ins(t_pipe *temp, int *prev_pipe, int (*fd))
 	// 	ms_heredoc(temp, fd);
 	// 	temp = temp->next;
 	// }
-	if (temp && temp->in)
+	while (temp && temp->in)
 	{
+		// close(fd[0]);
+		// close(fd[1]);
 		// while (temp->next && temp->next->in)
 		// {
 		// 	infile = open(temp->path, O_RDONLY);
@@ -42,26 +45,36 @@ void	setting_up_ins(t_pipe *temp, int *prev_pipe, int (*fd))
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
 		}
-		dup2(infile, STDIN_FILENO);
-		close(infile);
+		if (temp && !temp->next->in)
+			close (infile);
+		temp = temp->next;
+		// if (temp && temp->next->in)
+		// {
+		// 	close(fd[0]);
+		// 	close(fd[1]);
+		// 	exit(EXIT_SUCCESS);
+		// }
+	}
+	dup2(infile, STDIN_FILENO);
+	close(infile);
 		// if (temp->next && temp->next->out)
 		// 	temp = temp->next;
-	}
-	else if (*prev_pipe != STDIN_FILENO)
+	if (*prev_pipe != STDIN_FILENO)
 	{
 		dup2(*prev_pipe, STDIN_FILENO);
 		close(*prev_pipe);
 	}
-	exit (EXIT_SUCCESS);
+	// exit (EXIT_SUCCESS);
 }
 
 void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 {
 	int	outfile;
 
+	(void)args;
 	// if (temp->next && temp->next->out && !temp->out)
 	// 	temp = temp->next;
-	if (temp && temp->out)
+	while (temp && temp->out)
 	{
 		// while (temp->next && temp->next->out)
 		// {
@@ -83,15 +96,21 @@ void	setting_up_outs(t_pipe *temp, t_cmd *args, int (*fd), int *prev_out)
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
 		}
-		dup2(outfile, STDOUT_FILENO);
-		close(outfile);
-		// if (temp->next && temp->next->in)
-		// 	temp = temp->next;
-		*prev_out = 1;
+		// if (temp && temp->next->out)
+		// 	exit(EXIT_SUCCESS);
+		if (temp && !temp->next->out)
+			close(outfile);
+		temp = temp->next;
 	}
-	else if (temp->next && args->pipe_n)
+	dup2(outfile, STDOUT_FILENO);
+	close(outfile);
+	// if (temp->next && temp->next->in)
+	// 	temp = temp->next;
+		*prev_out = 1;
+	if (temp && temp->next)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
+	// exit (EXIT_SUCCESS);
 }

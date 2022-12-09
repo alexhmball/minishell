@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 03:46:07 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 04:12:40 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 			saving = append_str(saving, here_doc);
 		}
 	}
+	if (temp && temp->next->here_doc)
+		exit(EXIT_SUCCESS);
 	while (saving[i])
 	{
 		typed_len = ft_strlen(saving[i]);
@@ -62,5 +64,5 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 	}
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	exit (EXIT_SUCCESS);
+	// exit (EXIT_SUCCESS);
 }

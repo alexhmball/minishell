@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 03:41:56 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 05:27:54 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ size_t	my_lst_size(t_pipe *temp)
 void	pipex(t_cmd *args)
 {
 	t_pipe	*temp;
-	t_pipe	*cmd;
 	int		prev_pipe;
 	int		child;
 	int		fd[2];
@@ -52,33 +51,46 @@ void	pipex(t_cmd *args)
 		}
 		if (!child)
 		{
-			if (!temp->in && !temp->out && !temp->here_doc)
-				cmd = temp;
-			else
-				cmd = NULL;
+			// ft_putstr_fd(temp->cmd[0], 2);
 			if (temp->here_doc)
-				ms_heredoc(temp, fd);
-			else if (temp->in)
-				setting_up_ins(temp, &prev_pipe,fd);
-			else if (temp->out)
-				setting_up_outs(temp, args, fd, &prev_out);
-			if (cmd != NULL)
 			{
-				if (is_us(cmd))
+				ms_heredoc(temp, fd);
+				temp = temp->next;
+			}
+			if (temp->in)
+			{
+				setting_up_ins(temp, &prev_pipe,fd);
+				temp = temp->next;
+			}
+			if (temp->out)
+			{
+				setting_up_outs(temp, args, fd, &prev_out);
+				temp = temp->next;
+			}
+			if (!temp->in && !temp->out && !temp->here_doc)
+			{
+				if (is_us(temp))
 				{
-					excecute_us(args, cmd);
+					excecute_us(args, temp);
 					total_freedom(args);
 					lstclear_pipe(args->pipe, my_free);
 					exit(EXIT_SUCCESS);
 				}
 				else
-					execute_them(args, cmd);
+					execute_them(args, temp);
 			}
 		}
 		wait(&child);
 		close(fd[1]);
 		prev_pipe = fd[0];
+		// if (temp->next)
 		temp = temp->next;
+		while (temp && temp->next && temp->next->in)
+			temp = temp->next;
+		while (temp && temp->next && temp->next->out)
+			temp = temp->next;
+		while (temp && !temp->in && !temp->out)
+			temp = temp->next;
 		// while (temp && temp->here_doc)
 		// 	temp = temp->next;
 		// while (temp && temp->in)
