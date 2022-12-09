@@ -6,13 +6,13 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 22:12:21 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:52:24 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ms_heredoc(t_pipe *temp, int (*fd), t_pipe *args)
+void	ms_heredoc(t_pipe *temp, int (*fd), t_cmd *args)
 {
 	char	**saving;
 	char	*here_doc;

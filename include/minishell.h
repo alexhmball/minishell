@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:50:15 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:52:33 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_cmd
 	int					fd;
 	int					pipe_n;
 	int					redirect;
-	int					here_doc;
+	int					heredoc_n;
 	char				**env_for_excecute;
 	char				*err_msg;
 	DIR					*folder;
@@ -124,7 +124,7 @@ void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
 t_pipe	*setting_up_ins(t_pipe *temp);
 t_pipe	*setting_up_outs(t_pipe *temp);
-void	ms_heredoc(t_pipe *temp, int (*fd), t_pipe *args);
+void	ms_heredoc(t_pipe *temp, int (*fd), t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
