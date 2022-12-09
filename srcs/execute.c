@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 05:32:15 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 17:06:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	us_not_printing(t_cmd *args)
 			my_export(args, c);
 		else if (ft_strlen(c->cmd[0]) == 5
 			&& !ft_strncmp(c->cmd[0], "unset", 5))
-			my_unset(args);
+			my_unset(args, c);
 		else if (ft_strlen(c->cmd[0]) == 4 && !ft_strncmp(c->cmd[0], "exit", 4))
 			exit_shell(args, c);
 		c = c->next;
@@ -80,7 +80,7 @@ void	excecute_us(t_cmd *args, t_pipe *cmd)
 		my_env(args);
 	else if (ft_strlen(cmd->cmd[0]) == 5
 		&& !ft_strncmp(cmd->cmd[0], "unset", 5))
-		my_unset(args);
+		my_unset(args, cmd);
 	else if (ft_strlen(cmd->cmd[0]) == 4
 		&& !ft_strncmp(cmd->cmd[0], "exit", 4))
 		exit_shell(args, cmd);

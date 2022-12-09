@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 23:39:50 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 17:02:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	print_working_dir(void);
 void	change_dir(char **cmd, t_cmd *args);
 void	my_export(t_cmd *args, t_pipe *node);
 void	my_env(t_cmd *args);
-void	my_unset(t_cmd *args);
+void	my_unset(t_cmd *args, t_pipe *node);
 void	child_rangler(int signo, siginfo_t *info, void *context);
 void	exit_shell(t_cmd *args, t_pipe *node);
 void	us_not_printing(t_cmd *args);

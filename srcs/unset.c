@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:03 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 18:35:15 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 17:02:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*remove_env(t_list **head, t_list *node, t_list *prev_node, int c)
 	return (*head);
 }
 
-void	my_unset(t_cmd *args)
+void	my_unset(t_cmd *args, t_pipe *node)
 {
 	t_list	*current;
 	t_list	*temp;
@@ -33,13 +33,13 @@ void	my_unset(t_cmd *args)
 	current = *args->env;
 	temp = current;
 	i = 0;
-	if (two_d_strlen(args->cmd) > 1)
+	if (two_d_strlen(node->cmd) > 1)
 	{
 		while (current)
 		{
 			len = find_equal(current->content);
-			if (len >= ft_strlen(args->cmd[1])
-				&& !ft_strncmp(current->content, args->cmd[1], len))
+			if (len >= ft_strlen(node->cmd[1])
+				&& !ft_strncmp(current->content, node->cmd[1], len))
 			{
 				current = remove_env(args->env, current, temp, i);
 				i = 0;

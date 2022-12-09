@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 19:16:21 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 16:49:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	compare_env(t_cmd *args)
+int	compare_env(t_cmd *args, t_pipe *node)
 {
 	t_list	*current;
 	int		len;
 	int		len_env;
 
 	current = *args->env;
-	len = find_equal(args->cmd[1]);
-	if (two_d_strlen(args->cmd) > 1 && len != -1)
+	len = find_equal(node->cmd[1]);
+	if (two_d_strlen(node->cmd) > 1 && len != -1)
 	{
 		while (current)
 		{
 			len_env = find_equal(current->content);
 			if (len_env == len)
 			{
-				if (!ft_strncmp(current->content, args->cmd[1], len))
+				if (!ft_strncmp(current->content, node->cmd[1], len))
 				{
 					my_free(current->content);
-					current->content = ft_strdup(args->cmd[1]);
+					current->content = ft_strdup(node->cmd[1]);
 					return (1);
 				}
 			}
@@ -45,7 +45,7 @@ void	my_export(t_cmd *args, t_pipe *node)
 	t_list	*temp;
 
 	temp = *args->env;
-	if (two_d_strlen(node->cmd) > 1 && !compare_env(args))
+	if (two_d_strlen(node->cmd) > 1 && !compare_env(args, node))
 	{
 		while (temp)
 		{
