@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 01:27:12 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 01:58:52 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 		write(fd[1], "\n", 1);
 		i++;
 	}
+	freedom(saving);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
 	exit (EXIT_SUCCESS);

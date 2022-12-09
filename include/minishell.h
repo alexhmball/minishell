@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:00:29 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 22:33:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
-t_pipe	*setting_up_ins(t_pipe *temp);
+t_pipe	*setting_up_ins(t_pipe *temp, int (*fd));
 t_pipe	*setting_up_outs(t_pipe *temp);
 void	ms_heredoc(t_pipe *temp, int (*fd));
 

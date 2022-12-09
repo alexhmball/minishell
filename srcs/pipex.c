@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 21:53:58 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 22:33:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	pipex(t_cmd *args)
 		}
 		if (!child)
 		{
-			ft_putstr_fd("loop\n", 2);
 			if (temp && temp->here_doc)
 			{
 				if (prev_pipe != STDIN_FILENO)
@@ -62,7 +61,7 @@ void	pipex(t_cmd *args)
 			}
 			if (temp && temp->in)
 			{
-				temp = setting_up_ins(temp);
+				temp = setting_up_ins(temp, fd);
 				prev_in = 1;
 			}
 			if (prev_pipe != STDIN_FILENO && !prev_in)
@@ -75,7 +74,7 @@ void	pipex(t_cmd *args)
 				temp = setting_up_outs(temp);
 				prev_out = 1;
 			}
-			if (!prev_out && args->pipe_n)
+			if (!prev_out && args->pipe_n >= 1)
 			{
 				dup2(fd[1], STDOUT_FILENO);
 				close(fd[1]);
@@ -93,7 +92,6 @@ void	pipex(t_cmd *args)
 					execute_them(args, temp);
 			}
 		}
-		ft_putstr_fd("loop out\n", 2);
 		wait(&child);
 		close(fd[1]);
 		prev_pipe = fd[0];
@@ -101,15 +99,10 @@ void	pipex(t_cmd *args)
 			temp = temp->next;
 		while (temp && temp->next && temp->out)
 			temp = temp->next;
-		if (temp && !temp->in && !temp->out && !temp->here_doc)
-			temp = temp->next;
 		if (temp && temp->next && temp->here_doc)
-		{
-			// if (args->heredoc_n > 1)
-			// 	args->heredoc_n--;
 			args->pipe_n++;
+		if (temp && !temp->in && !temp->out)
 			temp = temp->next;
-		}
 		if (args->pipe_n > 0)
 			args->pipe_n--;
 	}
