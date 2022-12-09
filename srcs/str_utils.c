@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:56:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 21:10:40 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 23:19:43 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,31 @@ int	locate_dollar(char *str)
 		i++;
 	}
 	return (-1);
+}
+
+char	*get_value(char *str)
+{
+	int		i;
+	int		j;
+	char	*value;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	if (i == (int)ft_strlen(str))
+		return (NULL);
+	i++;
+	j = i;
+	while (str[j])
+		j++;
+	value = (char *)malloc(sizeof(char) * (j - i + 1));
+	if (!value)
+		return (NULL);
+	j = 0;
+	while (str[i])
+		value[j++] = str[i++];
+	value[j] = '\0';
+	return (value);
 }

@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:37:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 21:48:34 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 23:05:12 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,6 @@ t_env	**create_env(char **exp)
 	}
 	return (head);
 }
-
-// char	*find_env(char *temp, t_cmd *args)
-// {
-// 	t_env	*current;
-// 	int		i;
-// 	char	*ret;
-
-// 	current = *args->env;
-// 	i = 0;
-// 	while (current)
-// 	{
-// 		if (!ft_strncmp(temp, current->content, ft_strlen(temp)))
-// 		{
-// 			while (((char *)current->content)[i] != '=')
-// 				i++;
-// 			i++;
-// 			ret = ft_strdup(((char *)current->content) + i);
-// 			return (ret);
-// 		}
-// 		current = current->next;
-// 	}
-// 	return (NULL);
-// }
 
 void	my_env(t_cmd *args)
 {

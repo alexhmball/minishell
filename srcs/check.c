@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:06:04 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 22:54:56 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ int	validate_path(char *cmd, t_cmd *args)
 
 	i = 0;
 	search = find_path(args);
+	if (!search)
+		return (0);
 	current = get_working_dir();
 	search = append_str(search, current);
 	my_free(current);
-	if (!search)
-		return (0);
 	while (search[i])
 	{
 		if (searching_dirs(search[i], args, cmd, search))
