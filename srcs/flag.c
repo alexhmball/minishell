@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 03:11:16 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 21:23:40 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	flag_pipe(t_cmd *args)
 	}
 }
 
-static t_pipe	*flag_here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
+static t_pipe	*here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 {
 	if (ft_strlen(temp->cmd[0]) == 2 && temp->next)
 	{
@@ -57,7 +57,7 @@ void	flag_here_doc(t_cmd *args)
 		if (temp->cmd[0] && temp->cmd[0][0] == '<'
 				&& ft_strlen(temp->cmd[0]) > 1 && temp->cmd[0][1] == '<'
 					&& !temp->double_q && !temp->single_q)
-			temp = flag_here_doc_2(temp, prev, &i, args);
+			temp = here_doc_2(temp, prev, &i, args);
 		prev = temp;
 		temp = temp->next;
 		i++;
