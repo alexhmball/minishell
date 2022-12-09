@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:15:09 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:50:15 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@
 # include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_pipe
 {
@@ -57,10 +64,11 @@ typedef struct s_cmd
 	int					fd;
 	int					pipe_n;
 	int					redirect;
+	int					here_doc;
 	char				**env_for_excecute;
 	char				*err_msg;
 	DIR					*folder;
-	t_list				**env;
+	t_env				**env;
 	t_pipe				**pipe;
 	struct dirent		*dir;
 }	t_cmd;
@@ -79,7 +87,7 @@ char	*insert_expand(char *line, char *exp, char *temp);
 char	*add_char(char *s1, char c);
 int		string_count(char *line);
 int		two_d_strlen(char **str);
-t_list	**create_env(char **exp);
+t_env	**create_env(char **exp);
 char	*find_env(char *temp, t_cmd *args);
 void	check_expand(t_pipe *node, t_cmd *args);
 int		find_equal(char *str);
@@ -104,6 +112,8 @@ void	find_errors(t_cmd *args, t_pipe **head);
 void	expand_dollar(t_pipe *node, t_cmd *args);
 void	find_expand(t_pipe *current, int single_q, int double_q, t_cmd *args);
 void	flag_quotes(t_pipe *node, int *single_q, int *double_q);
+char	*get_key(char *str);
+char	*get_value(char *str);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -121,6 +131,7 @@ void	ms_heredoc(t_pipe *temp, int (*fd), t_pipe *args);
 void	my_free(void *content);
 int		freedom(char **free_me);
 void	total_freedom(t_cmd *args);
+void	executioner(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~LINKED_LIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -145,6 +156,10 @@ void	flag_pipe(t_cmd *args);
 void	flag_in(t_cmd *args);
 void	flag_here_doc(t_cmd *args);
 void	flag_out(t_cmd *args);
+t_env	*env_addback(t_env **head, t_env *node);
+t_env	*env_newlst(char *key, char *value);
+void	clear_env(t_env **head);
+void	env_delone(t_env *node);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -153,7 +168,7 @@ void	print_working_dir(void);
 void	change_dir(char **cmd, t_cmd *args);
 void	my_export(t_cmd *args, t_pipe *node);
 void	my_env(t_cmd *args);
-void	my_unset(t_cmd *args);
+void	my_unset(t_cmd *args, t_pipe *node);
 void	child_rangler(int signo, siginfo_t *info, void *context);
 void	exit_shell(t_cmd *args, t_pipe *node);
 void	us_not_printing(t_cmd *args);
