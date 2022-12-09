@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 23:22:03 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 23:36:22 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 20:42:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	find_errors(t_cmd *args, t_pipe **head)
 		if (!temp->out && !temp->in && !temp->is_pipe && !temp->here_doc
 			&& !temp->path && !is_us(temp))
 			*args->err = 127;
-		else if (!temp->out && !temp->in && !temp->is_pipe && !temp->here_doc
+		else if (temp->path &&!temp->out && !temp->in && !temp->is_pipe && !temp->here_doc
 			&& access(temp->path, X_OK) == -1 && !is_us(temp)
 			&& access(temp->path, R_OK) == -1)
 			*args->err = 126;

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 16:38:06 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/09 21:02:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	parse_pipe(t_cmd *args)
 	find_cmd_args(args);
 	organize_cmds(args);
 	// move_here_doc(args);
+	// printf("heelo\n");
 	remove_pipes(args);
 	confirm_path(args);
 	find_errors(args, args->pipe);
@@ -99,23 +100,19 @@ int	parsing(t_cmd *args)
 		return (0);
 	if (ret == 1)
 		return (1);
-	if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1
-		&& ft_strlen(args->cmd[0]) == 4)
-	{
-		ft_printf("%s\n", args->cmd[0]);
-		return (0);
-	}
-	else if (*args->cmd)
-	{
-		create_pipe_list(args);
-		if (!parse_pipe(args))
-			return (*args->err);
-		if (!args->pipe_n)
-			us_not_printing(args);
-		print_pipe(args->pipe);
-		pipex(args);
-		lstclear_pipe(args->pipe, my_free);
-	}
+	create_pipe_list(args);
+	if (!parse_pipe(args))
+		return (*args->err);
+	// if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1
+	// 	&& ft_strlen(args->cmd[0]) == 4)
+	// {
+	// 	exit_shell(args);
+	// }
+	if (!args->pipe_n)
+		us_not_printing(args);
+	print_pipe(args->pipe);
+	pipex(args);
+	lstclear_pipe(args->pipe, my_free);
 	my_free(args->s);
 	return (1);
 }
