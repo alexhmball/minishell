@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 01:58:52 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 03:01:27 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	heredocy(int signo, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+	if (signo == SIGINT)
+	{
+		exit(0);
+	}
+}
 
 void	ms_heredoc(t_pipe *temp, int (*fd))
 {
@@ -19,7 +29,11 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 	int		here_doc_len;
 	int		typed_len;
 	int		i;
+	struct sigaction	sa;
 
+	sa.sa_flags = SA_SIGINFO;
+	sa.sa_sigaction = heredocy;
+	sigaction(SIGINT, &sa, NULL);
 	here_doc_len = 0;
 	typed_len = 0;
 	here_doc_len = ft_strlen(temp->cmd[0]);
