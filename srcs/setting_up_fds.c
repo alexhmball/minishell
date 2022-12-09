@@ -6,29 +6,30 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 23:32:30 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 02:29:01 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_pipe	*setting_up_ins(t_pipe *temp)
+t_pipe	*setting_up_ins(t_pipe *temp, int (*fd))
 {
 	int	infile;
 
 	while (temp && temp->in)
 	{
-		ft_putstr_fd("in\n", 2);
 		infile = open(temp->path, O_RDONLY);
 		if (infile < 0)
 		{
 			perror(ft_strjoin("minishell: ", temp->cmd[0]));
 			exit(EXIT_FAILURE);
 		}
-		if (temp && temp->next && temp->next->in)
+		if (temp && temp->next && (temp->next->in || temp->next->here_doc))
 			close (infile);
 		temp = temp->next;
 	}
+	if (temp && temp->here_doc)
+		ms_heredoc(temp, fd);
 	dup2(infile, STDIN_FILENO);
 	close(infile);
 	return (temp);
@@ -40,7 +41,6 @@ t_pipe	*setting_up_outs(t_pipe *temp)
 
 	while (temp && temp->out)
 	{
-		ft_putstr_fd("out\n", 2);
 		if (temp && temp->append)
 			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0666);
 		else if (temp && temp->out)
