@@ -6,15 +6,15 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 04:06:25 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 23:04:14 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 01:55:08 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	error_message(long long *r, int s)
+static int	error_message(size_t *r, int s)
 {
-	if (*r > LLONG_MAX || *r * s < LLONG_MIN)
+	if (*r > LLONG_MAX || (long long)*r * s < LLONG_MIN)
 	{
 		errno = ERANGE;
 		perror("minishell: exit");
@@ -25,10 +25,10 @@ static int	error_message(long long *r, int s)
 	return (0);
 }
 
-long long	ft_atol(const char *str)
+size_t	ft_atol(char *str)
 {
 	int			s;
-	long long	r;
+	size_t		r;
 
 	r = 0;
 	s = 1;
