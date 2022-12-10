@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:16:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:02:44 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 21:54:37 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	pipe_size(t_pipe **head)
 {
 	t_pipe	*node;
 	int		i;
-	
+
 	i = 0;
 	node = *head;
 	while (node)

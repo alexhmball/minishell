@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:52:06 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 21:54:57 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	flag_here_doc(t_cmd *args)
 		temp = temp->next;
 		i++;
 	}
-	// printf("here_doc: %d\n", args->here_doc);
 }
 
 int	flag_list(t_cmd *args)
@@ -72,13 +71,9 @@ int	flag_list(t_cmd *args)
 	t_pipe	*temp;
 
 	flag_pipe(args);
-	// print_pipe(args->pipe);
 	flag_out(args);
-	// print_pipe(args->pipe);
 	flag_in(args);
-	// print_pipe(args->pipe);
 	flag_here_doc(args);
-	// print_pipe(args->pipe);
 	temp = *args->pipe;
 	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe)
 	{

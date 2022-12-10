@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 21:59:44 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 19:23:36 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	insert_env(char *env, char *path, t_cmd *args)
 	env_addback(args->env, env_newlst(ft_strdup(env), path));
 }
 
-void	change_pwd_env(t_cmd *args)
+void	change_pwd_env(t_cmd *args, char **cmd, char *path)
 {
 	char	*old_pwd;
 	char	*new_pwd;
@@ -45,6 +45,8 @@ void	change_pwd_env(t_cmd *args)
 	insert_env("PWD=", new_pwd, args);
 	my_free(new_pwd);
 	my_free(old_pwd);
+	if (path != cmd[1])
+		my_free(path);
 }
 
 void	change_dir(char **cmd, t_cmd *args)
@@ -69,7 +71,9 @@ void	change_dir(char **cmd, t_cmd *args)
 	{
 		perror("minishell: cd");
 		*args->err = 1;
+		if (path != cmd[1])
+			my_free(path);
 		return ;
 	}
-	change_pwd_env(args);
+	change_pwd_env(args, cmd, path);
 }
