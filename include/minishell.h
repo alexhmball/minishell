@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 21:06:01 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 21:38:07 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
+void	heredocy(int signo, siginfo_t *info, void *context);
 int		parsing(t_cmd *args);
 int		count_dollar(char *str);
 int		is_spc_tb(char c);

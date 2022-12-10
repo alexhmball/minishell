@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:50:17 by ballzball         #+#    #+#             */
-/*   Updated: 2022/12/10 21:03:37 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 21:38:35 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,3 @@ void	init_all(t_cmd *args)
 	args->s = NULL;
 }
 
-// function that simulates heredoc like in bash

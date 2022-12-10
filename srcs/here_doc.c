@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 21:01:15 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 21:37:35 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	**hd_saving_typed(t_pipe *temp)
 	saving = (char **)ft_calloc(1, sizeof(char *));
 	if (temp && temp->here_doc)
 	{
+		signal(SIGINT, (void*)SIGQUIT);
 		while (1)
 		{
 			here_doc = readline("> ");
