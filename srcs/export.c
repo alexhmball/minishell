@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 18:30:05 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 19:32:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	compare_env(t_cmd *args, t_pipe *node, char *key, char *value)
 			{
 				if (!ft_strncmp(current->key, key, len))
 				{
+					my_free(current->value);
 					current->value = ft_strdup(value);
 					return (1);
 				}

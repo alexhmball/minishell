@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:34:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 23:19:18 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 19:29:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ void	clear_env(t_env **head)
 	while (*head)
 	{
 		temp = (*head)->next;
-		if ((*head)->key)
-			my_free((*head)->key);
-		if ((*head)->value)
-			my_free((*head)->value);
+		my_free((*head)->key);
+		my_free((*head)->value);
 		my_free(*head);
 		*head = temp;
 	}
