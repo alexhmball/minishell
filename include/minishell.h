@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 03:40:49 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 21:40:31 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ typedef struct s_cmd
 	int					*err;
 	int					need_exp;
 	int					pid;
-	int					fd;
 	int					pipe_n;
 	int					redirect;
 	int					heredoc_n;
 	char				**env_for_excecute;
 	int					flag;
+	int					fd[2];
 	DIR					*folder;
 	t_env				**env;
 	t_pipe				**pipe;
@@ -75,6 +75,7 @@ typedef struct s_cmd
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void	heredocy(int signo, siginfo_t *info, void *context);
+void	signal_handler(int signo);
 int		parsing(t_cmd *args);
 int		count_dollar(char *str);
 int		is_spc_tb(char c);
@@ -122,9 +123,9 @@ int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
-t_pipe	*setting_up_ins(t_pipe *temp, int (*fd));
+t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args);
 t_pipe	*setting_up_outs(t_pipe *temp);
-void	ms_heredoc(t_pipe *temp, int (*fd));
+void	ms_heredoc(t_pipe *temp, t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -146,7 +147,6 @@ int		flag_list(t_cmd *args);
 void	parse_args_back(t_cmd *args, int i);
 void	create_pipe_list(t_cmd *args);
 t_pipe	*my_lst_last(t_pipe *temp);
-size_t	my_lst_size(t_pipe *temp);
 void	find_cmd_args(t_cmd *args);
 t_pipe	*ret_pipe_location(t_pipe **head, int node);
 t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c);
