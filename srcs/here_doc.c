@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 03:49:10 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/09 23:57:27 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 	int		typed_len;
 	int		i;
 
+	signal(SIGINT, (void*)SIGSTOP);
 	here_doc_len = 0;
 	typed_len = 0;
 	here_doc_len = ft_strlen(temp->cmd[0]);
@@ -40,7 +41,6 @@ void	ms_heredoc(t_pipe *temp, int (*fd))
 	close(fd[0]);
 	if (temp && temp->here_doc)
 	{
-		signal(SIGINT, (void*)SIGQUIT);
 		while (1)
 		{
 			here_doc = readline("> ");
