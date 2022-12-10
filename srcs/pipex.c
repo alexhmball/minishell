@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 00:10:26 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:32:52 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	handle_it(int sig)
+{
+	(void)sig;
+}
 
 void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
@@ -96,6 +101,7 @@ t_pipe	*parent_catching_up(t_pipe *temp, t_cmd *args)
 	return (temp);
 }
 
+
 void	pipex(t_cmd *args)
 {
 	t_pipe	*temp;
@@ -104,6 +110,7 @@ void	pipex(t_cmd *args)
 
 	temp = *args->pipe;
 	prev_pipe = STDIN_FILENO;
+	signal(SIGINT, handle_this);
 	while (temp)
 	{
 		if (pipe(args->fd) == -1)
