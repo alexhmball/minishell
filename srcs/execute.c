@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 19:18:44 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 19:46:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 	}
 	else
 	{
-		execve(cmd->path, cmd->cmd, args->env_for_excecute);
+		execve(cmd->path, cmd->cmd, NULL);
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd->cmd[0], 2);
 		ft_putstr_fd(": ", 2);
