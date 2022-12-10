@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 03:40:49 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 20:43:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_cmd
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void	heredocy(int signo, siginfo_t *info, void *context);
+void	signal_handler(int signo);
 int		parsing(t_cmd *args);
 int		count_dollar(char *str);
 int		is_spc_tb(char c);

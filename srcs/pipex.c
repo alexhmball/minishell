@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 03:49:00 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 21:35:28 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ void	pipex(t_cmd *args)
 	prev_pipe = STDIN_FILENO;
 	prev_in = 0;
 	prev_out = 0;
-	// struct sigaction	sa;
-
-	// sa.sa_flags = SA_SIGINFO;
-	// sa.sa_sigaction = heredocy;
-	// sigaction(SIGINT, &sa, NULL);
 	while (temp)
 	{
 		if (pipe(fd) == -1)
@@ -58,7 +53,6 @@ void	pipex(t_cmd *args)
 		}
 		if (!child)
 		{
-			signal(SIGINT, (void*)SIGQUIT);
 			if (temp && temp->here_doc)
 			{
 				if (prev_pipe != STDIN_FILENO)
