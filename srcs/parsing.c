@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 03:27:03 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 21:53:48 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	parse_pipe(t_cmd *args)
 		return (0);
 	find_cmd_args(args);
 	organize_cmds(args);
-	// move_here_doc(args);
-	// printf("heelo\n");
 	remove_pipes(args);
 	confirm_path(args);
 	find_errors(args, args->pipe);
@@ -104,14 +102,8 @@ int	parsing(t_cmd *args)
 	if (!parse_pipe(args))
 		return (*args->err);
 	freedom(args->cmd);
-	// if (!ft_strncmp(args->cmd[0], "exit", 4) && two_d_strlen(args->cmd) == 1
-	// 	&& ft_strlen(args->cmd[0]) == 4)
-	// {
-	// 	exit_shell(args);
-	// }
 	if (!args->pipe_n)
 		us_not_printing(args);
-	// print_pipe(args->pipe);
 	pipex(args);
 	lstclear_pipe(args->pipe, my_free);
 	my_free(args->s);

@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 21:36:31 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 21:54:12 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ void	handler(int signo, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
-	if (signo == SIGSEGV)
-	{
-		printf("Segmentation fault, chuckle fuck!\n");
-		exit(139);
-	}
 	if (signo == SIGCHLD)
 	{
 		wait(NULL);
@@ -60,7 +55,6 @@ int	main(int ac, char **av, char **env)
 	sigaddset(&sa.sa_mask, SIGCHLD);
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGCHLD, &sa, NULL);
-	sigaction(SIGSEGV, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	args.err = &g_error;
 	args.env = create_env(env);
