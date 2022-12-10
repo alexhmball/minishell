@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 18:05:14 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 18:30:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	my_export(t_cmd *args, t_pipe *node)
 		&& !compare_env(args, node, key, value))
 		find_export(args->env, key, value, node);
 	else if (two_d_strlen(node->cmd) > 1 && !value)
-		env_addback(args->env, env_newlst(key, NULL));
+		env_addback(args->env, env_newlst(ft_strdup(key), NULL));
 	else if (two_d_strlen(node->cmd) <= 1)
 		print_env(*args->env);
 	my_free(key);
