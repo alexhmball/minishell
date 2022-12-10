@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 00:10:26 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 03:22:11 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 			excecute_us(args, temp);
 			lstclear_pipe(args->pipe, my_free);
 			total_freedom(args);
-			// close(args->fd[0]);
-			// close(args->fd[1]);
+			close(args->fd[0]);
+			close(args->fd[1]);
 			exit(EXIT_SUCCESS);
 		}
 		else
@@ -32,22 +32,20 @@ void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 
 t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 {
-	int	prev_in;
-
-	prev_in = 0;
+	args->prev_in = 0;
 	if (temp && temp->in)
 	{
 		temp = setting_up_ins(temp, args);
-		prev_in = 1;
+		args->prev_in = 1;
 	}
-	if (prev_pipe != STDIN_FILENO && !prev_in)
+	if (prev_pipe != STDIN_FILENO && !args->prev_in)
 	{
 		dup2(prev_pipe, STDIN_FILENO);
 		close(prev_pipe);
 	}
 	if (temp && temp->out)
 	{
-		temp = setting_up_outs(temp);
+		temp = setting_up_outs(temp, args);
 		pre_out = 1;
 	}
 	if (!pre_out && args->pipe_n >= 1)
@@ -55,6 +53,8 @@ t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 		dup2(args->fd[1], STDOUT_FILENO);
 		close(args->fd[1]);
 	}
+	if (prev_pipe == STDIN_FILENO)
+		close(args->fd[0]);
 	return (temp);
 }
 

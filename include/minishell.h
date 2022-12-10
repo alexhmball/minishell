@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 21:40:31 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 03:21:50 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_cmd
 	char				**env_for_excecute;
 	int					flag;
 	int					fd[2];
+	int					prev_in;
 	DIR					*folder;
 	t_env				**env;
 	t_pipe				**pipe;
@@ -124,7 +125,7 @@ void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
 t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args);
-t_pipe	*setting_up_outs(t_pipe *temp);
+t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args);
 void	ms_heredoc(t_pipe *temp, t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 18:53:38 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/11 03:09:52 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**hd_saving_typed(t_pipe *temp)
 	int		here_doc_len;
 	int		typed_len;
 
-	signal(SIGINT, (void*)SIGSTOP);
+	signal(SIGINT, (void *)SIGSTOP);
 	here_doc_len = 0;
 	typed_len = 0;
 	here_doc_len = ft_strlen(temp->cmd[0]);
@@ -29,10 +29,10 @@ char	**hd_saving_typed(t_pipe *temp)
 		while (1)
 		{
 			here_doc = readline("> ");
-			if (!here_doc)
-				break ;
 			typed_len = ft_strlen(here_doc);
-			if (!ft_strncmp(temp->cmd[0], here_doc, typed_len)
+			if ((!here_doc_len && typed_len == here_doc_len) || !here_doc)
+				break ;
+			if (here_doc_len && !ft_strncmp(temp->cmd[0], here_doc, typed_len)
 				&& typed_len == here_doc_len)
 				break ;
 			saving = append_str(saving, here_doc);
