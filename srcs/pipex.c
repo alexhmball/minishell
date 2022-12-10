@@ -6,16 +6,11 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 01:32:52 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 02:50:08 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	handle_it(int sig)
-{
-	(void)sig;
-}
 
 void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
