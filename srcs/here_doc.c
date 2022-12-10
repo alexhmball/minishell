@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 18:04:16 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 18:53:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,7 @@ void	ms_heredoc(t_pipe *temp, t_cmd *args)
 	freedom(saved);
 	dup2(args->fd[1], STDOUT_FILENO);
 	close(args->fd[1]);
+	lstclear_pipe(args->pipe, my_free);
+	total_freedom(args);
 	exit (EXIT_SUCCESS);
 }
