@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 00:10:53 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:43:18 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,25 @@ void	handler(int signo, siginfo_t *info, void *context)
 	}
 }
 
+void	handle_this(int signum)
+{
+	(void)signum;
+	write(1, "\n", 1);
+	signal(SIGINT, SIG_IGN);
+}
+
 int	main(int ac, char **av, char **env)
 {
-	struct sigaction	sa;
 	t_cmd				args;
 
 	(void)ac;
 	(void)av;
 	g_error = 0;
-	sa.sa_sigaction = &handler;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGINT);
-	sigaddset(&sa.sa_mask, SIGCHLD);
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGCHLD, &sa, NULL);
+	args.sa.sa_sigaction = &handler;
+	args.sa.sa_flags = SA_SIGINFO;
+	sigemptyset(&args.sa.sa_mask);
+	sigaction(SIGINT, &args.sa, NULL);
+	sigaction(SIGCHLD, &args.sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	args.err = &g_error;
 	args.env = create_env(env);

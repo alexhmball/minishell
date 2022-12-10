@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 03:22:11 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 03:25:54 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_pipe	*parent_catching_up(t_pipe *temp, t_cmd *args)
 	return (temp);
 }
 
+
 void	pipex(t_cmd *args)
 {
 	t_pipe	*temp;
@@ -104,6 +105,7 @@ void	pipex(t_cmd *args)
 
 	temp = *args->pipe;
 	prev_pipe = STDIN_FILENO;
+	signal(SIGINT, handle_this);
 	while (temp)
 	{
 		if (pipe(args->fd) == -1)

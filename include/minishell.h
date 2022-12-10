@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 03:21:50 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 03:26:01 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,13 @@ typedef struct s_cmd
 	t_env				**env;
 	t_pipe				**pipe;
 	struct dirent		*dir;
+	struct sigaction	sa;
 }	t_cmd;
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+void	handle_the_sig(int sig);
+void	handle_this(int signum);
 void	heredocy(int signo, siginfo_t *info, void *context);
 void	signal_handler(int signo);
 int		parsing(t_cmd *args);

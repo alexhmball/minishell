@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 21:53:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 02:49:30 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	parse_pipe(t_cmd *args)
 
 int	init_cmd(t_cmd *args)
 {
+	sigaction(SIGINT, &args->sa, NULL);
 	init_struct(args);
 	args->s = readline("\x1b[30m\x1b[46mminishell$\x1b[m ");
 	if (!args->s)
@@ -83,7 +84,7 @@ int	init_cmd(t_cmd *args)
 	args->cmd = quote_validator(args, 0, 0);
 	if (!args->cmd)
 	{
-		printf("minishell: Error: invalid quotes\n");
+		ft_putstr_fd("minishell: Error: invalid quotes\n", 2);
 		return (1);
 	}
 	return (5);
@@ -93,6 +94,7 @@ int	parsing(t_cmd *args)
 {
 	int		ret;
 
+	sigaction(SIGINT, &args->sa, NULL);
 	ret = init_cmd(args);
 	if (ret == 0)
 		return (0);
