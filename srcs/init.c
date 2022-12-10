@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:50:17 by ballzball         #+#    #+#             */
-/*   Updated: 2022/12/09 22:00:56 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 21:03:37 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	init_all(t_cmd *args)
 	args->path = NULL;
 	args->cmd = NULL;
 	args->s = NULL;
-	args->fd = 0;
 }
 
 // function that simulates heredoc like in bash

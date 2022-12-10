@@ -3,110 +3,118 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/09 22:33:25 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 21:33:39 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-size_t	my_lst_size(t_pipe *temp)
+void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
-	size_t	i;
-
-	i = 0;
-	while (temp)
+	if (temp && !temp->in && !temp->out && !temp->here_doc)
 	{
-		temp = temp->next;
-		i++;
+		if (is_us(temp))
+		{
+			excecute_us(args, temp);
+			lstclear_pipe(args->pipe, my_free);
+			total_freedom(args);
+			exit(EXIT_SUCCESS);
+		}
+		else
+			execute_them(args, temp);
 	}
-	return (i);
+}
+
+t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
+{
+	int	prev_in;
+
+	prev_in = 0;
+	if (temp && temp->in)
+	{
+		temp = setting_up_ins(temp, args);
+		prev_in = 1;
+	}
+	if (prev_pipe != STDIN_FILENO && !prev_in)
+	{
+		dup2(prev_pipe, STDIN_FILENO);
+		close(prev_pipe);
+	}
+	if (temp && temp->out)
+	{
+		temp = setting_up_outs(temp);
+		pre_out = 1;
+	}
+	if (!pre_out && args->pipe_n >= 1)
+	{
+		dup2(args->fd[1], STDOUT_FILENO);
+		close(args->fd[1]);
+	}
+	return (temp);
+}
+
+void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
+{
+	int	prev_out;
+
+	prev_out = 0;
+	if (child == -1)
+	{
+		perror("fork: ");
+		exit(EXIT_FAILURE);
+	}
+	if (!child)
+	{
+		if (temp && temp->here_doc)
+		{
+			if (prev_pipe != STDIN_FILENO)
+				dup2(STDIN_FILENO, prev_pipe);
+			ms_heredoc(temp, args);
+		}
+		temp = ms_proc_ins_outs(temp, args, prev_pipe, prev_out);
+		ms_pipe_exec(temp, args);
+	}
+}
+
+t_pipe	*parent_catching_up(t_pipe *temp, t_cmd *args)
+{
+	while (temp && temp->next && (temp->in || temp->out))
+		temp = temp->next;
+	if (temp && temp->next && temp->here_doc)
+		args->pipe_n++;
+	if (temp && !temp->in && !temp->out)
+		temp = temp->next;
+	if (args->pipe_n > 0)
+		args->pipe_n--;
+	return (temp);
 }
 
 void	pipex(t_cmd *args)
 {
 	t_pipe	*temp;
+	pid_t	child;
 	int		prev_pipe;
-	int		child;
-	int		fd[2];
-	int		prev_in;
-	int		prev_out;
 
 	temp = *args->pipe;
 	prev_pipe = STDIN_FILENO;
-	prev_in = 0;
-	prev_out = 0;
 	while (temp)
 	{
-		if (pipe(fd) == -1)
+		if (pipe(args->fd) == -1)
 		{
 			perror("pipe: ");
 			exit(EXIT_FAILURE);
 		}
 		child = fork();
-		if (child == -1)
-		{
-			perror("fork: ");
-			exit(EXIT_FAILURE);
-		}
-		if (!child)
-		{
-			if (temp && temp->here_doc)
-			{
-				if (prev_pipe != STDIN_FILENO)
-					dup2(STDIN_FILENO, prev_pipe);
-				ms_heredoc(temp, fd);
-			}
-			if (temp && temp->in)
-			{
-				temp = setting_up_ins(temp, fd);
-				prev_in = 1;
-			}
-			if (prev_pipe != STDIN_FILENO && !prev_in)
-			{
-				dup2(prev_pipe, STDIN_FILENO);
-				close(prev_pipe);
-			}
-			if (temp && temp->out)
-			{
-				temp = setting_up_outs(temp);
-				prev_out = 1;
-			}
-			if (!prev_out && args->pipe_n >= 1)
-			{
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-			}
-			if (temp && !temp->in && !temp->out && !temp->here_doc)
-			{
-				if (is_us(temp))
-				{
-					excecute_us(args, temp);
-					lstclear_pipe(args->pipe, my_free);
-					total_freedom(args);
-					exit(EXIT_SUCCESS);
-				}
-				else
-					execute_them(args, temp);
-			}
-		}
+		children(temp, child, prev_pipe, args);
 		wait(&child);
-		close(fd[1]);
-		prev_pipe = fd[0];
-		while (temp && temp->next && temp->in)
-			temp = temp->next;
-		while (temp && temp->next && temp->out)
-			temp = temp->next;
-		if (temp && temp->next && temp->here_doc)
-			args->pipe_n++;
-		if (temp && !temp->in && !temp->out)
-			temp = temp->next;
-		if (args->pipe_n > 0)
-			args->pipe_n--;
+		close(args->fd[1]);
+		prev_pipe = args->fd[0];
+		temp = parent_catching_up(temp, args);
 	}
 	wait(&child);
-	close(fd[0]);
-	close(fd[1]);
+	close(args->fd[0]);
+	close(args->fd[1]);
 }
