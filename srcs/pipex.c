@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 21:40:00 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 18:23:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 		}
 		temp = ms_proc_ins_outs(temp, args, prev_pipe, prev_out);
 		ms_pipe_exec(temp, args);
+		lstclear_pipe(args->pipe, my_free);
 	}
 }
 

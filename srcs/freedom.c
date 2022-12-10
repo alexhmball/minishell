@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:10:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 21:51:54 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/10 18:12:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	my_free(void *content)
 
 void	executioner(t_cmd *args)
 {
-	total_freedom(args);
 	lstclear_pipe(args->pipe, my_free);
+	total_freedom(args);
 	exit(*args->err);
 }

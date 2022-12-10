@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 22:01:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/10 18:05:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,9 @@ void	find_export(t_env **head, char *key, char *value, t_pipe *node)
 
 void	my_export(t_cmd *args, t_pipe *node)
 {
-	t_env	*temp;
 	char	*key;
 	char	*value;
 
-	temp = *args->env;
 	key = get_key(node->cmd[1]);
 	value = get_value(node->cmd[1]);
 	if (two_d_strlen(node->cmd) > 1 && value
