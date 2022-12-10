@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 21:37:57 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 00:08:47 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 			excecute_us(args, temp);
 			lstclear_pipe(args->pipe, my_free);
 			total_freedom(args);
+			// close(args->fd[0]);
+			// close(args->fd[1]);
 			exit(EXIT_SUCCESS);
 		}
 		else
@@ -77,6 +79,7 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 		temp = ms_proc_ins_outs(temp, args, prev_pipe, prev_out);
 		ms_pipe_exec(temp, args);
 	}
+	wait(NULL);
 }
 
 t_pipe	*parent_catching_up(t_pipe *temp, t_cmd *args)
