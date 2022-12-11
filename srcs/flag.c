@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 11:50:58 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/11 14:51:14 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,13 @@ static t_pipe	*here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 	{
 		temp->here_doc = 1;
 		str = ft_strdup(temp->cmd[0] + 2);
-		remove_str(temp->cmd, 0);
-		temp->cmd = append_str(temp->cmd, str);
+		freedom(temp->cmd);
+		temp->cmd = (char **)malloc(sizeof(char *) * 2);
+		temp->cmd[0] = ft_strdup(str);
+		temp->cmd[1] = NULL;
+		free(str);
+		// remove_str(temp->cmd, 0);
+		// temp->cmd = append_str(temp->cmd, str);
 	}
 	args->heredoc_n++;
 	return (temp);
