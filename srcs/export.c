@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 19:32:05 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/11 13:42:46 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ void	my_export(t_cmd *args, t_pipe *node)
 		print_env(*args->env);
 	my_free(key);
 	my_free(value);
+	args->env_for_excecute = make_env_for_ex(args->env, args->env_for_excecute);
 }

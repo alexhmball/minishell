@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:03 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 22:05:06 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 13:54:50 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void	my_unset(t_cmd *args, t_pipe *node)
 			i++;
 		}
 	}
+	args->env_for_excecute = make_env_for_ex(args->env, args->env_for_excecute);
 }

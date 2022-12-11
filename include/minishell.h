@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 05:01:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/12 03:03:33 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+extern int g_error;
 
 typedef struct s_env
 {
@@ -108,7 +110,7 @@ int		check_path(t_cmd *args);
 int		check_single_path(char *cmd);
 int		locate_dollar(char *str);
 void	init_struct(t_cmd *args);
-void	set_error(t_cmd *args, int code);
+void	set_error(int code);
 int		search_all_paths(t_cmd *args, char **search);
 int		search_current_dir(t_cmd *args, char *current);
 char	**remove_str(char **str, int index);
@@ -121,6 +123,9 @@ void	find_expand(t_pipe *current, int single_q, int double_q, t_cmd *args);
 void	flag_quotes(t_pipe *node, int *single_q, int *double_q);
 char	*get_key(char *str);
 char	*get_value(char *str);
+char	**make_env_for_ex(t_env **head, char **free_me);
+char	**twd_d_strdup(char **str);
+char	*insert_pid(char *line, t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

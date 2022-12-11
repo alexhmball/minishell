@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 05:12:14 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/12 02:55:52 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	g_error;
 void	sig_igor(int sig)
 {
 	(void)sig;
-	write(1, "Quit: 3\n", 8);
+	write(1, "\n", 1);
 	g_error = 131;
 	signal(SIGQUIT, SIG_DFL);
 }
@@ -35,17 +35,17 @@ void	handler(int signo, siginfo_t *info, void *context)
 		else if (info->si_code == 1 && info->si_status == 1
 			&& g_error != 127 && g_error != 126)
 			g_error = 1;
-		// else if (info->si_status > 2)
-		// 	g_error = info->si_status;
-		// printf("status = %d code = %d\n", info->si_status, info->si_code);
+		else if (info->si_status == 3 && info->si_code == 3)
+			g_error = 131;
+		else if (info->si_status > 100)
+			g_error = info->si_status;
 	}
 	if (signo == SIGINT)
 	{
 		write(1, "\n\a", 2);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		if (g_error != 130)
-			rl_redisplay();
+		rl_redisplay();
 		g_error = 1;
 	}
 }
@@ -54,6 +54,7 @@ void	handle_this(int signum)
 {
 	(void)signum;
 	write(1, "\n", 1);
+	g_error = -420;
 	signal(SIGINT, SIG_IGN);
 }
 
@@ -73,19 +74,19 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	pid.sa_flags = SA_SIGINFO;
 	pid.sa_sigaction = &get_pid_me;
+	sigemptyset(&pid.sa_mask);
 	args.sa.sa_sigaction = &handler;
 	args.sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&args.sa.sa_mask);
 	sigaction(SIGINT, &args.sa, NULL);
 	sigaction(SIGCHLD, &args.sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
 	sigaction(SIGUSR1, &pid, NULL);
 	kill(0, SIGUSR1);
 	args.pid = g_error;
 	g_error = 0;
 	args.err = &g_error;
 	args.env = create_env(env);
-	args.env_for_excecute = env;
+	args.env_for_excecute = twd_d_strdup(env);
 	while (1)
 		if (!parsing(&args))
 			break ;

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 23:22:03 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 22:01:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 14:05:16 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	set_error(t_cmd *args, int code)
+void	set_error(int code)
 {
 	if (code == 13)
-		*args->err = 126;
+		g_error = 126;
 	if (code == 2)
-		*args->err = 127;
+		g_error = 127;
 }
 
 void	find_errors(t_cmd *args, t_pipe **head)

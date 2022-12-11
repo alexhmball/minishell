@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 05:01:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 11:21:09 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
-	if (args->pipe_n < 1)
+	// if (args->pipe_n < 1)
 		close(args->fd[0]);
+		close(args->fd[1]);
 	if (temp && !temp->in && !temp->out && !temp->here_doc)
 	{
 		if (is_us(temp))
@@ -78,8 +79,8 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 		signal(SIGQUIT, sig_igor);
 		if (temp && temp->here_doc)
 		{
-			if (prev_pipe != STDIN_FILENO)
-				dup2(STDIN_FILENO, prev_pipe);
+			// if (prev_pipe != STDIN_FILENO)
+			// 	dup2(STDIN_FILENO, prev_pipe);
 			ms_heredoc(temp, args);
 		}
 		temp = ms_proc_ins_outs(temp, args, prev_pipe, prev_out);
@@ -126,6 +127,7 @@ void	pipex(t_cmd *args)
 		temp = parent_catching_up(temp, args);
 	}
 	wait(&child);
+	close(prev_pipe);
 	close(args->fd[0]);
 	close(args->fd[1]);
 }
