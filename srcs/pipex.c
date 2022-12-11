@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 04:08:23 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 05:01:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 	return (temp);
 }
 
+
+
 void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 {
 	int	prev_out;
@@ -73,6 +75,7 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 	}
 	if (!child)
 	{
+		signal(SIGQUIT, sig_igor);
 		if (temp && temp->here_doc)
 		{
 			if (prev_pipe != STDIN_FILENO)

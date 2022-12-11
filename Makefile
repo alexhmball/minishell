@@ -6,7 +6,7 @@
 #    By: aball <aball@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/11 04:14:00 by aball            ###   ########.fr        #
+#    Updated: 2022/12/11 04:27:48 by aball            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ $(OBJDIR)/%.o : srcs/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: libft $(NAME)
-	@cat talal.ansi.txt
 	@tput setaf 2
 	@printf 'Executable Compiled\n'
 	@tput setaf 7
