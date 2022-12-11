@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/10 23:47:54 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/11 07:28:43 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	here_sig(int signum)
 {
 	if (signum == SIGINT)
 	{
-		signal(SIGINT, (void *)SIGSTOP);
+		signal(SIGINT, SIG_DFL);
+		kill(0, SIGINT);
 		exit (0);
 	}
 }
@@ -29,6 +30,7 @@ char	**hd_saving_typed(t_pipe *temp)
 	int		typed_len;
 
 	signal(SIGINT, here_sig);
+	signal(SIGQUIT, SIG_IGN);
 	here_doc_len = 0;
 	typed_len = 0;
 	here_doc_len = ft_strlen(temp->cmd[0]);

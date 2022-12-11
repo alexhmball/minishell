@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 05:12:14 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 07:30:57 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	g_error;
 void	sig_igor(int sig)
 {
 	(void)sig;
-	write(1, "Quit: 3\n", 8);
+	write(1, "\n", 1);
 	g_error = 131;
 	signal(SIGQUIT, SIG_DFL);
 }
