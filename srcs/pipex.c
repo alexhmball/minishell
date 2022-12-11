@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 03:25:54 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/11 04:08:23 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
+	if (args->pipe_n < 1)
+		close(args->fd[0]);
 	if (temp && !temp->in && !temp->out && !temp->here_doc)
 	{
 		if (is_us(temp))
@@ -46,6 +48,7 @@ t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 	if (temp && temp->out)
 	{
 		temp = setting_up_outs(temp, args);
+		close(args->fd[1]);
 		pre_out = 1;
 	}
 	if (!pre_out && args->pipe_n >= 1)
@@ -53,8 +56,8 @@ t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 		dup2(args->fd[1], STDOUT_FILENO);
 		close(args->fd[1]);
 	}
-	if (prev_pipe == STDIN_FILENO)
-		close(args->fd[0]);
+	if (!pre_out && args->pipe_n < 1)
+		close(args->fd[1]);
 	return (temp);
 }
 
@@ -95,7 +98,6 @@ t_pipe	*parent_catching_up(t_pipe *temp, t_cmd *args)
 		args->pipe_n--;
 	return (temp);
 }
-
 
 void	pipex(t_cmd *args)
 {
