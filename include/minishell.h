@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/12 03:08:27 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/12 03:09:23 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,7 @@ char	*get_key(char *str);
 char	*get_value(char *str);
 char	**make_env_for_ex(t_env **head, char **free_me);
 char	**twd_d_strdup(char **str);
-<<<<<<< HEAD
-=======
 char	*insert_pid(char *line, t_cmd *args);
->>>>>>> 29834c4b4e9ca36593eaea4ff2d724f0314386ad
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
