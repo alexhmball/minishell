@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/12 01:04:59 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/12 02:55:52 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	handler(int signo, siginfo_t *info, void *context)
 			g_error = 131;
 		else if (info->si_status > 100)
 			g_error = info->si_status;
-		// printf("status = %d code = %d\n", info->si_status, info->si_code);
 	}
 	if (signo == SIGINT)
 	{

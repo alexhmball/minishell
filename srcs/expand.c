@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 10:09:15 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/12 03:04:02 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,64 +26,6 @@ void	find_expand(t_pipe *current, int single_q, int double_q, t_cmd *args)
 		flag_quotes(current, &single_q, &double_q);
 		expand_dollar(current, args);
 	}
-}
-
-char	*insert_pid(char *line, t_cmd *args)
-{
-	char	*err_num;
-	char	*new_line;
-	int		len;
-	int		i;
-	int		j;
-
-	err_num = ft_itoa(args->pid);
-	len = ft_strlen(err_num) + ft_strlen(line);
-	new_line = (char *)malloc(sizeof(char) * (len));
-	i = 0;
-	j = 0;
-	while (line[i] && line[i] != '$')
-	{
-		new_line[i] = line[i];
-		i++;
-	}
-	len = i + 2;
-	while (err_num[j])
-		new_line[i++] = err_num[j++];
-	while (line[len])
-		new_line[i++] = line[len++];
-	my_free(line);
-	my_free(err_num);
-	new_line[i] = 0;
-	return (new_line);
-}
-
-char	*insert_error(char *line, t_cmd *args)
-{
-	char	*err_num;
-	char	*new_line;
-	int		len;
-	int		i;
-	int		j;
-
-	err_num = ft_itoa(*args->err);
-	len = ft_strlen(err_num) + ft_strlen(line);
-	new_line = (char *)malloc(sizeof(char) * (len));
-	i = 0;
-	j = 0;
-	while (line[i] && line[i] != '$')
-	{
-		new_line[i] = line[i];
-		i++;
-	}
-	len = i + 2;
-	while (err_num[j])
-		new_line[i++] = err_num[j++];
-	while (line[len])
-		new_line[i++] = line[len++];
-	my_free(line);
-	my_free(err_num);
-	new_line[i] = 0;
-	return (new_line);
 }
 
 void	insert_expansion(t_pipe *node, char *expand, t_cmd *args, int dollar)
@@ -114,10 +56,18 @@ void	insert_expansion(t_pipe *node, char *expand, t_cmd *args, int dollar)
 	my_free(new_line);
 }
 
+void	sub_it(int i, int dollar, t_pipe *node, t_cmd *args)
+{
+	char	*tmp;
+
+	tmp = ft_substr(node->cmd[0], dollar, i - dollar);
+	insert_expansion(node, tmp, args, dollar);
+	my_free(tmp);
+}
+
 int	check_need(int i, t_pipe *node, t_cmd *args)
 {
 	int		dollar;
-	char	*tmp;
 
 	dollar = i;
 	while (node->cmd[0][i] && node->cmd[0][i] != 39
@@ -136,9 +86,7 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 		dollar++;
 		if (i - dollar > 0)
 		{
-			tmp = ft_substr(node->cmd[0], dollar, i - dollar);
-			insert_expansion(node, tmp, args, dollar);
-			my_free(tmp);
+			sub_it(i, dollar, node, args);
 			return (1);
 		}
 	}
