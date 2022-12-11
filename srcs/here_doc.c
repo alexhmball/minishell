@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 03:26:08 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/10 23:47:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	here_sig(int signum)
+{
+	if (signum == SIGINT)
+	{
+		signal(SIGINT, (void *)SIGSTOP);
+		exit (0);
+	}
+}
 
 char	**hd_saving_typed(t_pipe *temp)
 {
@@ -19,7 +28,7 @@ char	**hd_saving_typed(t_pipe *temp)
 	int		here_doc_len;
 	int		typed_len;
 
-	signal(SIGINT, (void *)SIGSTOP);
+	signal(SIGINT, here_sig);
 	here_doc_len = 0;
 	typed_len = 0;
 	here_doc_len = ft_strlen(temp->cmd[0]);
