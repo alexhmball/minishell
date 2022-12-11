@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 19:23:36 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/11 14:13:14 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	change_dir(char **cmd, t_cmd *args)
 		path = my_getenv("OLDPWD", args);
 		if (!path)
 		{
-			perror("minishell: cd");
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 			*args->err = 1;
 			return ;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freedom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:10:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 18:12:59 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/11 13:39:27 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	freedom(char **free_me)
 void	total_freedom(t_cmd *args)
 {
 	clear_env(args->env);
+	freedom(args->env_for_excecute);
 	my_free(args->env);
 	my_free(args->s);
 	rl_clear_history();

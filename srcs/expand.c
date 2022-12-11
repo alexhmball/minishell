@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 05:10:16 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 10:09:15 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,12 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 	while (node->cmd[0][i] && node->cmd[0][i] != 39
 			&& node->cmd[0][i] != '"')
 		i++;
-	if (node->cmd[0][dollar + 1] == '?')
+	if (node->cmd[0][dollar + 1] == '?' || node->cmd[0][dollar + 1] == '$')
 	{
-		node->cmd[0] = insert_error(node->cmd[0], args);
-		return (1);
-	}
-	if (node->cmd[0][dollar + 1] == '$')
-	{
-		node->cmd[0] = insert_pid(node->cmd[0], args);
+		if (node->cmd[0][dollar + 1] == '$')
+			node->cmd[0] = insert_pid(node->cmd[0], args);
+		else
+			node->cmd[0] = insert_error(node->cmd[0], args);
 		return (1);
 	}
 	else

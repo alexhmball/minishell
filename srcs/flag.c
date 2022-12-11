@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 21:54:57 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/11 11:50:58 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	flag_pipe(t_cmd *args)
 
 static t_pipe	*here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 {
+	char	*str;
+
 	if (ft_strlen(temp->cmd[0]) == 2 && temp->next)
 	{
 		temp->next->here_doc = 1;
@@ -38,7 +40,9 @@ static t_pipe	*here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 	else if (ft_strlen(temp->cmd[0]) > 2)
 	{
 		temp->here_doc = 1;
-		temp->cmd[0] = ft_strdup(temp->cmd[0] + 2);
+		str = ft_strdup(temp->cmd[0] + 2);
+		remove_str(temp->cmd, 0);
+		temp->cmd = append_str(temp->cmd, str);
 	}
 	args->heredoc_n++;
 	return (temp);
