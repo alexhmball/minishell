@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:37:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 23:05:12 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/13 16:51:01 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ t_env	**create_env(char **exp)
 
 	i = 0;
 	head = (t_env **)malloc(sizeof(t_env *));
+	if (!*exp)
+	{
+		*head = NULL;
+		return (head);
+	}
 	key = get_key(exp[i]);
 	value = get_value(exp[i]);
 	temp = env_newlst(key, value);

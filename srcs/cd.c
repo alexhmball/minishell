@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 14:13:14 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/13 17:35:17 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	insert_env(char *env, char *path, t_cmd *args)
 	int		len_find;
 
 	temp = *args->env;
-	len_env = ft_strlen(env) - 1;
+	if (!path)
+		return ;
+	len_env = ft_strlen(env);
 	while (temp)
 	{
 		len_find = ft_strlen(temp->key);
@@ -31,7 +33,7 @@ void	insert_env(char *env, char *path, t_cmd *args)
 		}
 		temp = temp->next;
 	}
-	env_addback(args->env, env_newlst(ft_strdup(env), path));
+	env_addback(args->env, env_newlst(ft_strdup(env), ft_strdup(path)));
 }
 
 void	change_pwd_env(t_cmd *args, char **cmd, char *path)
@@ -39,14 +41,14 @@ void	change_pwd_env(t_cmd *args, char **cmd, char *path)
 	char	*old_pwd;
 	char	*new_pwd;
 
+	(void)cmd;
 	old_pwd = my_getenv("PWD", args);
 	new_pwd = get_working_dir();
-	insert_env("OLDPWD=", old_pwd, args);
-	insert_env("PWD=", new_pwd, args);
+	insert_env("OLDPWD", old_pwd, args);
+	insert_env("PWD", new_pwd, args);
 	my_free(new_pwd);
+	my_free(path);
 	my_free(old_pwd);
-	if (path != cmd[1])
-		my_free(path);
 }
 
 void	change_dir(char **cmd, t_cmd *args)
@@ -54,9 +56,17 @@ void	change_dir(char **cmd, t_cmd *args)
 	char	*path;
 
 	if (two_d_strlen(cmd) > 1)
-		path = cmd[1];
+		path = ft_strdup(cmd[1]);
 	else
+	{
 		path = my_getenv("HOME", args);
+		if (!path)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			*args->err = 1;
+			return ;
+		}
+	}
 	if (ft_strlen(path) == 1 && path[0] == '-')
 	{
 		path = my_getenv("OLDPWD", args);

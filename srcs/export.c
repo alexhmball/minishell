@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 13:42:46 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/13 15:55:44 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,22 @@ int	compare_env(t_cmd *args, t_pipe *node, char *key, char *value)
 	int		len;
 	int		len_env;
 
+	(void)node;
 	current = *args->env;
 	len = ft_strlen(key);
-	if (two_d_strlen(node->cmd) > 1 && len != -1)
+	while (current)
 	{
-		while (current)
+		len_env = ft_strlen(current->key);
+		if (len_env == len)
 		{
-			len_env = ft_strlen(current->key);
-			if (len_env == len)
+			if (!ft_strncmp(current->key, key, len))
 			{
-				if (!ft_strncmp(current->key, key, len))
-				{
-					my_free(current->value);
-					current->value = ft_strdup(value);
-					return (1);
-				}
+				my_free(current->value);
+				current->value = ft_strdup(value);
+				return (1);
 			}
-			current = current->next;
 		}
+		current = current->next;
 	}
 	return (0);
 }
@@ -78,17 +76,22 @@ void	my_export(t_cmd *args, t_pipe *node)
 {
 	char	*key;
 	char	*value;
-
-	key = get_key(node->cmd[1]);
-	value = get_value(node->cmd[1]);
-	if (two_d_strlen(node->cmd) > 1 && value
-		&& !compare_env(args, node, key, value))
-		find_export(args->env, key, value, node);
-	else if (two_d_strlen(node->cmd) > 1 && !value)
-		env_addback(args->env, env_newlst(ft_strdup(key), NULL));
-	else if (two_d_strlen(node->cmd) <= 1)
-		print_env(*args->env);
-	my_free(key);
-	my_free(value);
-	args->env_for_excecute = make_env_for_ex(args->env, args->env_for_excecute);
+	size_t	i;
+	
+	i = 1;
+	while (node->cmd[i])
+	{
+		key = get_key(node->cmd[i]);
+		value = get_value(node->cmd[i]);
+		if (value && !compare_env(args, node, key, value))
+			find_export(args->env, key, value, node);
+		else if (!value && !compare_env(args, node, key, value))
+			env_addback(args->env, env_newlst(ft_strdup(key), NULL));
+		my_free(key);
+		my_free(value);
+		args->env_for_excecute = make_env_for_ex(args->env, args->env_for_excecute);
+		i++;
+	}
+	if (two_d_strlen(node->cmd) <= 1)
+			print_env(*args->env);
 }

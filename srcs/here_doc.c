@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 11:05:51 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/12 03:06:21 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,26 @@ void	here_sig(int signum)
 char	**hd_saving_typed(t_pipe *temp)
 {
 	char	**saving;
-	char	*here_doc;
-	int		here_doc_len;
+	char	*typed;
+	int		delimiter_len;
 	int		typed_len;
 
 	signal(SIGINT, here_sig);
 	signal(SIGQUIT, SIG_IGN);
-	here_doc_len = 0;
-	typed_len = 0;
-	here_doc_len = ft_strlen(temp->cmd[0]);
+	delimiter_len = ft_strlen(temp->cmd[0]);
 	saving = (char **)ft_calloc(1, sizeof(char *));
 	if (temp && temp->here_doc)
 	{
 		while (g_error != -420)
 		{
-			here_doc = readline("> ");
-			typed_len = ft_strlen(here_doc);
-			if ((!here_doc_len && typed_len == here_doc_len) || !here_doc)
+			typed = readline("> ");
+			typed_len = ft_strlen(typed);
+			if ((!delimiter_len && typed_len == delimiter_len) || !typed)
 				break ;
-			if (here_doc_len && !ft_strncmp(temp->cmd[0], here_doc, typed_len)
-				&& typed_len == here_doc_len)
+			if (delimiter_len && !ft_strncmp(temp->cmd[0], typed, typed_len)
+				&& typed_len == delimiter_len)
 				break ;
-			saving = append_str(saving, here_doc);
+			saving = append_str(saving, typed);
 		}
 	}
 	return (saving);

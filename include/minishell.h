@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 14:05:58 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/12 03:09:23 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-extern int g_error;
+extern int	g_error;
 
 typedef struct s_env
 {
@@ -125,7 +125,7 @@ char	*get_key(char *str);
 char	*get_value(char *str);
 char	**make_env_for_ex(t_env **head, char **free_me);
 char	**twd_d_strdup(char **str);
-
+char	*insert_pid(char *line, t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

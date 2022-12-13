@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/12 01:04:59 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/13 16:50:03 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	handler(int signo, siginfo_t *info, void *context)
 			g_error = 131;
 		else if (info->si_status > 100)
 			g_error = info->si_status;
-		// printf("status = %d code = %d\n", info->si_status, info->si_code);
 	}
 	if (signo == SIGINT)
 	{
@@ -71,8 +70,12 @@ int	main(int ac, char **av, char **env)
 	t_cmd				args;
 	struct sigaction	pid;
 
-	(void)ac;
 	(void)av;
+	if (ac > 1)
+	{
+		printf("minishell: no arguments will be accepted\n");
+		return (0);
+	}
 	pid.sa_flags = SA_SIGINFO;
 	pid.sa_sigaction = &get_pid_me;
 	sigemptyset(&pid.sa_mask);
