@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:53:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 18:32:09 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/13 18:55:07 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ void	my_export(t_cmd *args, t_pipe *node)
 	char	*key;
 	char	*value;
 	size_t	i;
-	
+
 	i = 1;
 	while (node->cmd[i])
 	{
 		key = get_key(node->cmd[i]);
 		value = get_value(node->cmd[i]);
-		if  (check_key(key))
+		if (check_key(key))
 		{
 			if (value && !compare_env(args, node, key, value))
 				find_export(args->env, key, value, node);
@@ -119,6 +119,6 @@ void	my_export(t_cmd *args, t_pipe *node)
 		i++;
 	}
 	if (two_d_strlen(node->cmd) <= 1)
-			print_env(*args->env);
+		print_env(*args->env);
 	args->env_for_excecute = make_env_for_ex(args->env, args->env_for_excecute);
 }

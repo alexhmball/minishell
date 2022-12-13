@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/12 03:09:23 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:25:13 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ typedef struct s_cmd
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~PARSING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+void	get_pid_me(int signum, siginfo_t *info, void *context);
 void	sig_igor(int sig);
 void	handle_the_sig(int sig);
 void	handle_this(int signum);
-void	heredocy(int signo, siginfo_t *info, void *context);
-void	signal_handler(int signo);
+void	handler(int signo, siginfo_t *info, void *context);
 int		parsing(t_cmd *args);
 int		count_dollar(char *str);
 int		is_spc_tb(char c);
@@ -126,6 +126,8 @@ char	*get_value(char *str);
 char	**make_env_for_ex(t_env **head, char **free_me);
 char	**twd_d_strdup(char **str);
 char	*insert_pid(char *line, t_cmd *args);
+int		is_special_char(char c, char *str, int i);
+int		is_special(char c);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
