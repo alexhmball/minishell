@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 18:00:33 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/13 22:23:38 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	change_dir(char **cmd, t_cmd *args)
 			*args->err = 1;
 			return ;
 		}
+		printf("%s\n", path);
 	}
 	if (chdir(path) != 0)
 	{
