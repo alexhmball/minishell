@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 14:06:33 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/13 18:30:48 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,14 @@ void	us_not_printing(t_cmd *args)
 		}
 		else if (ft_strlen(c->cmd[0]) == 6
 			&& !ft_strncmp(c->cmd[0], "export", 6) && two_d_strlen(c->cmd) > 1)
-			my_export(args, c);
+			{
+				my_export(args, c);
+				freedom(c->cmd);
+				c->cmd = (char **)malloc(sizeof(char *) * 2);
+				c->cmd[0] = ft_strdup("exit");
+				c->cmd[1] = NULL;
+				args->flag = 1;
+			}
 		else if (ft_strlen(c->cmd[0]) == 5
 			&& !ft_strncmp(c->cmd[0], "unset", 5))
 			my_unset(args, c);

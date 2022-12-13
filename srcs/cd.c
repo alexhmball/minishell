@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 17:35:17 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/13 18:00:33 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	change_dir(char **cmd, t_cmd *args)
 	}
 	if (ft_strlen(path) == 1 && path[0] == '-')
 	{
+		my_free(path);
 		path = my_getenv("OLDPWD", args);
 		if (!path)
 		{
