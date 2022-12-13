@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/11 11:21:09 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/12 02:19:41 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
 	// if (args->pipe_n < 1)
-		close(args->fd[0]);
-		close(args->fd[1]);
+		// close(args->fd[0]);
+		// close(args->fd[1]);
 	if (temp && !temp->in && !temp->out && !temp->here_doc)
 	{
 		if (is_us(temp))
