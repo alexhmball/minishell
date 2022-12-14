@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/14 19:58:33 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:31:50 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,7 @@ void	pipex(t_cmd *args)
 	while (temp)
 	{
 		if (pipe(args->fd) == -1)
-		{
-			perror("pipe: ");
-			lstclear_pipe(args->pipe, my_free);
-			total_freedom(args);
-			exit(EXIT_FAILURE);
-		}
+			ms_error_messages(args, temp, -420);
 		child = fork();
 		children(temp, child, prev_pipe, args);
 		wait(&child);

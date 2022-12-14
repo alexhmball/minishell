@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 05:17:20 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 21:28:51 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	pipex(t_cmd *args);
 t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args);
 t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args);
 void	ms_heredoc(t_pipe *temp, t_cmd *args);
+void	ms_error_messages(t_cmd *args, t_pipe *temp, int redir);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
