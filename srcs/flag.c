@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 19:31:33 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 00:03:37 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static t_pipe	*here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
 	return (temp);
 }
 
-void	flag_here_doc(t_cmd *args)
+int	flag_here_doc(t_cmd *args)
 {
 	t_pipe	*temp;
 	t_pipe	*prev;
@@ -87,6 +87,8 @@ void	flag_here_doc(t_cmd *args)
 	temp = *args->pipe;
 	prev = NULL;
 	args->heredoc_n = 0;
+	if (check_doubles(args))
+		return (1);
 	while (temp)
 	{
 		if (temp->cmd[0] && temp->cmd[0][0] == '<'
@@ -97,32 +99,29 @@ void	flag_here_doc(t_cmd *args)
 		temp = temp->next;
 		i++;
 	}
+	return (0);
 }
 
 int	flag_list(t_cmd *args)
 {
 	t_pipe	*temp;
+	int		flag1;
+	int		flag2;
+	int		flag3;
 
-	if (flag_pipe(args))
-	{
-		*args->err = 258;
-		lstclear_pipe(args->pipe, my_free);
-		my_free(args->s);
-		freedom(args->cmd);
-		printf("minishell: syntax error remove extra `|'\n");
-		return (0);
-	}
-	flag_out(args);
+	flag1 = flag_pipe(args);
+	flag2 = flag_out(args);
 	flag_in(args);
-	flag_here_doc(args);
+	flag3 = flag_here_doc(args);
 	temp = *args->pipe;
-	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe)
+	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe
+		|| flag1 || flag2 || flag3)
 	{
 		*args->err = 258;
 		lstclear_pipe(args->pipe, my_free);
 		my_free(args->s);
 		freedom(args->cmd);
-		printf("minishell: syntax error near unexpected token `|'\n");
+		printf("minishell: syntax error remove extra token\n");
 		return (0);
 	}
 	return (1);

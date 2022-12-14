@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 19:31:50 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 00:02:54 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ char	*insert_pid(char *line, t_cmd *args);
 int		is_special_char(char c, char *str, int i);
 int		is_special(char c);
 void	make_lower(t_cmd *args);
+int		check_doubles(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -169,8 +170,8 @@ t_pipe	*pre_pipe(t_pipe **head, int count);
 void	print_pipe(t_pipe **head);
 int		flag_pipe(t_cmd *args);
 void	flag_in(t_cmd *args);
-void	flag_here_doc(t_cmd *args);
-void	flag_out(t_cmd *args);
+int		flag_here_doc(t_cmd *args);
+int		flag_out(t_cmd *args);
 t_env	*env_addback(t_env **head, t_env *node);
 t_env	*env_newlst(char *key, char *value);
 void	clear_env(t_env **head);

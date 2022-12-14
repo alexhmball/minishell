@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   flag_in.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:56:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 18:55:11 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 00:06:32 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	check_doubles(t_cmd *args)
+{
+	t_pipe	*temp;
+
+	temp = *args->pipe;
+	while (temp)
+	{
+		if (temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) > 2
+			&& !temp->double_q && !temp->single_q)
+			return (1);
+		if (ft_strlen(temp->cmd[0]) > 2 && temp->cmd[0][0] == '>'
+			&& temp->cmd[0][1] == '>' && !temp->double_q && !temp->single_q)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
 
 static void	flag_in2(t_pipe *t, t_cmd *args)
 {
