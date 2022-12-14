@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 19:18:18 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 19:22:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ int	init_cmd(t_cmd *args)
 	args->s = readline("\x1b[30m\x1b[46m☠️  MINISHELL ☠️ \x1b[m ");
 	if (!args->s)
 		return (0);
+	if (!*args->s)
+	{
+		free(args->s);
+		return (1);
+	}
 	args->cmd = quote_validator(args, 0, 0);
 	if (args->cmd && *args->cmd)
 		add_history(args->s);
