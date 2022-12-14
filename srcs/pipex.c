@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/14 21:31:50 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/15 01:00:06 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
 	close(args->fd[0]);
 	close(args->fd[1]);
-	if (temp && !temp->in && !temp->out && !temp->here_doc)
+	if (temp && !temp->in && !temp->out && !temp->here_doc && !temp->append)
 	{
 		if (is_us(temp))
 		{
@@ -29,6 +29,12 @@ void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 		}
 		else
 			execute_them(args, temp);
+	}
+	else
+	{
+		lstclear_pipe(args->pipe, my_free);
+		total_freedom(args);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -45,7 +51,7 @@ t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 		dup2(prev_pipe, STDIN_FILENO);
 		close(prev_pipe);
 	}
-	if (temp && temp->out)
+	if (temp && (temp->out || temp->append))
 	{
 		temp = setting_up_outs(temp, args);
 		close(args->fd[1]);
@@ -80,18 +86,17 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 			ms_heredoc(temp, args);
 		temp = ms_proc_ins_outs(temp, args, prev_pipe, prev_out);
 		ms_pipe_exec(temp, args);
-		lstclear_pipe(args->pipe, my_free);
 	}
 	wait(NULL);
 }
 
 t_pipe	*parent_catching_up(t_pipe *temp, t_cmd *args)
 {
-	while (temp && temp->next && (temp->in || temp->out))
+	while (temp && (temp->in || temp->out || temp->append))
 		temp = temp->next;
 	if (temp && temp->next && temp->here_doc)
 		args->pipe_n++;
-	if (temp && !temp->in && !temp->out)
+	if (temp && !temp->in && !temp->out && !temp->append)
 		temp = temp->next;
 	if (args->pipe_n > 0)
 		args->pipe_n--;

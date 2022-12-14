@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/14 21:40:47 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/15 01:01:51 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ms_error_messages(t_cmd *args, t_pipe *temp, int redir)
 {
-	if ((redir < 0 || !temp->path) && temp->in)
+	if ((redir < 0 || !temp->path) && temp->in && temp)
 	{
 		if (!temp->path)
 			ft_putstr_fd("minishell: No such file or directory\n", 2);
@@ -24,14 +24,14 @@ void	ms_error_messages(t_cmd *args, t_pipe *temp, int redir)
 		total_freedom(args);
 		exit(EXIT_FAILURE);
 	}
-	else if (redir < 0 && temp->out)
+	if (redir < 0 && (temp->out || temp->append) && temp)
 	{
 		ft_putstr_fd("minishell: Permission denied\n", 2);
 		lstclear_pipe(args->pipe, my_free);
 		total_freedom(args);
 		exit(EXIT_FAILURE);
 	}
-	else if (redir == -420)
+	if (redir == -420 && temp)
 	{
 		perror("pipe: ");
 		lstclear_pipe(args->pipe, my_free);
@@ -66,15 +66,15 @@ t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args)
 {
 	int	outfile;
 
-	(void)args;
-	while (temp && temp->out)
+	outfile = -1;
+	while (temp && (temp->out || temp->append))
 	{
 		if (temp && temp->append)
 			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_APPEND, 0666);
 		else if (temp && temp->out)
 			outfile = open(temp->cmd[0], O_RDWR | O_CREAT | O_TRUNC, 0666);
 		ms_error_messages(args, temp, outfile);
-		if (temp && (temp->next->out || temp->next->append))
+		if (temp && temp->next && (temp->next->out || temp->next->append))
 			close(outfile);
 		temp = temp->next;
 	}
