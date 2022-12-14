@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/14 22:18:26 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 02:32:25 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 {
 	close(args->fd[0]);
 	close(args->fd[1]);
-	if (temp && !temp->in && !temp->out && !temp->here_doc && !temp->append && g_error != -420)
+	if (temp && !temp->in && !temp->out && !temp->here_doc && !temp->append)
 	{
 		if (is_us(temp))
 		{
