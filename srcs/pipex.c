@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/13 15:06:34 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 19:58:33 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 	if (child == -1)
 	{
 		perror("fork: ");
+		lstclear_pipe(args->pipe, my_free);
+		total_freedom(args);
 		exit(EXIT_FAILURE);
 	}
 	if (!child)
@@ -110,6 +112,8 @@ void	pipex(t_cmd *args)
 		if (pipe(args->fd) == -1)
 		{
 			perror("pipe: ");
+			lstclear_pipe(args->pipe, my_free);
+			total_freedom(args);
 			exit(EXIT_FAILURE);
 		}
 		child = fork();
