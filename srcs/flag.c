@@ -6,11 +6,33 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 19:27:58 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 19:31:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	remove_pipes(t_cmd *args)
+{
+	t_pipe	*temp;
+	t_pipe	*prev;
+	int		i;
+
+	i = 0;
+	temp = *args->pipe;
+	prev = NULL;
+	while (temp)
+	{
+		if (temp->next && temp->is_pipe)
+		{
+			temp = remove_node(args->pipe, temp, prev, i);
+			args->pipe_n++;
+		}
+		prev = temp;
+		temp = temp->next;
+		i++;
+	}
+}
 
 int	flag_pipe(t_cmd *args)
 {
