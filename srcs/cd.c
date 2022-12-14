@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:36:24 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 22:23:38 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 21:31:53 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,30 @@ void	insert_env(char *env, char *path, t_cmd *args)
 		temp = temp->next;
 	}
 	env_addback(args->env, env_newlst(ft_strdup(env), ft_strdup(path)));
+}
+
+static int	check_cd(t_cmd *args, char **path)
+{
+	if (ft_strlen(*path) == 1 && *path[0] == '-')
+	{
+		my_free(*path);
+		*path = my_getenv("OLDPWD", args);
+		if (!*path)
+		{
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+			*args->err = 1;
+			return (1);
+		}
+		printf("%s\n", *path);
+	}
+	if (chdir(*path) != 0)
+	{
+		perror("minishell: cd");
+		*args->err = 1;
+		my_free(*path);
+		return (1);
+	}
+	return (0);
 }
 
 void	change_pwd_env(t_cmd *args, char **cmd, char *path)
@@ -67,25 +91,7 @@ void	change_dir(char **cmd, t_cmd *args)
 			return ;
 		}
 	}
-	if (ft_strlen(path) == 1 && path[0] == '-')
-	{
-		my_free(path);
-		path = my_getenv("OLDPWD", args);
-		if (!path)
-		{
-			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-			*args->err = 1;
-			return ;
-		}
-		printf("%s\n", path);
-	}
-	if (chdir(path) != 0)
-	{
-		perror("minishell: cd");
-		*args->err = 1;
-		if (path != cmd[1])
-			my_free(path);
+	if (check_cd(args, &path))
 		return ;
-	}
 	change_pwd_env(args, cmd, path);
 }
