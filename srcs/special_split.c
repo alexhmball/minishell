@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 20:01:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 18:18:20 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 22:36:02 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	word_count(const char *s, int single_q, int double_q)
 		if ((is_spc_tb(s[i])) && i != 0 && !is_spc_tb(s[i - 1])
 			&& s[i] && !single_q && !double_q)
 			j++;
-		if (is_special_char(s[i], (char *)s, i) && !single_q && !double_q 
+		if (is_special_char(s[i], (char *)s, i) && !single_q && !double_q
 			&& i != 0 && !is_spc_tb(s[i - 1]) && !is_spc_tb(s[i + 1]))
 		{
 			if (i != 0 && !is_spc_tb(s[i - 1]))
