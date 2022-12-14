@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:56:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 00:06:32 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/15 02:38:01 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	flag_in(t_cmd *args)
 	i = 0;
 	while (t)
 	{
-		if (t->cmd[0] && t->cmd[0][0] == '<' && ft_strlen(t->cmd[0]) == 1)
+		if (t->cmd[0] && t->cmd[0][0] == '<' && ft_strlen(t->cmd[0]) == 1 && t->next)
 		{
 			t->next->in = 1;
 			t = remove_node(args->pipe, t, prev, i);
