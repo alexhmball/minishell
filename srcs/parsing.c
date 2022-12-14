@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 22:20:37 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 19:33:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,7 @@ void	move_here_doc(t_cmd *args)
 	}
 }
 
-void	remove_pipes(t_cmd *args)
-{
-	t_pipe	*temp;
-	t_pipe	*prev;
-	int		i;
 
-	i = 0;
-	temp = *args->pipe;
-	prev = NULL;
-	while (temp)
-	{
-		if (temp->next && temp->is_pipe)
-		{
-			temp = remove_node(args->pipe, temp, prev, i);
-			args->pipe_n++;
-		}
-		prev = temp;
-		temp = temp->next;
-		i++;
-	}
-}
 
 int	parse_pipe(t_cmd *args)
 {
@@ -71,18 +51,17 @@ int	parse_pipe(t_cmd *args)
 	return (1);
 }
 
-int	init_cmd(t_cmd *args)
+int	check_parsed(t_cmd *args)
 {
-	sigaction(SIGINT, &args->sa, NULL);
-	init_struct(args);
-	args->s = readline("\x1b[30m\x1b[46m☠️  MINISHELL ☠️ \x1b[m ");
-	if (!args->s)
-		return (0);
 	args->cmd = quote_validator(args, 0, 0);
 	if (args->cmd && *args->cmd)
 		add_history(args->s);
 	else
+	{
+		freedom(args->cmd);
+		free(args->s);
 		return (1);
+	}
 	if (!args->cmd)
 	{
 		ft_putstr_fd("minishell: Error: invalid quotes\n", 2);
@@ -93,6 +72,20 @@ int	init_cmd(t_cmd *args)
 		freedom(args->cmd);
 		return (1);
 	}
+	return (0);
+}
+
+int	init_cmd(t_cmd *args)
+{
+	sigaction(SIGINT, &args->sa, NULL);
+	init_struct(args);
+	args->s = readline("\x1b[30m\x1b[46m☠️  MINISHELL ☠️ \x1b[m ");
+	if (!args->s)
+		return (0);
+	if (!*args->s)
+		return (1);
+	if (check_parsed(args))
+		return (1);
 	return (5);
 }
 

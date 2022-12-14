@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 21:28:51 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:31:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ t_pipe	*ret_pipe_location(t_pipe **head, int node);
 t_pipe	*remove_node(t_pipe **head, t_pipe *node, t_pipe *prev_node, int c);
 t_pipe	*pre_pipe(t_pipe **head, int count);
 void	print_pipe(t_pipe **head);
-void	flag_pipe(t_cmd *args);
+int		flag_pipe(t_cmd *args);
 void	flag_in(t_cmd *args);
 void	flag_here_doc(t_cmd *args);
 void	flag_out(t_cmd *args);
@@ -176,6 +176,7 @@ t_env	*env_newlst(char *key, char *value);
 void	clear_env(t_env **head);
 void	env_delone(t_env *node);
 int		pipe_size(t_pipe **head);
+void	remove_pipes(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~BUILT_IN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
