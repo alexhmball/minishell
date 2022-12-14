@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 21:43:54 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 05:13:07 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	parse_pipe(t_cmd *args)
 	find_cmd_args(args);
 	organize_cmds(args);
 	remove_pipes(args);
+	make_lower(args);
 	confirm_path(args);
 	find_errors(args, args->pipe);
 	return (1);
@@ -109,7 +110,6 @@ int	parsing(t_cmd *args)
 	if (ret == 1)
 		return (1);
 	create_pipe_list(args);
-	// print_pipe(args->pipe);
 	if (!parse_pipe(args))
 		return (*args->err);
 	freedom(args->cmd);

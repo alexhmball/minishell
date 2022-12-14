@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 20:25:13 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 05:17:20 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char	**twd_d_strdup(char **str);
 char	*insert_pid(char *line, t_cmd *args);
 int		is_special_char(char c, char *str, int i);
 int		is_special(char c);
+void	make_lower(t_cmd *args);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
