@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   special_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 20:01:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 22:41:07 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 18:52:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-static int	word_count(const char *s, int single_q, int double_q)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		check_quotes(s[i], &single_q, &double_q);
-		if ((is_spc_tb(s[i])) && i != 0 && !is_spc_tb(s[i - 1])
-			&& s[i] && !single_q && !double_q)
-			j++;
-		if (is_special_char(s[i], (char *)s, i) && !single_q && !double_q)
-		{
-			if (i != 0 && !is_spc_tb(s[i - 1]))
-				j++;
-			j++;
-		}
-		i++;
-	}
-	if (s[i] == 0 && !is_spc_tb(s[i - 1]))
-		j++;
-	return (j + 1);
-}
 
 static int	special_check(char *s, size_t *end, size_t *start)
 {
@@ -46,7 +20,10 @@ static int	special_check(char *s, size_t *end, size_t *start)
 		while (s[*end] && is_special(s[*end]))
 		{
 			if (s[*end + 1] && s[*end] != s[*end + 1])
+			{
+				*end += 1;
 				break ;
+			}
 			*end += 1;
 		}
 		return (1);
@@ -58,11 +35,9 @@ static char	**cut(char const *s, char **split, int single_q, int double_q)
 {
 	size_t	start;
 	size_t	end;
-	size_t	k;
 
 	start = 0;
 	end = 0;
-	k = 0;
 	while (s[end])
 	{
 		while (s[end] && is_spc_tb(s[end]))
@@ -72,35 +47,32 @@ static char	**cut(char const *s, char **split, int single_q, int double_q)
 			&& (single_q || double_q || !is_special(s[end])))
 			check_quotes(s[end++], &single_q, &double_q);
 		if (s[end] && (is_spc_tb(s[end]) || is_special(s[end])))
-			split[k++] = ft_substr(s, start, end - start);
+			split = append_str(split, ft_substr(s, start, end - start));
 		if (special_check((char *)s, &end, &start))
-			split[k++] = ft_substr(s, start, end - start);
+			split = append_str(split, ft_substr(s, start, end - start));
 	}
 	if (s[end] == 0 && !is_spc_tb(s[end - 1]))
-		split[k++] = ft_substr(s, start, end - start);
-	split[k] = 0;
+		split = append_str(split, ft_substr(s, start, end - start));
 	return (split);
 }
 
 char	**special_split(char const *s)
 {
 	char		**split;
-	int			d;
 	int			i;
 
 	if (!s)
 		return (0);
-	d = word_count(s, 0, 0);
 	if (!s || !*s)
 		return (NULL);
-	split = (char **)malloc((d + 1) * sizeof(char *));
+	split = (char **)malloc(1 * sizeof(char *));
 	if (!split)
 		return (0);
+	split[0] = 0;
 	split = cut(s, split, 0, 0);
 	i = 0;
 	while (split[i])
 	{
-			printf("split[%d] = %s\n", i, split[i]);
 		if (!split[i][0])
 		{
 			split = remove_str(split, i);
