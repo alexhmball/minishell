@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/14 21:34:11 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:40:47 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,24 @@ void	ms_error_messages(t_cmd *args, t_pipe *temp, int redir)
 			ft_putstr_fd("minishell: No such file or directory\n", 2);
 		else
 			ft_putstr_fd("minishell: Permission denied\n", 2);
+		lstclear_pipe(args->pipe, my_free);
+		total_freedom(args);
+		exit(EXIT_FAILURE);
 	}
 	else if (redir < 0 && temp->out)
+	{
 		ft_putstr_fd("minishell: Permission denied\n", 2);
+		lstclear_pipe(args->pipe, my_free);
+		total_freedom(args);
+		exit(EXIT_FAILURE);
+	}
 	else if (redir == -420)
+	{
 		perror("pipe: ");
-	lstclear_pipe(args->pipe, my_free);
-	total_freedom(args);
-	exit(EXIT_FAILURE);
+		lstclear_pipe(args->pipe, my_free);
+		total_freedom(args);
+		exit(EXIT_FAILURE);
+	}
 }
 
 t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args)
