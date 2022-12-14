@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lowering.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 05:13:38 by ballzball         #+#    #+#             */
-/*   Updated: 2022/12/14 20:53:48 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 18:05:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	ft_strtolower(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return ;
 	while (str[i])
 	{
 		str[i] = ft_tolower(str[i]);

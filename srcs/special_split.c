@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 20:01:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 21:13:44 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 18:18:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	word_count(const char *s, int single_q, int double_q)
 		if ((is_spc_tb(s[i])) && i != 0 && !is_spc_tb(s[i - 1])
 			&& s[i] && !single_q && !double_q)
 			j++;
-		if (is_special_char(s[i], (char *)s, i) && !single_q && !double_q)
+		if (is_special_char(s[i], (char *)s, i) && !single_q && !double_q 
+			&& i != 0 && !is_spc_tb(s[i - 1]) && !is_spc_tb(s[i + 1]))
 		{
 			if (i != 0 && !is_spc_tb(s[i - 1]))
 				j++;
@@ -82,6 +83,7 @@ char	**special_split(char const *s)
 {
 	char		**split;
 	int			d;
+	int			i;
 
 	if (!s)
 		return (0);
@@ -91,5 +93,16 @@ char	**special_split(char const *s)
 	split = (char **)malloc((d + 1) * sizeof(char *));
 	if (!split)
 		return (0);
-	return (cut(s, split, 0, 0));
+	split = cut(s, split, 0, 0);
+	i = 0;
+	while (split[i])
+	{
+		if (!split[i][0])
+		{
+			split = remove_str(split, i);
+			i = -1;
+		}
+		i++;
+	}
+	return (split);
 }
