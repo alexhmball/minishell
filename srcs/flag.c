@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/12 03:06:39 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 19:15:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	flag_list(t_cmd *args)
 		*args->err = 258;
 		lstclear_pipe(args->pipe, my_free);
 		my_free(args->s);
+		freedom(args->cmd);
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
