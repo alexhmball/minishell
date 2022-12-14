@@ -6,13 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 19:15:34 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 19:27:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	flag_pipe(t_cmd *args)
+int	flag_pipe(t_cmd *args)
 {
 	t_pipe	*temp;
 
@@ -23,8 +23,12 @@ void	flag_pipe(t_cmd *args)
 			&& !temp->double_q && !temp->single_q
 				&& ft_strlen(temp->cmd[0]) == 1)
 			temp->is_pipe = 1;
+		if (ft_strlen(temp->cmd[0]) > 1 && temp->cmd[0][0] == '|'
+			&& !temp->double_q && !temp->single_q)
+			return (1);
 		temp = temp->next;
 	}
+	return (0);
 }
 
 static t_pipe	*here_doc_2(t_pipe *temp, t_pipe *prev, int *i, t_cmd *args)
@@ -77,7 +81,15 @@ int	flag_list(t_cmd *args)
 {
 	t_pipe	*temp;
 
-	flag_pipe(args);
+	if (flag_pipe(args))
+	{
+		*args->err = 258;
+		lstclear_pipe(args->pipe, my_free);
+		my_free(args->s);
+		freedom(args->cmd);
+		printf("minishell: syntax error remove extra `|'\n");
+		return (0);
+	}
 	flag_out(args);
 	flag_in(args);
 	flag_here_doc(args);
