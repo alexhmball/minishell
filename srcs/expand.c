@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 15:45:06 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 18:55:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	insert_expansion(t_pipe *node, char *expand, t_cmd *args, int dollar)
 	node->cmd = remove_str(node->cmd, 0);
 	node->cmd = append_str(node->cmd, new_line);
 	my_free(env);
-	my_free(new_line);
 }
 
 void	sub_it(int i, int dollar, t_pipe *node, t_cmd *args)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_out.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:57:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 13:28:40 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 18:55:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	flag_out_3(t_pipe *temp)
 	str = ft_strdup(temp->cmd[0] + 1);
 	temp->cmd = remove_str(temp->cmd, 0);
 	temp->cmd = append_str(temp->cmd, str);
-	free(str);
 }
 
 void	flag_out(t_cmd *args)

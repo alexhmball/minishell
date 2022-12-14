@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_in.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:56:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 13:28:59 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 18:55:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	flag_in2(t_pipe *t, t_cmd *args)
 	validate_path(temp, args);
 	t->cmd = remove_str(t->cmd, 0);
 	t->cmd = append_str(t->cmd, temp);
-	free(temp);
 	t->path = ft_strdup(args->path);
 	my_free(args->path);
 }

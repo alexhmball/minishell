@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 22:43:38 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 19:16:49 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 18:58:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	group_args(t_cmd *args, int arg, int cmd)
 	cmd_pipe = ret_pipe_location(args->pipe, cmd);
 	arg_pipe = ret_pipe_location(args->pipe, arg);
 	while (arg_pipe->cmd[i])
-		cmd_pipe->cmd = append_str(cmd_pipe->cmd, arg_pipe->cmd[i++]);
+		cmd_pipe->cmd = append_str(cmd_pipe->cmd, ft_strdup(arg_pipe->cmd[i++]));
 	remove_node(args->pipe, arg_pipe,
 		ret_pipe_location(args->pipe, arg - 1), arg);
 }

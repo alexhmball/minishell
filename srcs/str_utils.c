@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:56:04 by aball             #+#    #+#             */
-/*   Updated: 2022/12/09 23:19:43 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 18:54:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**append_str(char **str, char *append)
 	new[i++] = ft_strdup(append);
 	new[i] = NULL;
 	freedom(str);
+	my_free(append);
 	return (new);
 }
 

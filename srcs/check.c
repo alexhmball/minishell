@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:59:19 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 18:46:27 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 18:54:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	validate_path(char *cmd, t_cmd *args)
 		return (0);
 	current = get_working_dir();
 	search = append_str(search, current);
-	my_free(current);
 	while (search[i])
 	{
 		if (searching_dirs(search[i], args, cmd, search))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 21:02:52 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 18:56:06 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	remove_quotes(t_pipe **h, int single_q, int double_q, t_cmd *args)
 		tmp = quote_collector(current, tmp, single_q, double_q);
 		current->cmd = remove_str(current->cmd, 0);
 		current->cmd = append_str(current->cmd, tmp);
-		my_free(tmp);
 		current = current->next;
 	}
 }
