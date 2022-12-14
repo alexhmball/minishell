@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 23:16:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 21:54:37 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 23:40:43 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void	exit_shell(t_cmd *args, t_pipe *node)
 		{
 			if (!ft_isdigit(node->cmd[1][i]) && node->cmd[1][0] != '-')
 			{
-				errno = EINVAL;
-				perror("minishell: exit");
+				ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 				*args->err = 255;
 				lstclear_pipe(args->pipe, my_free);
 				total_freedom(args);
