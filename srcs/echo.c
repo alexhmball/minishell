@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 13:05:27 by aball             #+#    #+#             */
-/*   Updated: 2022/12/08 21:14:29 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 22:07:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ int	two_d_strlen(char **str)
 	return (i);
 }
 
+static int	check_the_check(char **echo, int i)
+{
+	if (echo[i][0] != '-')
+		return (1);
+	if (echo[i][0] == '-' && ft_strlen(echo[i]) == 1)
+		return (1);
+	return (0);
+}
+
 static int	check_newline(char **echo, int *start, int len)
 {
 	int	i;
@@ -33,7 +42,7 @@ static int	check_newline(char **echo, int *start, int len)
 	new_line = 1;
 	while (echo[i])
 	{
-		if (echo[i][0] != '-')
+		if (check_the_check(echo, i))
 			break ;
 		j++;
 		if (!echo[i][j])
