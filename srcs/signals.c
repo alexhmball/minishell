@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 18:55:45 by ballzball         #+#    #+#             */
-/*   Updated: 2022/12/14 20:52:25 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 23:11:09 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ void	handler(int signo, siginfo_t *info, void *context)
 	{
 		if (info->si_status == 2 && info->si_code == 2)
 			g_error = 130;
-		else if (info->si_code == 1 && info->si_status == 2)
-			g_error = 2;
-		else if (info->si_code == 1 && info->si_status == 1
-			&& g_error != 127 && g_error != 126)
-			g_error = 1;
+		else if (info->si_code == 1 && g_error != 127 && g_error != 126)
+			g_error = info->si_status;
 		else if (info->si_status == 3 && info->si_code == 3)
 			g_error = 131;
 		else if (info->si_status > 100)
