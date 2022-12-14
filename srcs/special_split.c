@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 20:01:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 21:13:44 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/14 22:28:34 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ static int	special_check(char *s, size_t *end, size_t *start)
 	if (s[*end] && is_special(s[*end]))
 	{
 		*start = *end;
-		while (is_special(s[*end]))
+		while (s[*end] && is_special(s[*end]))
+		{
+			if (s[*end + 1] && s[*end] != s[*end + 1])
+				break ;
 			*end += 1;
+		}
 		return (1);
 	}
 	return (0);
@@ -82,6 +86,7 @@ char	**special_split(char const *s)
 {
 	char		**split;
 	int			d;
+	int			i;
 
 	if (!s)
 		return (0);
@@ -91,5 +96,17 @@ char	**special_split(char const *s)
 	split = (char **)malloc((d + 1) * sizeof(char *));
 	if (!split)
 		return (0);
-	return (cut(s, split, 0, 0));
+	split = cut(s, split, 0, 0);
+	i = 0;
+	while (split[i])
+	{
+			printf("split[%d] = %s\n", i, split[i]);
+		if (!split[i][0])
+		{
+			split = remove_str(split, i);
+			i = -1;
+		}
+		i++;
+	}
+	return (split);
 }
