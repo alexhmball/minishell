@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 05:13:07 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 21:14:29 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	init_cmd(t_cmd *args)
 	args->s = readline("\x1b[30m\x1b[46m☠️  MINISHELL ☠️ \x1b[m ");
 	if (!args->s)
 		return (0);
-
 	args->cmd = quote_validator(args, 0, 0);
 	if (args->cmd && *args->cmd)
 		add_history(args->s);
@@ -94,7 +93,6 @@ int	init_cmd(t_cmd *args)
 		freedom(args->cmd);
 		return (1);
 	}
-
 	return (5);
 }
 
@@ -113,7 +111,6 @@ int	parsing(t_cmd *args)
 	if (!parse_pipe(args))
 		return (*args->err);
 	freedom(args->cmd);
-	// print_pipe(args->pipe);
 	if (!args->pipe_n)
 		us_not_printing(args);
 	pipex(args);

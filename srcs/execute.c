@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 18:30:48 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 21:16:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static void	force_exit(t_cmd *args, t_pipe *c)
+{
+	freedom(c->cmd);
+	c->cmd = (char **)malloc(sizeof(char *) * 2);
+	c->cmd[0] = ft_strdup("exit");
+	c->cmd[1] = NULL;
+	args->flag = 1;
+}
 
 void	us_not_printing(t_cmd *args)
 {
@@ -22,22 +31,14 @@ void	us_not_printing(t_cmd *args)
 		if (ft_strlen(c->cmd[0]) == 2 && !ft_strncmp(c->cmd[0], "cd", 2))
 		{
 			change_dir(c->cmd, args);
-			freedom(c->cmd);
-			c->cmd = (char **)malloc(sizeof(char *) * 2);
-			c->cmd[0] = ft_strdup("exit");
-			c->cmd[1] = NULL;
-			args->flag = 1;
+			force_exit(args, c);
 		}
 		else if (ft_strlen(c->cmd[0]) == 6
 			&& !ft_strncmp(c->cmd[0], "export", 6) && two_d_strlen(c->cmd) > 1)
-			{
-				my_export(args, c);
-				freedom(c->cmd);
-				c->cmd = (char **)malloc(sizeof(char *) * 2);
-				c->cmd[0] = ft_strdup("exit");
-				c->cmd[1] = NULL;
-				args->flag = 1;
-			}
+		{
+			my_export(args, c);
+			force_exit(args, c);
+		}
 		else if (ft_strlen(c->cmd[0]) == 5
 			&& !ft_strncmp(c->cmd[0], "unset", 5))
 			my_unset(args, c);

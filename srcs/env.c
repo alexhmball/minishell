@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:37:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/13 16:51:01 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/14 21:21:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ char	*my_getenv(char *str_env, t_cmd *args)
 	return (NULL);
 }
 
+static void	input_env(char **exp, t_env **head, char *key, char *value)
+{
+	int	i;
+
+	i = 1;
+	while (exp[i])
+	{
+		key = get_key(exp[i]);
+		value = get_value(exp[i]);
+		env_addback(head, env_newlst(key, value));
+		i++;
+	}
+}
+
 t_env	**create_env(char **exp)
 {
 	t_env	**head;
@@ -45,7 +59,7 @@ t_env	**create_env(char **exp)
 
 	i = 0;
 	head = (t_env **)malloc(sizeof(t_env *));
-	if (!*exp)
+	if (!*exp || !exp)
 	{
 		*head = NULL;
 		return (head);
@@ -54,14 +68,7 @@ t_env	**create_env(char **exp)
 	value = get_value(exp[i]);
 	temp = env_newlst(key, value);
 	*head = temp;
-	i++;
-	while (exp[i])
-	{
-		key = get_key(exp[i]);
-		value = get_value(exp[i]);
-		env_addback(head, env_newlst(key, value));
-		i++;
-	}
+	input_env(exp, head, key, value);
 	return (head);
 }
 
