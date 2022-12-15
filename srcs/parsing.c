@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 01:58:47 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 02:29:55 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	parsing(t_cmd *args)
 	if (!parse_pipe(args))
 		return (*args->err);
 	freedom(args->cmd);
-	print_pipe(args->pipe);
+	// print_pipe(args->pipe);
 	if (!args->pipe_n)
 		us_not_printing(args);
 	pipex(args);
