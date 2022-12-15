@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 22:13:24 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/15 22:30:05 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	shuffle_it(char *str, int i)
 void	strip_tease(t_pipe *node, t_cmd *args)
 {
 	size_t	i;
+	char	**temp;
 	
 	i = 0;
 	while (*node->cmd && node->cmd[0][i])
@@ -88,13 +89,16 @@ void	strip_tease(t_pipe *node, t_cmd *args)
 			
 	}
 	if (node->expand)
-		node->cmd = ft_split(node->cmd[0], ' ');
-	validate_path(node->cmd[0], args);
-	if (args->path)
 	{
-		node->path = ft_strdup(args->path);
-		my_free(args->path);
+		temp = ft_split(node->cmd[0], ' ');
+		freedom(node->cmd);
+		node->cmd = temp;
 	}
+	validate_path(node->cmd[0], args);
+	if (args->path && !node->path)
+		node->path = ft_strdup(args->path);
+	my_free(args->path);
+
 }
 
 void	create_pipe_list(t_cmd *args)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 21:32:23 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/16 01:58:47 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int	parsing(t_cmd *args)
 	print_pipe(args->pipe);
 	if (!args->pipe_n)
 		us_not_printing(args);
-	// pipex(args);
-	ms_pipes(args);
+	pipex(args);
+	// ms_pipes(args);
 	if (g_error == -420)
 		g_error = 130;
 	lstclear_pipe(args->pipe, my_free);
