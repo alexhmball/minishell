@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/16 02:24:45 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/16 02:39:43 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ void	pipex(t_cmd *args)
 		}
 		child = fork();
 		children(temp, child, prev_pipe, args);
-		// wait(NULL);
+		if (temp->here_doc)
+			wait(NULL);
 		close(args->fd[1]);
 		free = prev_pipe;
 		prev_pipe = args->fd[0];
@@ -154,7 +155,8 @@ void	pipex(t_cmd *args)
 			close(free);
 		temp = parent_catching_up(temp, args);
 	}
-	wait(NULL);
+	while (waitpid(-1, NULL, 0) > 0)
+		;
 	if (prev_pipe != STDIN_FILENO)
 		close(prev_pipe);
 	close(args->fd[0]);
