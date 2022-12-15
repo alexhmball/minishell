@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/16 02:39:43 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 02:58:35 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 			close(prev_pipe);
 		ms_pipe_exec(temp, args);
 	}
-	// wait(NULL);
+	if (temp->here_doc)
+		wait(NULL);
 }
 
 t_pipe	*parent_catching_up(t_pipe *temp, t_cmd *args)
