@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 22:30:05 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 02:46:11 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ void	strip_tease(t_pipe *node, t_cmd *args)
 		if (node->cmd[0][i] == 1 || node->cmd[0][i] == 2)
 			shuffle_it(node->cmd[0], i);
 		else
-			i++;
-			
+			i++;		
 	}
 	if (node->expand)
 	{

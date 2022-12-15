@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 21:46:00 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 02:47:38 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	flag_here_doc(t_cmd *args)
 
 int	is_redir(char c)
 {
-	if (c == '>' || c == '<' || c == '|')
+	if (c == '>' || c == '<')
 		return (1);
 	return (0);
 }
