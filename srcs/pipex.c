@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/16 03:06:55 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/16 03:44:23 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,13 @@ t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 	}
 	if (prev_pipe != STDIN_FILENO)
 		close(prev_pipe);
-	
 	if (temp && (temp->out || temp->append))
 	{
 		temp = setting_up_outs(temp, args);
 		close(args->fd[1]);
 		pre_out = 1;
 	}
-	if (!pre_out && args->pipe_n >= 1)
-	{
-		dup2(args->fd[1], STDOUT_FILENO);
-		close(args->fd[1]);
-	}
-	if (!pre_out && args->pipe_n < 1)
-	{
-		close(args->fd[1]);
-		close(args->fd[0]);
-		if (prev_pipe != STDIN_FILENO)
-			close(prev_pipe);
-	}
-	close(args->fd[0]);
+	ms_child_norm(args, prev_pipe, pre_out);
 	return (temp);
 }
 
@@ -121,7 +108,6 @@ void	pipex(t_cmd *args)
 	t_pipe	*temp;
 	pid_t	child;
 	int		prev_pipe;
-	int		free;
 
 	temp = *args->pipe;
 	prev_pipe = STDIN_FILENO;
@@ -134,13 +120,7 @@ void	pipex(t_cmd *args)
 			close(args->fd[1]);
 		child = fork();
 		children(temp, child, prev_pipe, args);
-		if (temp->here_doc)
-			wait(NULL);
-		close(args->fd[1]);
-		free = prev_pipe;
-		prev_pipe = args->fd[0];
-		if (free != STDIN_FILENO && prev_pipe != STDIN_FILENO)
-			close(free);
+		prev_pipe = ms_parent_norm(args, temp, prev_pipe);
 		temp = parent_catching_up(temp, args);
 	}
 	while (waitpid(-1, NULL, 0) > 0)

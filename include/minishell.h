@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:34:17 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:46:55 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,8 @@ t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args, int prev_pipe);
 t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args);
 void	ms_heredoc(t_pipe *temp, t_cmd *args, int prev_pipe);
 void	ms_error_messages(t_cmd *args, t_pipe *temp, int redir);
-void	ms_pipes(t_cmd *args);
+int		ms_parent_norm(t_cmd *args, t_pipe *temp, int prev_pipe);
+void	ms_child_norm(t_cmd *args, int prev_pipe, int pre_out);
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 void	my_free(void *content);

@@ -3,19 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/15 08:00:03 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:24:44 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int	breaking_heredoc(int d_len, int t_len, char *typed, t_pipe *temp)
+{
+	if ((!d_len && t_len == d_len) || !typed)
+		return (1);
+	if (d_len && !ft_strncmp(temp->cmd[0], typed, t_len) && t_len == d_len)
+		return (1);
+	return (0);
+}
+
 void	here_sig(int signum, siginfo_t *info, void *context)
 {
 	static t_cmd	*args;
-	
+
 	(void)info;
 	if (signum == SIGUSR2)
 		args = (t_cmd *)context;
@@ -33,12 +42,11 @@ void	here_sig(int signum, siginfo_t *info, void *context)
 
 char	**hd_saving_typed(t_pipe *temp, t_cmd *args)
 {
-	// char	**saving;
-	char	*typed;
-	int		delimiter_len;
-	int		typed_len;
+	char				*typed;
+	int					delimiter_len;
+	int					typed_len;
 	struct sigaction	act;
-	
+
 	act.sa_sigaction = &here_sig;
 	act.sa_flags = SA_SIGINFO;
 	sigemptyset(&act.sa_mask);
@@ -49,14 +57,11 @@ char	**hd_saving_typed(t_pipe *temp, t_cmd *args)
 	here_sig(SIGUSR2, NULL, args);
 	if (temp && temp->here_doc)
 	{
-		while (g_error != -420)
+		while (1)
 		{
 			typed = readline("> ");
 			typed_len = ft_strlen(typed);
-			if ((!delimiter_len && typed_len == delimiter_len) || !typed)
-				break ;
-			if (delimiter_len && !ft_strncmp(temp->cmd[0], typed, typed_len)
-				&& typed_len == delimiter_len)
+			if (breaking_heredoc(delimiter_len, typed_len, typed, temp))
 				break ;
 			args->saving = append_str(args->saving, typed);
 		}
