@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 18:56:06 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 21:23:51 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,42 +45,30 @@ void	flag_quotes(t_pipe *node, int *single_q, int *double_q)
 		node->double_q = 1;
 }
 
-char	*quote_collector(t_pipe *current, char *tmp, int single_q, int double_q)
+char	**quote_collector(t_pipe *current, int single_q, int double_q)
 {
-	int	flag;
 	int	i;
 
 	i = 0;
-	flag = 0;
-	while (current->cmd[0][i]
-			&& (single_q || double_q || !is_spc_tb(current->cmd[0][i])))
+	while (current->cmd[0][i])
 	{
-		if (current->cmd[0][i]
-			&& !check_quotes(current->cmd[0][i], &single_q, &double_q))
-			tmp = add_char(tmp, current->cmd[0][i]);
-		if (!is_q(current->cmd[0][i]) && !flag && (single_q || double_q))
-		{
-			flag_quotes(current, &single_q, &double_q);
-			flag = 1;
-		}
+		if (current->cmd[0][i] == '"' && check_quotes(current->cmd[0][i], &single_q, &double_q))
+			current->cmd[0][i] = 1;
+		if (current->cmd[0][i] == 39 && check_quotes(current->cmd[0][i], &single_q, &double_q))
+			current->cmd[0][i] = 2;	
 		i++;
 	}
-	return (tmp);
+	return (current->cmd);
 }
 
-void	remove_quotes(t_pipe **h, int single_q, int double_q, t_cmd *args)
+void	remove_quotes(t_pipe **h, int single_q, int double_q)
 {
-	char	*tmp;
 	t_pipe	*current;
 
 	current = *h;
 	while (current)
 	{
-		tmp = NULL;
-		find_expand(current, single_q, double_q, args);
-		tmp = quote_collector(current, tmp, single_q, double_q);
-		current->cmd = remove_str(current->cmd, 0);
-		current->cmd = append_str(current->cmd, tmp);
+		current->cmd = quote_collector(current, single_q, double_q);
 		current = current->next;
 	}
 }

@@ -2,7 +2,7 @@ valgrind --suppressions=file.supp --track-origins=yes --leak-check=full --show-l
 redo pipes
 echo $0
 cat /dev/random | head 10 | wc
-<><><><><><><><>
-expansion in export 
-(test="don't panic") quotes in export
+<><><><><><><><> [done]
+expansion in export [done]
+(test="don't panic") quotes in export [done]
 heredoc no expansion and no cntrl c

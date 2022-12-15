@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:35:15 by aball             #+#    #+#             */
-/*   Updated: 2022/11/24 15:21:30 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/15 21:32:05 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_dollar(char *str)
 
 int	is_q(char c)
 {
-	if (c == '"' || c == 39)
+	if (c == '"' || c == 39 || c == 1 || c == 2)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 08:03:37 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/15 21:09:31 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		is_spc_tb(char c);
 int		is_q(char c);
 char	**quote_validator(t_cmd *args, int single_q, int double_q);
 int		check_quotes(char c, int *single_q, int *double_q);
-void	remove_quotes(t_pipe **h, int single_q, int double_q, t_cmd *args);
+void	remove_quotes(t_pipe **h, int single_q, int double_q);
 char	*expand(char *line, int i, t_cmd *args);
 char	*insert_expand(char *line, char *exp, char *temp);
 char	*add_char(char *s1, char c);

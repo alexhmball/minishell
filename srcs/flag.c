@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 00:03:37 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/15 21:46:00 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,26 @@ int	flag_here_doc(t_cmd *args)
 	return (0);
 }
 
+int	is_redir(char c)
+{
+	if (c == '>' || c == '<' || c == '|')
+		return (1);
+	return (0);
+}
+int	check_redir(t_cmd *args)
+{
+	t_pipe	*temp;
+
+	temp = *args->pipe;
+	while (temp->next)
+	{
+		if (is_redir(temp->cmd[0][0]) && is_redir(temp->next->cmd[0][0]))
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
 int	flag_list(t_cmd *args)
 {
 	t_pipe	*temp;
@@ -109,10 +129,16 @@ int	flag_list(t_cmd *args)
 	int		flag2;
 	int		flag3;
 
-	flag1 = flag_pipe(args);
-	flag2 = flag_out(args);
-	flag_in(args);
-	flag3 = flag_here_doc(args);
+	flag1 = 1;
+	flag2 = 1;
+	flag3 = 1;
+	if (!check_redir(args))
+	{
+		flag1 = flag_pipe(args);
+		flag2 = flag_out(args);
+		flag_in(args);
+		flag3 = flag_here_doc(args);
+	}
 	temp = *args->pipe;
 	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe
 		|| flag1 || flag2 || flag3)
