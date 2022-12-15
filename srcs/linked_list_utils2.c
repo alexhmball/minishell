@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 21:28:40 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/15 22:13:24 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,38 @@ void	print_pipe(t_pipe **head)
 	printf("...~~~~~~~~~~~~~~..\n");
 }
 
+void	shuffle_it(char *str, int i)
+{
+	while (str[i])
+	{
+		str[i] = str[i + 1];
+		i++;
+	}
+}
+
+void	strip_tease(t_pipe *node, t_cmd *args)
+{
+	size_t	i;
+	
+	i = 0;
+	while (*node->cmd && node->cmd[0][i])
+	{
+		if (node->cmd[0][i] == 1 || node->cmd[0][i] == 2)
+			shuffle_it(node->cmd[0], i);
+		else
+			i++;
+			
+	}
+	if (node->expand)
+		node->cmd = ft_split(node->cmd[0], ' ');
+	validate_path(node->cmd[0], args);
+	if (args->path)
+	{
+		node->path = ft_strdup(args->path);
+		my_free(args->path);
+	}
+}
+
 void	create_pipe_list(t_cmd *args)
 {
 	t_pipe	*temp;
@@ -88,6 +120,7 @@ void	create_pipe_list(t_cmd *args)
 	while (temp)
 	{
 		find_expand(temp, 0, 0, args);
+		strip_tease(temp, args);
 		temp = temp->next;
 	}
 }

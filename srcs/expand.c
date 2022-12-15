@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 21:31:52 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/15 22:11:59 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 			node->cmd[0] = insert_pid(node->cmd[0], args);
 		else
 			node->cmd[0] = insert_error(node->cmd[0], args);
+		node->expand = 1;
 		return (1);
 	}
 	else
@@ -109,6 +110,7 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 		if (i - dollar > 0)
 		{
 			sub_it(i, dollar, node, args);
+			node->expand = 1;
 			return (1);
 		}
 	}

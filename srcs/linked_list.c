@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:30:22 by aball             #+#    #+#             */
-/*   Updated: 2022/12/10 18:43:25 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 22:11:26 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_pipe	*lstnew_pipe(char *content, char *path)
 	new->single_q = 0;
 	new->here_doc = 0;
 	new->append = 0;
+	new->expand = 0;
 	new->in = 0;
 	new->out = 0;
 	if (path)

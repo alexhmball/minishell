@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 21:09:31 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/15 22:11:06 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_pipe
 	int				out;
 	int				here_doc;
 	int				append;
+	int				expand;
 	int				single_q;
 	int				double_q;
 	char			*path;
