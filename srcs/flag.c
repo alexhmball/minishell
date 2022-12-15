@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 02:47:38 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:03:03 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,14 @@ int	flag_list(t_cmd *args)
 		freedom(args->cmd);
 		printf("minishell: syntax error remove extra token\n");
 		return (0);
+	}
+	temp = *args->pipe;
+	while (temp)
+	{
+		if (!temp->here_doc)
+			find_expand(temp, 0, 0, args);
+		strip_tease(temp, args);
+		temp = temp->next;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:04:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 02:46:11 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:02:19 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ void	create_pipe_list(t_cmd *args)
 		temp = temp->next;
 	}
 	remove_quotes(args->pipe, 0, 0);
-	temp = *args->pipe;
-	while (temp)
-	{
-		find_expand(temp, 0, 0, args);
-		strip_tease(temp, args);
-		temp = temp->next;
-	}
+	// temp = *args->pipe;
+	// while (temp)
+	// {
+	// 	find_expand(temp, 0, 0, args);
+	// 	strip_tease(temp, args);
+	// 	temp = temp->next;
+	// }
 }
