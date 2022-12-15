@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/16 02:59:29 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:06:55 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,23 +128,10 @@ void	pipex(t_cmd *args)
 	signal(SIGINT, handle_this);
 	while (temp)
 	{
-		// if (temp->next)
-		// {
 		if (pipe(args->fd) == -1)
 			ms_error_messages(args, temp, -420);
-		// }
-		// ft_putstr_fd("args->fd[0]: ", 2);
-		// ft_putnbr_fd(args->fd[0], 2);
-		// ft_putstr_fd("\nargs->fd[1]: ", 2);
-		// ft_putnbr_fd(args->fd[1], 2);
-		// ft_putstr_fd("\nprev_pipe: ", 2);
-		// ft_putnbr_fd(prev_pipe, 2);
-		// ft_putchar_fd('\n', 2);
 		if (!temp->next)
-		{
 			close(args->fd[1]);
-		// 	// close(prev_pipe);
-		}
 		child = fork();
 		children(temp, child, prev_pipe, args);
 		if (temp->here_doc)
