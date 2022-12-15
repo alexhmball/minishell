@@ -6,7 +6,7 @@
 /*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:46:55 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/16 03:50:34 by talsaiaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ int		check_invisible_quotes(char c, int *single_q, int *double_q);
 void	expand_it(t_cmd *args);
 void	shuffle_it(char *str, int i);
 int		is_redir(char c);
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
