@@ -6,36 +6,11 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 22:11:59 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:09:31 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	check_invisible_quotes(char c, int *single_q, int *double_q)
-{
-	if (c == 1 && !*single_q && !*double_q)
-	{
-		*double_q = 1;
-		return (1);
-	}
-	else if (c == 2 && !*single_q && !*double_q)
-	{
-		*single_q = 1;
-		return (1);
-	}
-	else if (c == 1 && !*single_q && *double_q)
-	{
-		*double_q = 0;
-		return (1);
-	}
-	else if (c == 2 && *single_q && !*double_q)
-	{
-		*single_q = 0;
-		return (1);
-	}
-	return (0);
-}
 
 void	find_expand(t_pipe *current, int single_q, int double_q, t_cmd *args)
 {

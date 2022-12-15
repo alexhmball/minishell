@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:03:03 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:26:15 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,56 +107,4 @@ int	is_redir(char c)
 	if (c == '>' || c == '<')
 		return (1);
 	return (0);
-}
-int	check_redir(t_cmd *args)
-{
-	t_pipe	*temp;
-
-	temp = *args->pipe;
-	while (temp->next)
-	{
-		if (is_redir(temp->cmd[0][0]) && is_redir(temp->next->cmd[0][0]))
-			return (1);
-		temp = temp->next;
-	}
-	return (0);
-}
-
-int	flag_list(t_cmd *args)
-{
-	t_pipe	*temp;
-	int		flag1;
-	int		flag2;
-	int		flag3;
-
-	flag1 = 1;
-	flag2 = 1;
-	flag3 = 1;
-	if (!check_redir(args))
-	{
-		flag1 = flag_pipe(args);
-		flag2 = flag_out(args);
-		flag_in(args);
-		flag3 = flag_here_doc(args);
-	}
-	temp = *args->pipe;
-	if (temp->is_pipe || lstlast_pipe(*args->pipe)->is_pipe
-		|| flag1 || flag2 || flag3)
-	{
-		*args->err = 258;
-		lstclear_pipe(args->pipe, my_free);
-		my_free(args->s);
-		freedom(args->cmd);
-		printf("minishell: syntax error remove extra token\n");
-		return (0);
-	}
-	temp = *args->pipe;
-	while (temp)
-	{
-		if (!temp->here_doc)
-			find_expand(temp, 0, 0, args);
-		strip_tease(temp, args);
-		temp = temp->next;
-	}
-	return (1);
 }

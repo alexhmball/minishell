@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+         #
+#    By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 20:53:37 by aball             #+#    #+#              #
-#    Updated: 2022/12/15 21:19:15 by talsaiaa         ###   ########.fr        #
+#    Updated: 2022/12/16 03:29:23 by ballzball        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FILES = main parsing echo quotes freedom utils pwd cd env expand unset check exp
 		str_utils linked_list path init error execute linked_list_utils pipex \
 		linked_list_utils2 setting_up_fds special_split exit group_args \
 		here_doc flag flag_in flag_out env_list str_utils2 insert signals \
-		parse_str lowering ft_atol_special ms_pipes
+		parse_str lowering ft_atol_special invisible norm
 
 OBJDIR = objects
 

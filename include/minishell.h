@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:03:44 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:34:17 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,11 @@ void	make_lower(t_cmd *args);
 int		check_doubles(t_cmd *args);
 size_t	ft_atol_special(const char *str);
 void	strip_tease(t_pipe *node, t_cmd *args);
+int		check_invisible_quotes(char c, int *single_q, int *double_q);
+void	expand_it(t_cmd *args);
+void	shuffle_it(char *str, int i);
+int		is_redir(char c);
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

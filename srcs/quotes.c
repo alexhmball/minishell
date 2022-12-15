@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 20:05:42 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 21:23:51 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 03:27:43 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ char	**quote_collector(t_pipe *current, int single_q, int double_q)
 	i = 0;
 	while (current->cmd[0][i])
 	{
-		if (current->cmd[0][i] == '"' && check_quotes(current->cmd[0][i], &single_q, &double_q))
+		if (current->cmd[0][i] == '"'
+			&& check_quotes(current->cmd[0][i], &single_q, &double_q))
 			current->cmd[0][i] = 1;
-		if (current->cmd[0][i] == 39 && check_quotes(current->cmd[0][i], &single_q, &double_q))
-			current->cmd[0][i] = 2;	
+		if (current->cmd[0][i] == 39
+			&& check_quotes(current->cmd[0][i], &single_q, &double_q))
+			current->cmd[0][i] = 2;
 		i++;
 	}
 	return (current->cmd);
