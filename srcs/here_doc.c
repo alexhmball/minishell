@@ -3,36 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:30:34 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/14 22:20:45 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 08:00:03 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	here_sig(int signum)
+void	here_sig(int signum, siginfo_t *info, void *context)
 {
-	if (signum == SIGINT)
+	static t_cmd	*args;
+	
+	(void)info;
+	if (signum == SIGUSR2)
+		args = (t_cmd *)context;
+	else if (signum == SIGINT)
 	{
+		g_error = -420;
+		lstclear_pipe(args->pipe, my_free);
+		freedom(args->saving);
+		total_freedom(args);
 		signal(SIGINT, SIG_DFL);
 		kill(0, SIGINT);
 		exit (0);
 	}
 }
 
-char	**hd_saving_typed(t_pipe *temp)
+char	**hd_saving_typed(t_pipe *temp, t_cmd *args)
 {
-	char	**saving;
+	// char	**saving;
 	char	*typed;
 	int		delimiter_len;
 	int		typed_len;
-
-	signal(SIGINT, here_sig);
+	struct sigaction	act;
+	
+	act.sa_sigaction = &here_sig;
+	act.sa_flags = SA_SIGINFO;
+	sigemptyset(&act.sa_mask);
+	sigaction(SIGINT, &act, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	delimiter_len = ft_strlen(temp->cmd[0]);
-	saving = (char **)ft_calloc(1, sizeof(char *));
+	args->saving = (char **)ft_calloc(1, sizeof(char *));
+	here_sig(SIGUSR2, NULL, args);
 	if (temp && temp->here_doc)
 	{
 		while (g_error != -420)
@@ -44,13 +58,13 @@ char	**hd_saving_typed(t_pipe *temp)
 			if (delimiter_len && !ft_strncmp(temp->cmd[0], typed, typed_len)
 				&& typed_len == delimiter_len)
 				break ;
-			saving = append_str(saving, typed);
+			args->saving = append_str(args->saving, typed);
 		}
 	}
-	return (saving);
+	return (args->saving);
 }
 
-void	ms_heredoc(t_pipe *temp, t_cmd *args)
+void	ms_heredoc(t_pipe *temp, t_cmd *args, int prev_pipe)
 {
 	char	**saved;
 	int		saved_len;
@@ -59,7 +73,7 @@ void	ms_heredoc(t_pipe *temp, t_cmd *args)
 	saved_len = 0;
 	i = 0;
 	close(args->fd[0]);
-	saved = hd_saving_typed(temp);
+	saved = hd_saving_typed(temp, args);
 	while (saved[i])
 	{
 		saved_len = ft_strlen(saved[i]);
@@ -68,6 +82,7 @@ void	ms_heredoc(t_pipe *temp, t_cmd *args)
 		i++;
 	}
 	freedom(saved);
+	close(prev_pipe);
 	dup2(args->fd[1], STDOUT_FILENO);
 	close(args->fd[1]);
 	lstclear_pipe(args->pipe, my_free);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 21:58:03 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/15 08:03:37 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_pipe
 typedef struct s_cmd
 {
 	char				**cmd;
+	char				**saving;
 	char				*path;
 	char				*s;
 	int					*err;
@@ -96,7 +97,7 @@ char	*insert_expand(char *line, char *exp, char *temp);
 char	*add_char(char *s1, char c);
 int		string_count(char *line);
 int		two_d_strlen(char **str);
-t_env	**create_env(char **exp);
+t_env	**create_env(char **exp, t_cmd *args);
 char	*find_env(char *temp, t_cmd *args);
 void	check_expand(t_pipe *node, t_cmd *args);
 int		find_equal(char *str);
@@ -130,6 +131,7 @@ int		is_special_char(char c, char *str, int i);
 int		is_special(char c);
 void	make_lower(t_cmd *args);
 int		check_doubles(t_cmd *args);
+size_t	ft_atol_special(const char *str);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -138,9 +140,9 @@ int		check_exec(t_cmd *args);
 void	excecute_us(t_cmd *args, t_pipe *cmd);
 void	execute_them(t_cmd *args, t_pipe *cmd);
 void	pipex(t_cmd *args);
-t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args);
+t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args, int prev_pipe);
 t_pipe	*setting_up_outs(t_pipe *temp, t_cmd *args);
-void	ms_heredoc(t_pipe *temp, t_cmd *args);
+void	ms_heredoc(t_pipe *temp, t_cmd *args, int prev_pipe);
 void	ms_error_messages(t_cmd *args, t_pipe *temp, int redir);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~MEMORY_MANAGEMENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 00:34:50 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/15 02:32:25 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/15 08:58:47 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,22 @@ void	ms_pipe_exec(t_pipe *temp, t_cmd *args)
 	}
 }
 
-t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
+t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int *prev_pipe, int pre_out)
 {
 	args->prev_in = 0;
 	if (temp && temp->in)
 	{
-		temp = setting_up_ins(temp, args);
+		temp = setting_up_ins(temp, args, *prev_pipe);
 		args->prev_in = 1;
 	}
 	if (prev_pipe != STDIN_FILENO && !args->prev_in)
 	{
-		dup2(prev_pipe, STDIN_FILENO);
-		close(prev_pipe);
+		dup2(*prev_pipe, STDIN_FILENO);
+		close(*prev_pipe);
+		close(args->fd[0]);
 	}
+	close(*prev_pipe);
+	
 	if (temp && (temp->out || temp->append))
 	{
 		temp = setting_up_outs(temp, args);
@@ -63,11 +66,15 @@ t_pipe	*ms_proc_ins_outs(t_pipe *temp, t_cmd *args, int prev_pipe, int pre_out)
 		close(args->fd[1]);
 	}
 	if (!pre_out && args->pipe_n < 1)
+	{
 		close(args->fd[1]);
+		close(args->fd[0]);
+		close(*prev_pipe);
+	}
 	return (temp);
 }
 
-void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
+void	children(t_pipe *temp, pid_t child, int *prev_pipe, t_cmd *args)
 {
 	int	prev_out;
 
@@ -83,8 +90,9 @@ void	children(t_pipe *temp, pid_t child, int prev_pipe, t_cmd *args)
 	{
 		signal(SIGQUIT, sig_igor);
 		if (temp && temp->here_doc)
-			ms_heredoc(temp, args);
+			ms_heredoc(temp, args, *prev_pipe);
 		temp = ms_proc_ins_outs(temp, args, prev_pipe, prev_out);
+		close(*prev_pipe);
 		ms_pipe_exec(temp, args);
 	}
 	wait(NULL);
@@ -117,10 +125,11 @@ void	pipex(t_cmd *args)
 		if (pipe(args->fd) == -1)
 			ms_error_messages(args, temp, -420);
 		child = fork();
-		children(temp, child, prev_pipe, args);
+		children(temp, child, &prev_pipe, args);
 		wait(&child);
 		close(args->fd[1]);
 		prev_pipe = args->fd[0];
+		// close(args->fd[0]);
 		temp = parent_catching_up(temp, args);
 	}
 	wait(&child);

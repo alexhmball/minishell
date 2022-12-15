@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_in.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:56:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 02:38:01 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/15 05:52:40 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_doubles(t_cmd *args)
 	temp = *args->pipe;
 	while (temp)
 	{
-		if (temp->cmd[0][0] == '<' && ft_strlen(temp->cmd[0]) > 2
+		if (ft_strlen(temp->cmd[0]) > 2 && temp->cmd[0][0] == '<'
 			&& !temp->double_q && !temp->single_q)
 			return (1);
 		if (ft_strlen(temp->cmd[0]) > 2 && temp->cmd[0][0] == '>'

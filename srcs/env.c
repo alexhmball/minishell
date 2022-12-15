@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:37:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 21:21:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/15 05:46:45 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,34 @@ char	*my_getenv(char *str_env, t_cmd *args)
 
 static void	input_env(char **exp, t_env **head, char *key, char *value)
 {
-	int	i;
+	int		i;
+	size_t	shlvl;
 
 	i = 1;
 	while (exp[i])
 	{
 		key = get_key(exp[i]);
-		value = get_value(exp[i]);
+		if (!ft_strncmp(key, "PWD", 3) && ft_strlen(key) == 3)
+			value = get_working_dir();
+		else
+			value = get_value(exp[i]);
+		if (!ft_strncmp(key, "SHLVL", 5) && ft_strlen(key) == 5)
+		{
+			if (value)
+			{
+				shlvl = ft_atol_special(value);
+				my_free(value);
+				value = ft_itoa(shlvl + (size_t)1);
+			}
+			else
+				value = ft_strdup("1");
+		}
 		env_addback(head, env_newlst(key, value));
 		i++;
 	}
 }
 
-t_env	**create_env(char **exp)
+t_env	**create_env(char **exp, t_cmd *args)
 {
 	t_env	**head;
 	t_env	*temp;
@@ -61,14 +76,17 @@ t_env	**create_env(char **exp)
 	head = (t_env **)malloc(sizeof(t_env *));
 	if (!*exp || !exp)
 	{
-		*head = NULL;
-		return (head);
+		exp = (char **)malloc(sizeof(char *) * 3);
+		exp[0] = ft_strdup("PWD");
+		exp[1] = ft_strdup("SHLVL");
+		exp[2] = NULL;
 	}
 	key = get_key(exp[i]);
 	value = get_value(exp[i]);
 	temp = env_newlst(key, value);
 	*head = temp;
 	input_env(exp, head, key, value);
+	args->env_for_excecute = make_env_for_ex(head, args->env_for_excecute);
 	return (head);
 }
 

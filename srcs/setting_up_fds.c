@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting_up_fds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 03:52:47 by talsaiaa          #+#    #+#             */
-/*   Updated: 2022/12/15 01:01:51 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/15 08:03:32 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ms_error_messages(t_cmd *args, t_pipe *temp, int redir)
 	}
 }
 
-t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args)
+t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args, int prev_pipe)
 {
 	int	infile;
 
@@ -55,7 +55,7 @@ t_pipe	*setting_up_ins(t_pipe *temp, t_cmd *args)
 		temp = temp->next;
 	}
 	if (temp && temp->here_doc)
-		ms_heredoc(temp, args);
+		ms_heredoc(temp, args, prev_pipe);
 	dup2(infile, STDIN_FILENO);
 	close(infile);
 	close(args->fd[0]);
