@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 13:19:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/17 02:45:36 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,20 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 	while (node->cmd[0][i] && !is_q(node->cmd[0][i]) && node->cmd[0][i] != '$'
 		&& !is_spc_tb(node->cmd[0][i]))
 		i++;
+	if ((node->cmd[0][i] == 1 || node->cmd[0][i] == 2)
+		&& node->cmd[0][i + 1] == node->cmd[0][i])
+		i += 2;
 	if (node->cmd[0][dollar] == '?')
 	{
 		node->cmd[0] = insert_error(node->cmd[0], args);
 		node->expand = 1;
 		return (1);
 	}
-	else
+	else if (i - dollar > 0)
 	{
-		if (i - dollar > 0)
-		{
-			sub_it(i, dollar, node, args);
-			node->expand = 1;
-			return (1);
-		}
+		sub_it(i, dollar, node, args);
+		node->expand = 1;
+		return (1);
 	}
 	return (0);
 }
