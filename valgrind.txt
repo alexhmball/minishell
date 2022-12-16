@@ -1,4 +1,4 @@
-valgrind --suppressions=file.supp --track-origins=yes --leak-check=full --show-leak-kinds=all ./minishell
+valgrind --suppressions=file.supp --track-origins=yes --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./minishell
 redo pipes
 echo $0
 cat /dev/random | head 10 | wc
