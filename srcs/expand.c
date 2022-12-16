@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:09:31 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 07:52:06 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 	int		dollar;
 
 	dollar = i;
+	while (node->cmd[0][dollar] && node->cmd[0][dollar] == '$')
+		dollar++;
+	i = dollar;
 	while (node->cmd[0][i] && !is_q(node->cmd[0][i]) && node->cmd[0][i] != '$')
 		i++;
-	if (node->cmd[0][dollar] == '?' || node->cmd[0][dollar] == '$')
+	if (node->cmd[0][dollar] == '?')
 	{
-		if (node->cmd[0][dollar] == '$')
-			node->cmd[0] = insert_pid(node->cmd[0], args);
-		else
-			node->cmd[0] = insert_error(node->cmd[0], args);
+		node->cmd[0] = insert_error(node->cmd[0], args);
 		node->expand = 1;
 		return (1);
 	}
@@ -107,7 +107,8 @@ void	expand_dollar(t_pipe *node, t_cmd *args)
 		if (node->cmd[0][i] == '$' && !single_q)
 		{
 			i++;
-			check_need(i, node, args);
+			if (!check_need(i, node, args))
+				break ;
 			i = -1;
 			single_q = 0;
 			double_q = 0;

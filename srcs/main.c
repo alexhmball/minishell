@@ -6,7 +6,7 @@
 /*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 21:22:36 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 05:47:31 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 07:31:00 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	initializer(t_cmd *args, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_cmd				args;
-	struct sigaction	pid;
 
 	(void)av;
 	if (ac > 1)
@@ -34,16 +33,11 @@ int	main(int ac, char **av, char **env)
 		printf("minishell: no arguments will be accepted\n");
 		return (0);
 	}
-	pid.sa_flags = SA_SIGINFO;
-	pid.sa_sigaction = &get_pid_me;
-	sigemptyset(&pid.sa_mask);
 	args.sa.sa_sigaction = &handler;
 	args.sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&args.sa.sa_mask);
 	sigaction(SIGINT, &args.sa, NULL);
 	sigaction(SIGCHLD, &args.sa, NULL);
-	sigaction(SIGUSR1, &pid, NULL);
-	kill(0, SIGUSR1);
 	initializer(&args, env);
 	while (1)
 		if (!parsing(&args))
