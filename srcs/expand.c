@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:58:39 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 07:52:06 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 13:19:17 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	check_need(int i, t_pipe *node, t_cmd *args)
 	while (node->cmd[0][dollar] && node->cmd[0][dollar] == '$')
 		dollar++;
 	i = dollar;
-	while (node->cmd[0][i] && !is_q(node->cmd[0][i]) && node->cmd[0][i] != '$')
+	while (node->cmd[0][i] && !is_q(node->cmd[0][i]) && node->cmd[0][i] != '$'
+		&& !is_spc_tb(node->cmd[0][i]))
 		i++;
 	if (node->cmd[0][dollar] == '?')
 	{

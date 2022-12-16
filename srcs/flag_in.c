@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_in.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:56:28 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:28:48 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 10:25:52 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	check_doubles(t_cmd *args)
 			return (1);
 		if (ft_strlen(temp->cmd[0]) > 2 && temp->cmd[0][0] == '>'
 			&& temp->cmd[0][1] == '>' && !temp->double_q && !temp->single_q)
+			return (1);
+		if (temp->cmd && temp->cmd[0][0] == '>' && !temp->next)
+			return (1);
+		if (temp->cmd && temp->cmd[0][0] == '<' && !temp->next)
 			return (1);
 		temp = temp->next;
 	}
@@ -52,6 +56,8 @@ void	flag_in(t_cmd *args)
 	t = *args->pipe;
 	prev = NULL;
 	i = 0;
+	if (check_doubles(args))
+		return ;
 	while (t)
 	{
 		if (t->cmd[0] && t->cmd[0][0] == '<'

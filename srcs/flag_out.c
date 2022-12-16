@@ -6,7 +6,7 @@
 /*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:57:01 by aball             #+#    #+#             */
-/*   Updated: 2022/12/15 00:08:06 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/16 10:26:00 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	flag_out(t_cmd *args)
 	i = 0;
 	prev = NULL;
 	temp = *args->pipe;
+	if (check_doubles(args))
+		return (1);
 	while (temp)
 	{
 		if (temp->cmd[0] && temp->cmd[0][0] == '>'

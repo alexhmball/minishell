@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 21:07:48 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:26:15 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 10:25:05 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	flag_pipe(t_cmd *args)
 {
 	t_pipe	*temp;
 
+	if (check_doubles(args))
+		return (1);
 	temp = *args->pipe;
 	while (temp)
 	{

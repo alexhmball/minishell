@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 23:22:03 by aball             #+#    #+#             */
-/*   Updated: 2022/12/11 14:05:16 by ballzball        ###   ########.fr       */
+/*   Updated: 2022/12/16 10:31:46 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	find_errors(t_cmd *args, t_pipe **head)
 			&& !temp->here_doc && access(temp->path, X_OK) == -1 && !is_us(temp)
 			&& access(temp->path, R_OK) == -1)
 			*args->err = 126;
-		else
+		else if (ft_strncmp(temp->cmd[0], "exit", 4))
 			*args->err = 0;
 		temp = temp->next;
 	}

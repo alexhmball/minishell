@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:22:16 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:48:05 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/16 09:42:54 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,18 @@ int	parse_pipe(t_cmd *args)
 int	check_parsed(t_cmd *args)
 {
 	args->cmd = quote_validator(args, 0, 0);
+	if (!args->cmd)
+	{
+		add_history(args->s);
+		ft_putstr_fd("minishell: Error: invalid quotes\n", 2);
+		return (1);
+	}
 	if (args->cmd && *args->cmd)
 		add_history(args->s);
 	else
 	{
 		freedom(args->cmd);
 		free(args->s);
-		return (1);
-	}
-	if (!args->cmd)
-	{
-		ft_putstr_fd("minishell: Error: invalid quotes\n", 2);
 		return (1);
 	}
 	if (!*args->cmd)
