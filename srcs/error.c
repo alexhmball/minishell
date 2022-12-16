@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 23:22:03 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 10:31:46 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/16 15:19:43 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ void	find_errors(t_cmd *args, t_pipe **head)
 			*args->err = 0;
 		temp = temp->next;
 	}
+}
+
+void	print_access(t_pipe *cmd, char *error)
+{
+	set_error(errno);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd->cmd[0], 2);
+	ft_putstr_fd(error, 2);
 }

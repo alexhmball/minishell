@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talsaiaa <talsaiaa@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:53:44 by aball             #+#    #+#             */
-/*   Updated: 2022/12/16 03:50:34 by talsaiaa         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:18:39 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int		check_invisible_quotes(char c, int *single_q, int *double_q);
 void	expand_it(t_cmd *args);
 void	shuffle_it(char *str, int i);
 int		is_redir(char c);
+void	print_access(t_pipe *cmd, char *error);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~EXECUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

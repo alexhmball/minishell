@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ballzball <ballzball@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:10:35 by aball             #+#    #+#             */
-/*   Updated: 2022/12/14 21:16:17 by aball            ###   ########.fr       */
+/*   Updated: 2022/12/16 15:18:48 by ballzball        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,10 @@ void	execute_them(t_cmd *args, t_pipe *cmd)
 		ft_putstr_fd(cmd->cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
+	else if (access(cmd->path, F_OK) != 0)
+		print_access(cmd, ": No such file or directory\n");
 	else if (access(cmd->path, X_OK) != 0)
-	{
-		set_error(errno);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd->cmd[0], 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
+		print_access(cmd, ": Permission denied\n");
 	else if (g_error != -420)
 	{
 		execve(cmd->path, cmd->cmd, args->env_for_excecute);
