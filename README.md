@@ -1,5 +1,5 @@
 
-# Minishell - Learning Outcomes and Reflection
+# Minishell - *as beautiful as a shell*
 
 Minishell, as beautiful as a shell, is a project that allowed me to explore the world of Unix shell development. The project's goal was to create a functional shell, similar to Bash, capable of handling commands, executing programs, managing environment variables, and implementing various shell features.
 
